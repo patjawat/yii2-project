@@ -2,11 +2,14 @@
 
 namespace app\modules\bookingcar\controllers;
 
+use Yii;
 use app\modules\bookingcar\models\Booking;
 use app\modules\bookingcar\models\BookingSearch;
+use app\models\Amphures;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * BookingController implements the CRUD actions for Booking model.
@@ -131,4 +134,21 @@ class BookingController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+    public function actionDistrictList() {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+                $province_id = $parents[0];
+                foreach(Amphures::find()->where(['province_id' => $province_id])->orderBy(['name_th' => SORT_ASC])->all() as $district){
+                    $out[] = ['id' => $district->id, 'name' => $district->name_th];
+                }
+
+                return ['output'=>$out, 'selected'=>''];
+            }
+        }
+        return ['output'=>'', 'selected'=>''];
+    }
+
 }

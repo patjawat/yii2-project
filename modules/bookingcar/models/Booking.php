@@ -8,14 +8,12 @@ use Yii;
  * This is the model class for table "booking".
  *
  * @property int $id
- * @property string|null $localtion_province จังหวัด
- * @property string|null $localtion_district อำเภอ
+ * @property string|null $ref
+ * @property string|null $province_id จังหวัด
+ * @property string|null $district_id อำเภอ
  * @property int|null $passengers_number จำนวนผู้โดยสาร
- * @property int|null $car_van รถตู้
- * @property int|null $car_truck รถกระบะ
- * @property int|null $car_sedan รถเก๋ง
- * @property int|null $car_bus รถบัส
- * @property int|null $car_small_truck รถบรรทุกขนาดเล็ก
+ * @property string|null $cars รถ
+ * @property string|null $data_json json
  * @property string|null $passengers_name ชื่อผู้โดยสาร
  * @property int|null $contact_name ผู้ติดต่อ
  * @property int|null $contact_phone เบอร์โทรผู้ติดต่อ
@@ -53,9 +51,10 @@ class Booking extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['passengers_number', 'car_van', 'car_truck', 'car_sedan', 'car_bus', 'car_small_truck', 'contact_name', 'contact_phone', 'cost_type', 'receive'], 'integer'],
-            [['passengers_name', 'title', 'description', 'stopover', 'driver', 'car_id'], 'string'],
-            [['localtion_province', 'localtion_district', 'rally_point', 'date_start', 'time_start', 'person_name', 'certifier_name', 'certifier_position', 'author_id', 'author_position', 'date_end', 'time_end'], 'string', 'max' => 255],
+            [['passengers_number', 'contact_name', 'contact_phone', 'cost_type', 'receive'], 'integer'],
+            [['cars', 'data_json', 'passengers_name', 'title', 'description', 'stopover', 'driver', 'car_id'], 'string'],
+            [['ref'], 'string', 'max' => 200],
+            [['province_id', 'district_id', 'rally_point', 'date_start', 'time_start', 'person_name', 'certifier_name', 'certifier_position', 'author_id', 'author_position', 'date_end', 'time_end'], 'string', 'max' => 255],
         ];
     }
 
@@ -66,14 +65,12 @@ class Booking extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'localtion_province' => 'จังหวัด',
-            'localtion_district' => 'อำเภอ',
+            'ref' => 'Ref',
+            'province_id' => 'จังหวัด',
+            'district_id' => 'อำเภอ',
             'passengers_number' => 'จำนวนผู้โดยสาร',
-            'car_van' => 'รถตู้',
-            'car_truck' => 'รถกระบะ',
-            'car_sedan' => 'รถเก๋ง',
-            'car_bus' => 'รถบัส',
-            'car_small_truck' => 'รถบรรทุกขนาดเล็ก',
+            'cars' => 'รถ',
+            'data_json' => 'json',
             'passengers_name' => 'ชื่อผู้โดยสาร',
             'contact_name' => 'ผู้ติดต่อ',
             'contact_phone' => 'เบอร์โทรผู้ติดต่อ',
@@ -95,5 +92,22 @@ class Booking extends \yii\db\ActiveRecord
             'driver' => 'ผู้ขับรถ',
             'car_id' => 'รถ',
         ];
+    }
+
+    public function afterFind() {
+        $this->data_json = Json::decode($this->data_json, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        $this->cars = Json::decode($this->cars, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        return parent::afterFind();
+    }
+
+    public function beforeSave($insert) {
+        if (parent::beforeSave($insert)) {
+            $this->data_json = Json::encode($this->data_json, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+            $this->cars = Json::encode($this->cars, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+         
+            return true;
+        } else {
+            return false;
+        }
     }
 }

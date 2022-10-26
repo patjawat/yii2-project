@@ -79,6 +79,12 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         }
+        // if ($model->load(Yii::$app->request->post())){
+        //     \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        //     // return $model->login();
+        //     return $this->goBack();
+
+        // }
 
         $model->password = '';
         return $this->render('login', [

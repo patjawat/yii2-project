@@ -17,8 +17,8 @@ class BookingSearch extends Booking
     public function rules()
     {
         return [
-            [['id', 'passengers_number', 'car_van', 'car_truck', 'car_sedan', 'car_bus', 'car_small_truck', 'contact_name', 'contact_phone', 'cost_type', 'receive'], 'integer'],
-            [['localtion_province', 'localtion_district', 'passengers_name', 'rally_point', 'date_start', 'time_start', 'title', 'description', 'stopover', 'person_name', 'certifier_name', 'certifier_position', 'author_id', 'author_position', 'date_end', 'time_end', 'driver', 'car_id'], 'safe'],
+            [['id', 'passengers_number',  'contact_name', 'contact_phone', 'cost_type', 'receive'], 'integer'],
+            [['province_id', 'district_id', 'passengers_name', 'rally_point', 'date_start', 'time_start', 'title', 'description', 'stopover', 'person_name', 'certifier_name', 'certifier_position', 'author_id', 'author_position', 'date_end', 'time_end', 'driver', 'car_id'], 'safe'],
         ];
     }
 
@@ -60,19 +60,14 @@ class BookingSearch extends Booking
         $query->andFilterWhere([
             'id' => $this->id,
             'passengers_number' => $this->passengers_number,
-            'car_van' => $this->car_van,
-            'car_truck' => $this->car_truck,
-            'car_sedan' => $this->car_sedan,
-            'car_bus' => $this->car_bus,
-            'car_small_truck' => $this->car_small_truck,
             'contact_name' => $this->contact_name,
             'contact_phone' => $this->contact_phone,
             'cost_type' => $this->cost_type,
             'receive' => $this->receive,
         ]);
 
-        $query->andFilterWhere(['like', 'localtion_province', $this->localtion_province])
-            ->andFilterWhere(['like', 'localtion_district', $this->localtion_district])
+        $query->andFilterWhere(['like', 'province_id', $this->province_id])
+            ->andFilterWhere(['like', 'district_id', $this->district_id])
             ->andFilterWhere(['like', 'passengers_name', $this->passengers_name])
             ->andFilterWhere(['like', 'rally_point', $this->rally_point])
             ->andFilterWhere(['like', 'date_start', $this->date_start])
