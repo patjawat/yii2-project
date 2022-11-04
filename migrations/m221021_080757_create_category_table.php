@@ -14,6 +14,7 @@ class m221021_080757_create_category_table extends Migration
     {
         $this->createTable('{{%category}}', [
             'id' => $this->primaryKey(),
+            'ref' => $this->string(200),
             'group_name' => $this->string()->comment('กลุ่มตาราง'),
             'type_name' => $this->string()->comment('ประภทตาราง'),
             'title' => $this->text()->comment(''),

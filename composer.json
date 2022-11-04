@@ -38,6 +38,7 @@
         "kartik-v/yii2-grid": "dev-master",
         "kartik-v/yii2-widget-select2": "dev-master",
         "kartik-v/yii2-widget-datepicker": "dev-master",
+        "kartik-v/yii2-widget-timepicker": "dev-master",
         "kartik-v/yii2-editable": "*",
         "kartik-v/yii2-report": "@dev",
         "kartik-v/yii2-icons": "@dev",
@@ -49,7 +50,9 @@
         "mdmsoft/yii2-admin": "~2.0",
         "kartik-v/yii2-bootstrap5-dropdown": "@dev",
         "dixonsatit/yii2-thai-year-formatter": "*",
-        "kartik-v/yii2-widget-depdrop": "^1.0"
+        "kartik-v/yii2-widget-depdrop": "^1.0",
+        "kalyabin/yii2-select-google-map-location": "*",
+        "mdmsoft/yii2-upload-file": "~2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

@@ -22,8 +22,10 @@ class AppAsset extends AssetBundle
         'fontawesome-free-6.2.0-web/css/all.min.css',
         "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css",
         "css/style.css",
+        'aos/aos.css'
     ];
     public $js = [
+        'aos/aos.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

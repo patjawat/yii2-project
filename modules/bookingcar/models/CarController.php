@@ -1,17 +1,17 @@
 <?php
 
-namespace app\modules\bookingcar\controllers;
+namespace app\modules\bookingcar\models;
 
-use app\modules\bookingcar\models\Booking;
-use app\modules\bookingcar\models\BookingSearch;
+use app\modules\bookingcar\models\Category;
+use app\modules\bookingcar\models\CategorySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * BookingController implements the CRUD actions for Booking model.
+ * CarController implements the CRUD actions for Category model.
  */
-class BookingController extends Controller
+class CarController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,13 +32,13 @@ class BookingController extends Controller
     }
 
     /**
-     * Lists all Booking models.
+     * Lists all Category models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new BookingSearch();
+        $searchModel = new CategorySearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -48,7 +48,7 @@ class BookingController extends Controller
     }
 
     /**
-     * Displays a single Booking model.
+     * Displays a single Category model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -61,13 +61,13 @@ class BookingController extends Controller
     }
 
     /**
-     * Creates a new Booking model.
+     * Creates a new Category model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Booking();
+        $model = new Category();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -83,7 +83,7 @@ class BookingController extends Controller
     }
 
     /**
-     * Updates an existing Booking model.
+     * Updates an existing Category model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -103,7 +103,7 @@ class BookingController extends Controller
     }
 
     /**
-     * Deletes an existing Booking model.
+     * Deletes an existing Category model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -117,15 +117,15 @@ class BookingController extends Controller
     }
 
     /**
-     * Finds the Booking model based on its primary key value.
+     * Finds the Category model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Booking the loaded model
+     * @return Category the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Booking::findOne(['id' => $id])) !== null) {
+        if (($model = Category::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

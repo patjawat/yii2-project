@@ -6,6 +6,8 @@ use yii\web\Controller;
 use yii\web\Response;
 use app\modules\bookingcar\models\Booking;
 use app\modules\bookingcar\models\BookingSearch;
+use app\modules\bookingcar\models\Category;
+use app\modules\bookingcar\models\CategorySearch;
 
 /**
  * Default controller for the `Bookingcar` module
@@ -21,9 +23,13 @@ class DefaultController extends Controller
         $searchModel = new BookingSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
+        $searchModelCar = new CategorySearch();
+        $dataProviderCar = $searchModelCar->search($this->request->queryParams);
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'searchModelCar' => $searchModelCar,
+            'dataProviderCar' => $dataProviderCar,
         ]);
     }
 

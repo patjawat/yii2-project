@@ -1,6 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@100;200;300;400&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@100;200;300;400&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@200;300;400&family=Sarabun:wght@100;200;300&display=swap');
+/* @font-face {
+    font-family: "THSarabunNew";
+    src: url("../fonts/THSarabunNew\ Bold.ttf")
+  } */
 html, body {
     font-family: 'Prompt', sans-serif;
+    font-weight: 300;
+    /* font-family: 'THSarabunNew',Tahoma; */
 }
 
 .bd-masthead {
@@ -12,7 +19,7 @@ html, body {
 
 
 main > .container {
-    padding: 70px 15px 20px;
+    padding: 25px 15px 20px;
 }
 
 .footer {

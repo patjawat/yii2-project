@@ -34,6 +34,9 @@ $config = [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'pitX8eaH4IKLXLsGPK8R1e9fDyX4NVeP',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -81,7 +84,7 @@ $config = [
     'as access' => [
         'class' => 'mdm\admin\components\AccessControl',
         'allowActions' => [
-            // '*',
+            '*',
             // 'site/*',
             'usermanager/*',
             'uploads/upload-ajax',
@@ -91,6 +94,9 @@ $config = [
             'line/*'
             // 'api/*'
         ],
+    ],
+    'controllerMap' => [
+        'file' => 'mdm\\upload\\FileController', // use to show or download file
     ],
 ];
 

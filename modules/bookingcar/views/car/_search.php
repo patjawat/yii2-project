@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var app\modules\bookingcar\models\BookingSearch $model */
+/** @var app\modules\bookingcar\models\CategorySearch $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="booking-search">
+<div class="category-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -22,19 +22,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'ref') ?>
 
-    <?= $form->field($model, 'date_start') ?>
+    <?= $form->field($model, 'group_name') ?>
 
-    <?= $form->field($model, 'time_start') ?>
+    <?= $form->field($model, 'type_name') ?>
 
-    <?= $form->field($model, 'date_end') ?>
+    <?= $form->field($model, 'title') ?>
 
-    <?php // echo $form->field($model, 'time_end') ?>
+    <?php // echo $form->field($model, 'description') ?>
 
-    <?php // echo $form->field($model, 'province_id') ?>
-
-    <?php // echo $form->field($model, 'district_id') ?>
-
-    <?php // echo $form->field($model, 'car_id') ?>
+    <?php // echo $form->field($model, 'status') ?>
 
     <?php // echo $form->field($model, 'data_json') ?>
 

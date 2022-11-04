@@ -4,12 +4,12 @@ namespace app\modules\bookingcar\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\modules\bookingcar\models\Booking;
+use app\modules\bookingcar\models\Category;
 
 /**
- * BookingSearch represents the model behind the search form of `app\modules\bookingcar\models\Booking`.
+ * CategorySearch represents the model behind the search form of `app\modules\bookingcar\models\Category`.
  */
-class BookingSearch extends Booking
+class CategorySearch extends Category
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class BookingSearch extends Booking
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['ref', 'date_start', 'time_start', 'date_end', 'time_end', 'province_id', 'district_id', 'car_id', 'data_json'], 'safe'],
+            [['id', 'status'], 'integer'],
+            [['ref', 'group_name', 'type_name', 'title', 'description', 'data_json'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class BookingSearch extends Booking
      */
     public function search($params)
     {
-        $query = Booking::find();
+        $query = Category::find();
 
         // add conditions that should always apply here
 
@@ -59,16 +59,14 @@ class BookingSearch extends Booking
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'status' => $this->status,
         ]);
 
         $query->andFilterWhere(['like', 'ref', $this->ref])
-            ->andFilterWhere(['like', 'date_start', $this->date_start])
-            ->andFilterWhere(['like', 'time_start', $this->time_start])
-            ->andFilterWhere(['like', 'date_end', $this->date_end])
-            ->andFilterWhere(['like', 'time_end', $this->time_end])
-            ->andFilterWhere(['like', 'province_id', $this->province_id])
-            ->andFilterWhere(['like', 'district_id', $this->district_id])
-            ->andFilterWhere(['like', 'car_id', $this->car_id])
+            ->andFilterWhere(['like', 'group_name', $this->group_name])
+            ->andFilterWhere(['like', 'type_name', $this->type_name])
+            ->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'data_json', $this->data_json]);
 
         return $dataProvider;
