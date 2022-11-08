@@ -2,19 +2,16 @@
 
 namespace app\modules\bookingcar\controllers;
 
-use Yii;
 use app\modules\bookingcar\models\Category;
 use app\modules\bookingcar\models\CategorySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\UploadedFile;
-use mdm\upload\FileModel;
 
 /**
- * CarController implements the CRUD actions for Category model.
+ * BookingStatusController implements the CRUD actions for Category model.
  */
-class CarController extends Controller
+class BookingStatusController extends Controller
 {
     /**
      * @inheritDoc
@@ -43,7 +40,8 @@ class CarController extends Controller
     {
         $searchModel = new CategorySearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
-        $dataProvider->query->where(['type_name' => 'car']);
+        $dataProvider->query->where(['type_name' => 'booking_status']);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -70,19 +68,11 @@ class CarController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Category([
-            'ref' => substr(Yii::$app->getSecurity()->generateRandomString(),10)
-        ]);
-        if ($this->request->isPost) {
-            // if ($model->load($this->request->post()) && $model->save()) {
-                if($model->load(Yii::$app->request->post()) && $model->validate()){
-                    $file = UploadedFile::getInstance($model, 'file');
-                    if($fileModel = FileModel::saveAs($file,['uploadPath' => Yii::getAlias('@webroot').'/uploads'])){
-                        $model->id = $fileModel->id;
-                        $model->save(false);
-                        return $this->redirect(['view', 'id' => $model->id]);
-                    }
+        $model = new Category();
 
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
             $model->loadDefaultValues();
@@ -104,16 +94,9 @@ class CarController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->validate()) {
-
-            $file = UploadedFile::getInstance($model, 'file');
-            if($fileModel = FileModel::saveAs($file,['uploadPath' => Yii::getAlias('@webroot').'/uploads'])){
-            $model->id = $fileModel->id;
-            $model->save(false);
-
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
-    }
 
         return $this->render('update', [
             'model' => $model,

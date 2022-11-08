@@ -12,7 +12,7 @@ use kartik\widgets\DateTimePicker;
 
     <?php $form = ActiveForm::begin([
     // 'layout' => 'horizontal',
-    'action' => ['/bookingcar/booking/create'],
+    'action' => ['index'],
     'method' => 'get',
     'options' => [
         'data-pjax' => 1,
@@ -20,8 +20,8 @@ use kartik\widgets\DateTimePicker;
 ]);?>
 
     <div class="row">
-        <div class="col-6">
-            <?=$form->field($model, 'date_start')->widget(DateTimePicker::classname(), [
+        <div class="col-4">
+            <?=$form->field($model, 'start')->widget(DateTimePicker::classname(), [
                 'options' => ['placeholder' => 'เลือกวันเวลาที่ออกเดินทาง ...'],
                 'language' => 'th',
                 'pluginOptions' => [
@@ -31,8 +31,8 @@ use kartik\widgets\DateTimePicker;
             ?>
             
         </div>
-        <div class="col-6">
-        <?=$form->field($model, 'date_end')->widget(DateTimePicker::classname(), [
+        <div class="col-4">
+        <?=$form->field($model, 'end')->widget(DateTimePicker::classname(), [
                 'options' => ['placeholder' => 'เลือกวันเวลาที่วันกลับ ...'],
                 'language' => 'th',
                 'pluginOptions' => [
@@ -41,8 +41,10 @@ use kartik\widgets\DateTimePicker;
             ])->label('วันกลับ');
             ?>
         </div>
+        <div class="col-4 mt-4 pt-2">
+            <?=Html::submitButton('<i class="fa-solid fa-magnifying-glass"></i> ค้นหา', ['class' => 'btn btn-primary'])?>
+        </div>
     </div>
-    <?=Html::submitButton('จองรถ', ['class' => 'btn btn-primary'])?>
     <?php ActiveForm::end();?>
 
 </div>

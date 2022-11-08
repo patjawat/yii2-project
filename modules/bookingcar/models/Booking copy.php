@@ -9,8 +9,10 @@ use yii\helpers\Json;
  *
  * @property int $id
  * @property string|null $ref
- * @property string|null $start วันเดินทาง
- * @property string|null $end วันออกเดินทาง
+ * @property string|null $date_start วันเดินทาง
+ * @property string|null $time_start วันเดินทาง
+ * @property string|null $date_end วันออกเดินทาง
+ * @property string|null $time_end วันออกเดินทาง
  * @property string|null $province_id จังหวัด
  * @property string|null $district_id อำเภอ
  * @property string|null $car_id รถ
@@ -32,11 +34,10 @@ class Booking extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title','start','end','car_id'], 'required'],
-            [['car_id','title'], 'string'],
+            [['car_id'], 'string'],
+            [['data_json'], 'safe'],
             [['ref'], 'string', 'max' => 200],
-            [['start', 'end', 'province_id', 'district_id'], 'string', 'max' => 255],
-            [['data_json','status_id'], 'safe'],
+            [['date_start', 'time_start', 'date_end', 'time_end', 'province_id', 'district_id'], 'string', 'max' => 255],
         ];
     }
 
@@ -48,8 +49,10 @@ class Booking extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'ref' => 'Ref',
-            'start' => 'วันเดินทาง',
-            'end' => 'วันออกเดินทาง',
+            'date_start' => 'วันเดินทาง',
+            'time_start' => 'วันเดินทาง',
+            'date_end' => 'วันออกเดินทาง',
+            'time_end' => 'วันออกเดินทาง',
             'province_id' => 'จังหวัด',
             'district_id' => 'อำเภอ',
             'car_id' => 'รถ',
@@ -57,13 +60,12 @@ class Booking extends \yii\db\ActiveRecord
         ];
     }
 
-
-    // public function init() {
-    //     if ($this->isNewRecord) {
-    //         $this->ref = substr(Yii::$app->getSecurity()->generateRandomString(), 10);
-    //     }
-    //     parent::init();
-    // }
+    public function init() {
+        if ($this->isNewRecord) {
+            $this->ref = substr(Yii::$app->getSecurity()->generateRandomString(), 10);
+        }
+        parent::init();
+    }
 
     public function afterFind() {
         $this->data_json = Json::decode($this->data_json, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
@@ -79,14 +81,4 @@ class Booking extends \yii\db\ActiveRecord
             return false;
         }
     }
-
-    public function getCar() {
-        return $this->hasOne(Category::className(), ['id' => 'car_id']);
-    }
-
-    public function getStatus() {
-        return $this->hasOne(Category::className(), ['keycode' => 'status_id']);
-    }
-
-
 }

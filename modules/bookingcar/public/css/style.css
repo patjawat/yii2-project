@@ -10,6 +10,9 @@ html, body {
     /* font-family: 'THSarabunNew',Tahoma; */
 }
 
+h1,h2,h3,h4,h5,h6 {
+    font-family: 'Prompt', sans-serif !important;
+}
 .bd-masthead {
     --bd-pink-rgb: 214,51,132;
     padding: 3rem 0;

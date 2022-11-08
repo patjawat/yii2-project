@@ -19,6 +19,10 @@ $config = [
         'thaiFormatter'=>[
         'class'=>'dixonsatit\thaiYearFormatter\ThaiYearFormatter',
     ],
+    'formatter' => [
+        'class' => 'yii\i18n\Formatter',
+        'nullDisplay' => '-',
+    ],
     'i18n' => [
         'translations' => [
             '*' => [
@@ -51,7 +55,8 @@ $config = [
         ],
         'authManager' => [
             // 'class' => 'dektrium\rbac\components\DbManager',
-            'class' => 'yii\rbac\PhpManager'
+            'class' => 'yii\rbac\DbManager',
+            // 'class' => 'yii\rbac\PhpManager'
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -92,7 +97,6 @@ $config = [
             'soc/events/upload-ajax',
             'gii/*',
             'line/*'
-            // 'api/*'
         ],
     ],
     'controllerMap' => [

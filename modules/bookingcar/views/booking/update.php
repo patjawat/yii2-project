@@ -5,14 +5,14 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var app\modules\bookingcar\models\Booking $model */
 
-$this->title = 'Update Booking: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Bookings', 'url' => ['index']];
+$this->title = 'แก้ไขการจอง';
+$this->params['breadcrumbs'][] = ['label' => 'การจอง', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'แก้ไข';
 ?>
 <div class="booking-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h3><?= Html::encode($this->title) ?></h3>
 
     <?= $this->render('_form', [
         'model' => $model,

@@ -1,6 +1,7 @@
 <?php
 
 use app\modules\bookingcar\models\Category;
+use app\modules\bookingcar\models\Booking;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -40,7 +41,14 @@ $this->params['breadcrumbs'][] = $this->title;
             $i = 1;
             $delay = 3;
             ?>
-        <?php foreach ($dataProvider->getModels() as $model):?>
+        <?php foreach ($dataProviderCar->getModels() as $model):?>
+            <?php
+            $start = explode(' ',$searchModel->start);
+            $bookingCount = Booking::find()->where(['like', 'start', $start[0] . '%', false])
+            ->andWhere(['car_id' => $model->id])
+            ->count();
+            ?>
+
         <tr class="align-middle" >
             <td><?=$i++;?></td>
             <td>
@@ -50,12 +58,17 @@ $this->params['breadcrumbs'][] = $this->title;
                
             </td>
             <td>
-            <?=$model->data_json['band'];?>
+            <?php // $model->data_json['band'];?>
+           
             </td>
             <td>
+            <?php if($bookingCount > 0): ?>
+                <button type="button" class="btn btn-warning" disabled><i class="fa-solid fa-minus"></i> ไม่ว่าง</button>
 
-            <?= Html::a('<i class="fa-regular fa-pen-to-square"></i> เลือก', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-              
+                <?php else: ?>
+                    <?= Html::a('<i class="fa-solid fa-check"></i> เลือก', ['/bookingcar/booking/create', 'car_id' => $model->id,'start' => $searchModel->start,'end' => $searchModel->end], ['class' => 'btn btn-primary']) ?>
+
+                    <?php endif; ?>
             </td>
         </tr>
         <?php endforeach;?>

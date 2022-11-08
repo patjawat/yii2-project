@@ -19,6 +19,7 @@ class User extends ActiveRecord implements IdentityInterface {
     public $roles;
     public $q;
     public $old_password;
+    public $file;
 
     public function scenarios() {
         $scenarios = parent::scenarios();

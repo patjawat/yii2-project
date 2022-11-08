@@ -6,16 +6,16 @@ AppAsset::register($this);
 $AssetBundle = AppAsset::register($this);
 ?>
 
-
-<br>
 <div class="container">
+    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
     <div class="row">
 
         <div class="col-6">
-            <?php echo $this->render('_search', ['model' => $searchModel]); ?>
             <?php echo $this->render('car_items', [
-            'searchModel' => $searchModelCar,
-            'dataProvider' => $dataProviderCar,
+            'searchModelCar' => $searchModelCar,
+            'dataProviderCar' => $dataProviderCar,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]); ?>
 
 
@@ -41,6 +41,17 @@ $AssetBundle = AppAsset::register($this);
                     console.log(event);
                 }
             "),
+            'eventClick' => "function(calEvent, jsEvent, view) {
+                $(this).css('border-color', 'red');
+                $.get('index.php?r=event/update',{'id':calEvent.id}, function(data){
+                    $('.modal').modal('show')
+                    .find('#modelContent')
+                    .html(data);
+                })
+                $('#calendar').fullCalendar('removeEvents', function (calEvent) {
+                    return true;
+                });
+           }",
 
     ],
     'events' => Url::to(['/bookingcar/default/events', 'id' => '1111']),
@@ -52,10 +63,6 @@ $AssetBundle = AppAsset::register($this);
         </div>
     </div>
 </div>
-
-
-
-
 
 
 <div class="row">

@@ -2,6 +2,8 @@
 
 namespace app\modules\bookingcar\controllers;
 
+use Yii;
+use app\models\Amphures;
 use app\modules\bookingcar\models\Booking;
 use app\modules\bookingcar\models\BookingSearch;
 use yii\web\Controller;
@@ -67,7 +69,16 @@ class BookingController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Booking();
+       $car_id = $this->request->get('car_id');
+       $start = $this->request->get('start');
+       $end = $this->request->get('end');
+        $model = new Booking([
+            'ref' =>  substr(Yii::$app->getSecurity()->generateRandomString(), 10),
+            'car_id' => $car_id,
+            'status_id' => 'await',
+            'start' => $start,
+            'end' => $end
+        ]);
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -79,6 +90,7 @@ class BookingController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'car_id' => $car_id
         ]);
     }
 
@@ -93,7 +105,7 @@ class BookingController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save(false)) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -130,5 +142,23 @@ class BookingController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionDistrictList()
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+                $province_id = $parents[0];
+                foreach (Amphures::find()->where(['province_id' => $province_id])->orderBy(['name_th' => SORT_ASC])->all() as $district) {
+                    $out[] = ['id' => $district->id, 'name' => $district->name_th];
+                }
+
+                return ['output' => $out, 'selected' => ''];
+            }
+        }
+        return ['output' => '', 'selected' => ''];
     }
 }

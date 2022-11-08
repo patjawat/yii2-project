@@ -11,6 +11,8 @@ use yii\filters\VerbFilter;
 use yii\web\Response;
 use dektrium\user\models\RegistrationForm;
 use dektrium\user\models\User as BaseUser;
+use yii\web\UploadedFile;
+use mdm\upload\FileModel;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -75,6 +77,14 @@ class UserController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->setPassword($model->password);
             $model->generateAuthKey();
+
+             // Upload image
+             $file = UploadedFile::getInstance($model, 'file');
+             if($fileModel = FileModel::saveAs($file,['uploadPath' => Yii::getAlias('@webroot').'/uploads/users'])){
+             $model->id = $fileModel->id;
+             // End Upload File
+             }
+             
             if($model->save()){
               $model->assignment();
             }
@@ -95,9 +105,18 @@ class UserController extends Controller
         $oldPass = $model->password_hash;
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            
           if($oldPass!==$model->password){
             $model->setPassword($model->password);
           }
+
+          // Upload image
+            $file = UploadedFile::getInstance($model, 'file');
+            if($fileModel = FileModel::saveAs($file,['uploadPath' => Yii::getAlias('@webroot').'/uploads/users'])){
+            $model->id = $fileModel->id;
+            // End Upload File
+            }
+
           if($model->save()){
             $model->assignment();
           }

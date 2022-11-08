@@ -18,7 +18,7 @@ class BookingSearch extends Booking
     {
         return [
             [['id'], 'integer'],
-            [['ref', 'date_start', 'time_start', 'date_end', 'time_end', 'province_id', 'district_id', 'car_id', 'data_json'], 'safe'],
+            [['ref', 'start', 'end','province_id', 'district_id', 'car_id', 'data_json','title'], 'safe'],
         ];
     }
 
@@ -62,10 +62,9 @@ class BookingSearch extends Booking
         ]);
 
         $query->andFilterWhere(['like', 'ref', $this->ref])
-            ->andFilterWhere(['like', 'date_start', $this->date_start])
-            ->andFilterWhere(['like', 'time_start', $this->time_start])
-            ->andFilterWhere(['like', 'date_end', $this->date_end])
-            ->andFilterWhere(['like', 'time_end', $this->time_end])
+            ->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'start', $this->start])
+            ->andFilterWhere(['like', 'end', $this->end])
             ->andFilterWhere(['like', 'province_id', $this->province_id])
             ->andFilterWhere(['like', 'district_id', $this->district_id])
             ->andFilterWhere(['like', 'car_id', $this->car_id])

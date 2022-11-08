@@ -9,6 +9,7 @@ use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
+use kartik\bs5dropdown\Dropdown;
 AppAsset::register($this);
 $myAssetBundle = AppAsset::register($this);
 
@@ -42,19 +43,43 @@ echo Nav::widget([
     'options' => ['class' => 'navbar-nav ms-auto flex-nowrap'],
     'items' => [
         ['label' => '<i class="fa-solid fa-house-user"></i> หน้าหลัก', 'url' => ['/site/index']],
-        ['label' => '<i class="fa-solid fa-user-tag"></i> หนักงานคนขับ', 'url' => ['/site/about']],
+        ['label' => '<i class="fa-solid fa-user-tag"></i> หนักงานคนขับ', 'url' => ['/bookingcar/default/driver-list']],
         ['label' => '<i class="fa-solid fa-info"></i> เกี่ยวกับระบบ', 'url' => ['/site/contact']],
+        ['label' => '<i class="fa-solid fa-list-ul"></i> รายการขอใช้ยานพหนะ', 'url' => ['/bookingcar/booking']],
+        [
+            'label' => 'ตั้งค่า', 
+            'items' => [
+                ['label' => '<i class="fa-solid fa-user-shield"></i> ผู้ใช้งานระบบ', 'url' => '/usermanager'],
+                ['label' => '<i class="fa-solid fa-car"></i> รถ', 'url' => '/bookingcar/car'],
+                [
+                     'label' => 'Section 3', 
+                     'items' => [
+                         ['label' => 'Section 3.1', 'url' => '/'],
+                         ['label' => 'Section 3.2', 'url' => '#'],
+                         [
+                             'label' => 'Section 3.3', 
+                             'items' => [
+                                 ['label' => 'Section 3.3.1', 'url' => '/'],
+                                 ['label' => 'Section 3.3.2', 'url' => '#'],
+                             ],
+                         ],
+                     ],
+                 ],
+            ],
+        ],
         Yii::$app->user->isGuest
         ? ['label' => '<i class="fa-solid fa-user-lock"></i> เข้าสู่ระบบ', 'url' => ['/site/login']]
         : '<li class="nav-item">'
         . Html::beginForm(['/site/logout'])
         . Html::submitButton(
             '<i class="fa-solid fa-power-off"></i> (' . Yii::$app->user->identity->username . ')',
-            ['class' => 'btn btn-danger btn-sm logout']
+            ['class' => 'btn btn-outline-danger btn-sm logout']
         )
         . Html::endForm()
         . '</li>',
     ],
+    'dropdownClass' => Dropdown::classname(), // use the custom dropdown
+    // 'options' => ['class' => 'navbar-nav mr-auto'],
 ]);
 NavBar::end();
 ?>
