@@ -45,6 +45,9 @@ class BookingController extends Controller
     {
         $searchModel = new BookingSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
+        if(!Yii::$app->user->can('driver')){
+        $dataProvider->query->where(['created_by' => Yii::$app->user->id]);
+        }
 
         return $this->render('index', [
             'searchModel' => $searchModel,

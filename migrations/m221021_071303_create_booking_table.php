@@ -23,7 +23,11 @@ class m221021_071303_create_booking_table extends Migration
             'car_id' => $this->json()->comment('รถ'),
             'data_json' => $this->json()->comment('json'),
             'status_id' => $this->string(200)->comment('สถานะ'),
-            'driver_id' => $this->string(50)->comment('คนขับ')
+            'driver_id' => $this->string(50)->comment('คนขับ'),
+            'updated_at' => $this->timestamp()->defaultValue(null)->append('ON UPDATE CURRENT_TIMESTAMP'),
+            'created_at' => $this->timestamp(),   
+            'created_by' => $this->integer()->comment('ผู้สร้าง'),
+            'updated_by' => $this->integer()->comment('ผู้แก้ไข')
         ]);
     }
 

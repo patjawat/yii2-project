@@ -37,11 +37,22 @@ class User extends ActiveRecord implements IdentityInterface {
     /**
      * @inheritdoc
      */
-    public function behaviors() {
+
+    public function behaviors()
+    {
         return [
+            [
+                'class' => 'mdm\upload\UploadBehavior',
+                'attribute' => 'file', // required, use to receive input file
+                'savedAttribute' => 'id', // optional, use to link model with saved file.
+                'uploadPath' => Yii::getAlias('@webroot').'/uploads', // saved directory. default to '@runtime/upload'
+                'autoSave' => true, // when true then uploaded file will be save before ActiveRecord::save()
+                'autoDelete' => true, // when true then uploaded file will deleted before ActiveRecord::delete()
+            ],
             TimestampBehavior::className(),
         ];
     }
+
 
     /**
      * @inheritdoc
@@ -241,8 +252,13 @@ class User extends ActiveRecord implements IdentityInterface {
         $auth = Yii::$app->authManager;
         $roleUser = $auth->getRolesByUser($this->id);
         $auth->revokeAll($this->id);
-        foreach ($this->roles as $key => $roleName) {
-            $auth->assign($auth->getRole($roleName), $this->id);
+        if($this->roles){
+
+            foreach ($this->roles as $key => $roleName) {
+                $auth->assign($auth->getRole($roleName), $this->id);
+            }
+        }else{
+            $auth->assign($auth->getRole('user'), $this->id);
         }
     }
 

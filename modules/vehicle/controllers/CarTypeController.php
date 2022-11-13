@@ -40,7 +40,7 @@ class CarTypeController extends Controller
     {
         $searchModel = new CategorySearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
-
+        $dataProvider->query->where(['type_name' => 'car_type']);
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ]); ?>
 
 <?php $authAuthChoice = yii\authclient\widgets\AuthChoice::begin([
-                'baseAuthUrl' => ['site/auth']
+                'baseAuthUrl' => ['site/authen']
             ]); ?>
 
             <?php foreach ($authAuthChoice->getClients() as $client): ?>

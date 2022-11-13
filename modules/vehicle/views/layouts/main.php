@@ -45,14 +45,17 @@ echo Nav::widget([
     'items' => [
         ['label' => '<i class="fa-solid fa-user-tag"></i> หนักงานคนขับ', 'url' => ['/vehicle/default/driver-list']],
         ['label' => '<i class="fa-solid fa-info"></i> เกี่ยวกับระบบ', 'url' => ['/vehicle/about']],
-        ['label' => '<i class="fa-solid fa-user-tag"></i> ภาระกิจ'.(BookingHelper::Myjob() > 0 ? ' <span class="badge bg-danger">'.BookingHelper::Myjob().'</span>' : null), 'url' => ['/vehicle/myjob']],
-        ['label' => '<i class="fa-solid fa-list-ul"></i> รายการขอใช้ยานพหนะ', 'url' => ['/vehicle/booking']],
+        ['label' => '<i class="fa-solid fa-book-open-reader"></i> รายการจอง'.(BookingHelper::MyBooking() > 0 ? ' <span class="badge bg-danger">'.BookingHelper::MyBooking().'</span>' : null), 'url' => ['/vehicle/booking']],
+        Yii::$app->user->can('driver') ? ['label' => '<i class="fa-solid fa-user-tag"></i> ภาระกิจ'.(BookingHelper::Myjob() > 0 ? ' <span class="badge bg-danger">'.BookingHelper::Myjob().'</span>' : null), 'url' => ['/vehicle/myjob']] : '',
+        Yii::$app->user->can('driver') ? ['label' => '<i class="fa-solid fa-list-ul"></i> รายการขอใช้ยานพหนะ', 'url' => ['/vehicle/booking']] : '',
+        ['label' => '<i class="fa-solid fa-user-check"></i> โปรไฟล์', 'url' => '/me'],
         [
             'label' => 'ตั้งค่า', 
             'items' => [
                 ['label' => '<i class="fa-solid fa-user-shield"></i> ผู้ใช้งานระบบ', 'url' => '/usermanager'],
                 ['label' => '<i class="fa-solid fa-car"></i> รถ', 'url' => '/vehicle/car'],
                 ['label' => '<i class="fa-solid fa-car"></i> ประเภทรถ', 'url' => '/vehicle/car-type'],
+                
                 [
                      'label' => 'Section 3', 
                      'items' => [
@@ -70,35 +73,19 @@ echo Nav::widget([
             ],
         ],
 
-        [
-            'label' => 'โปรไฟล์', 
-            'items' => [
-                ['label' => '<i class="fa-solid fa-user-shield"></i> ผู้ใช้งานระบบ', 'url' => '/usermanager'],
-                ['label' => '<i class="fa-solid fa-car"></i> รถ', 'url' => '/vehicle/car'],
-                ['label' => '<i class="fa-solid fa-car"></i> ประเภทรถ', 'url' => '/vehicle/car-type'],
-                [
-                     'label' => 'Section 3', 
-                     'items' => [
-                         ['label' => 'Section 3.1', 'url' => '/'],
-                         ['label' => 'Section 3.2', 'url' => '#'],
-                         [
-                             'label' => 'Section 3.3', 
-                             'items' => [
-                                 ['label' => 'Section 3.3.1', 'url' => '/'],
-                                 ['label' => 'Section 3.3.2', 'url' => '#'],
-                             ],
-                         ],
-                     ],
-                 ],
-            ],
-        ],
+       
         Yii::$app->user->isGuest
-        ? ['label' => '<i class="fa-solid fa-user-lock"></i> เข้าสู่ระบบ', 'url' => ['/site/login']]
+        ? ['label' => '<i class="fa-solid fa-user-lock"></i> เข้าสู่ระบบ', 'url' => ['/auth/login']]
         : '<li class="nav-item">'
-        . Html::beginForm(['/site/logout'])
+        . Html::beginForm(['/auth/logout'])
+        // . Html::submitButton(
+        //     '<i class="fa-solid fa-power-off"></i> (' . Yii::$app->user->identity->username . ')',
+        //     ['class' => 'btn btn-outline-danger btn-sm logout']
+        // )
+        // . Html::endForm()
         . Html::submitButton(
-            '<i class="fa-solid fa-power-off"></i> (' . Yii::$app->user->identity->username . ')',
-            ['class' => 'btn btn-outline-danger btn-sm logout']
+            '<i class="fa-solid fa-power-off"></i> ออกจากระบบ ',
+            ['class' => 'btn btn-danger btn-sm logout']
         )
         . Html::endForm()
         . '</li>',

@@ -1,36 +1,54 @@
 <?php
-
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
-
+use kartik\select2\Select2;
+use kartik\widgets\DateTimePicker;
+use yii\bootstrap5\ActiveForm;
+use yii\helpers\ArrayHelper;
+use app\modules\vehicle\models\Category;
 /** @var yii\web\View $this */
 /** @var app\modules\vehicle\models\Category $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
+<style>
+    .box-img{
+        position: relative;
+        /* width:500px; */
+    }
+    .box-img > img{
+        width:500px;
+    }
+</style>
 <div class="category-form">
+<div class="row">
+    <div class="col-6">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'ref')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'ref')->hiddenInput(['maxlength' => true])->label(false) ?>
 
-    <?= $form->field($model, 'code')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'group_name')->hiddenInput(['value' => 'car'])->label(false) ?>
 
-    <?= $form->field($model, 'group_name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'type_name')->hiddenInput(['value' => 'car_type'])->label(false) ?>
+    <?= $form->field($model, 'title')->textInput(['rows' => 6])->label('ยี่ห้อ') ?>
 
-    <?= $form->field($model, 'type_name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'title')->textarea(['rows' => 6]) ?>
+<div style="margin-top:10px">
+    <?= $form->field($model,'file')->fileInput(); ?>
+</div>
 
-    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'status')->textInput() ?>
-
-    <?= $form->field($model, 'data_json')->textarea(['rows' => 6]) ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+    <div class="form-group mt-3">
+        <?= Html::submitButton('<i class="fa-solid fa-check"></i> บันทึก', ['class' => 'btn btn-success']) ?>
     </div>
+
+    </div>
+    <div class="col-6">
+        <div class="box-img" data-aos="fade-left">
+            <?= Html::img(['/file','id'=>$model->id]) ?>
+        </div>
+    </div>
+</div>
+
 
     <?php ActiveForm::end(); ?>
 

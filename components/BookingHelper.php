@@ -19,6 +19,14 @@ class BookingHelper extends Component{
 
     }
     
+    public static function MyBooking(){
+        $sql = "SELECT COUNT(id) as total FROM `booking` WHERE created_by = :id";
+        $model = Yii::$app->db->createCommand($sql)
+        ->bindValue(':id',Yii::$app->user->id)
+        ->queryScalar();
+        return $model;
+
+}
 
 }
 

@@ -4,6 +4,12 @@ namespace app\modules\vehicle\models;
 
 use Yii;
 use yii\helpers\Json;
+use yii\helpers\Html;
+use yii\db\Expression;
+use \yii\db\ActiveRecord;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
+use yii\behaviors\AttributeBehavior;
 /**
  * This is the model class for table "booking".
  *
@@ -35,8 +41,9 @@ class Booking extends \yii\db\ActiveRecord
             [['title','start','end','car_id'], 'required'],
             [['car_id','title'], 'string'],
             [['ref'], 'string', 'max' => 200],
+            [['created_by', 'updated_by'], 'integer'],
             [['start', 'end', 'province_id', 'district_id'], 'string', 'max' => 255],
-            [['data_json','status_id','driver_id'], 'safe'],
+            [['data_json','status_id','driver_id','updated_at', 'created_at'], 'safe'],
         ];
     }
 
@@ -64,6 +71,27 @@ class Booking extends \yii\db\ActiveRecord
     //     }
     //     parent::init();
     // }
+
+
+    public function behaviors() {
+        return [
+            [
+                'class' => AttributeBehavior::className(),
+                'attributes' => [ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at']],
+                'value' => new Expression('NOW()'),
+            ],
+            [
+                'class' => AttributeBehavior::className(),
+                'attributes' => [ActiveRecord::EVENT_BEFORE_UPDATE => 'updated_at'],
+                'value' => new Expression('NOW()'),
+            ],
+            [
+                'class' => BlameableBehavior::className(),
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => 'updated_by',
+            ]
+        ];
+     }
 
     public function afterFind() {
         $this->data_json = Json::decode($this->data_json, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);

@@ -20,7 +20,7 @@ class m221111_060323_create_auth_social_table extends Migration
             'source_id' => $this->string()->notNull(),
         ]);
 
-        $this->addForeignKey('fk-auth-user_id-user-id', 'auth', 'user_id', 'user', 'id', 'CASCADE', 'CASCADE');
+      //  $this->addForeignKey('fk-auth-user_id-user-id', 'auth', 'user_id', 'user', 'id', 'CASCADE', 'CASCADE');
         
     }
 

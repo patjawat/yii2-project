@@ -63,7 +63,7 @@ $config = [
         ],
         'user' => [
             'identityClass' => 'mdm\admin\models\User',
-            'loginUrl' => ['site/login'],
+            'loginUrl' => ['auth/login'],
             'enableAutoLogin' => false,
             'enableSession' => true,
             // ตั้งเวลา timeout 1 ชั่วโมง 60 วินาที * 60 นาที
@@ -105,8 +105,10 @@ $config = [
     'as access' => [
         'class' => 'mdm\admin\components\AccessControl',
         'allowActions' => [
-            '*',
+            // '*',
             // 'site/*',
+            'auth/*',
+            'site/logout',
             'usermanager/*',
             'uploads/upload-ajax',
             'datecontrol/parse/convert',
@@ -117,6 +119,8 @@ $config = [
     ],
     'controllerMap' => [
         'file' => 'mdm\\upload\\FileController', // use to show or download file
+        'me' => 'app\modules\usermanager\controllers\MeController',
+        'auth' => 'app\modules\usermanager\controllers\AuthController'
     ],
 ];
 

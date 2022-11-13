@@ -52,12 +52,12 @@ class UserController extends Controller
     ]);
         if (Yii::$app->request->isAjax) {
         Yii::$app->response->format = Response::FORMAT_JSON;
-            return $this->renderAjax('index', [
+            return $this->renderAjax('@app/modules/usermanager/views/user/index', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
             ]);
         }else {
-            return $this->render('index', [
+            return $this->render('@app/modules/usermanager/views/user/index', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
             ]);
@@ -70,6 +70,10 @@ class UserController extends Controller
             'model' => $this->findModel($id),
         ]);
     }
+
+
+
+
     public function actionCreate()
     {
         $model = new User();
@@ -78,19 +82,12 @@ class UserController extends Controller
             $model->setPassword($model->password);
             $model->generateAuthKey();
 
-             // Upload image
-             $file = UploadedFile::getInstance($model, 'file');
-             if($fileModel = FileModel::saveAs($file,['uploadPath' => Yii::getAlias('@webroot').'/uploads/users'])){
-             $model->id = $fileModel->id;
-             // End Upload File
-             }
-             
             if($model->save()){
               $model->assignment();
             }
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            return $this->render('create', [
+            return $this->render('@app/modules/usermanager/views/user/create', [
                 'model' => $model,
             ]);
         }
@@ -109,13 +106,6 @@ class UserController extends Controller
           if($oldPass!==$model->password){
             $model->setPassword($model->password);
           }
-
-          // Upload image
-            $file = UploadedFile::getInstance($model, 'file');
-            if($fileModel = FileModel::saveAs($file,['uploadPath' => Yii::getAlias('@webroot').'/uploads/users'])){
-            $model->id = $fileModel->id;
-            // End Upload File
-            }
 
           if($model->save()){
             $model->assignment();
