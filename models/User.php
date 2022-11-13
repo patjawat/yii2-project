@@ -48,7 +48,7 @@ class User extends ActiveRecord implements IdentityInterface {
     public function rules() {
         return [
             
-            [['username', 'phone'], 'required'],
+            [['username'], 'required'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
             ['username', 'filter', 'filter' => 'trim'],
@@ -63,7 +63,7 @@ class User extends ActiveRecord implements IdentityInterface {
             ['doctor_id', 'unique'],
             ['doctor_id', 'string', 'max' => 5],
             [['doctor_id'], 'trim'],
-            ['confirm_password', 'required'],
+            // ['confirm_password', 'required'],
             ['confirm_password', 'string', 'min' => 6],
             ['confirm_password', 'compare', 'compareAttribute' => 'password'],
             ['phone', 'string', 'min' => 10, 'max' => 10],

@@ -25,6 +25,7 @@ class AppAsset extends AssetBundle
         'jquery.steps-1.1.0/jquery.steps.min.js'
     ];
     public $js = [
+        'js/site.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

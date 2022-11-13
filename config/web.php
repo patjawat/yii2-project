@@ -7,7 +7,7 @@ $modules = require __DIR__ . '/add_modules.php';
 
 $config = [
     'id' => 'basic',
-    'defaultRoute' =>'bookingcar',
+    'defaultRoute' =>'vehicle',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
@@ -16,6 +16,22 @@ $config = [
     ],
     'modules' => $modules,
     'components' => [
+        'authClientCollection' => [
+            'class' => 'yii\authclient\Collection',
+            'clients' => [
+                'google' => [
+                    'class' => 'yii\authclient\clients\Google',
+                    'clientId'     => '261870609037-achvftqh65ralnf8aiulrv04c019sd3j.apps.googleusercontent.com',
+                    'clientSecret' => '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',
+                ],
+                'facebook' => [
+                    'class' => 'yii\authclient\clients\Facebook',
+                    'clientId' => '411343985901927',
+                    'clientSecret' => '3166561a7c357b4c20b19279bc832c9f',
+                ],
+                // etc.
+            ],
+        ],
         'thaiFormatter'=>[
         'class'=>'dixonsatit\thaiYearFormatter\ThaiYearFormatter',
     ],
