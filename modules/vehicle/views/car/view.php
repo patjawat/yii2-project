@@ -60,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 <div class="col-6">
         <div class="box-img" data-aos="fade-left">
-            <?= Html::img(['/file','id'=>$model->id]) ?>
+            <?= Html::img(['/file','id'=>$model->photo]) ?>
         </div>
     </div>
     </div>

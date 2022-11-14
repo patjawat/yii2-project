@@ -87,8 +87,8 @@ use yii\bootstrap4\ActiveForm;
                     <?php //  $form->field($model, 'doctor_id')->textInput(['maxlength' => true]) ?>
                     <?php //  $form->field($model, 'license_number')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-                    <div class="box-img text-center img-thumbnail">
-                        <?= Html::img(['/file','id'=>$model->id]) ?>
+                    <div class="box-img text-center">
+                    <?= Html::img(['/file','id'=>$model->photo],['class' => 'rounded','style' => 'width:200px']) ?>
                         <?= $form->field($model,'file')->fileInput(); ?>
                     </div>
 

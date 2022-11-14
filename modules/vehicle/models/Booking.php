@@ -10,6 +10,7 @@ use \yii\db\ActiveRecord;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\behaviors\AttributeBehavior;
+use app\modules\usermanager\models\User;
 /**
  * This is the model class for table "booking".
  *
@@ -111,7 +112,7 @@ class Booking extends \yii\db\ActiveRecord
 
     public function driversMap() 
     {
-        $sql = "SELECT u.id,u.fullname FROM auth_assignment a INNER JOIN user u ON u.id = a.user_id;";
+        $sql = "SELECT u.id,u.fullname FROM auth_assignment a INNER JOIN user u ON u.id = a.user_id WHERE item_name = 'driver'";
         $driver = Yii::$app->db->createCommand($sql)->queryAll();
         return yii\helpers\ArrayHelper::map($driver, 'id', 'fullname');
     }
@@ -140,9 +141,18 @@ class Booking extends \yii\db\ActiveRecord
         return $driver;
     }
 
+    public function CountByStatus()
+    {
+        return self::where(['status_id' => $this->status_id])->count();
+    }
+
 
     public function getCar() {
         return $this->hasOne(Category::className(), ['id' => 'car_id']);
+    }
+
+    public function getDriver() {
+        return $this->hasOne(User::className(), ['id' => 'driver_id']);
     }
 
     public function getStatus() {

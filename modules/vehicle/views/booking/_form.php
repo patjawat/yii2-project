@@ -15,7 +15,7 @@ $myAssetBundle = AppAsset::register($this);
 /** @var app\modules\bookingcar\models\Booking $model */
 /** @var yii\widgets\ActiveForm $form */
 
-$car_id = isset($car_id) ? $car_id : $model->car_id;
+$car_id = isset($car_id) ? $car_id : $model->car->photo;
 $car = Category::findOne($car_id);
 
 // $disable = $model->isNewRecord ? false : (Yii::$app->user->can('driver') ? true : false); // (Yii::$app->user->can('driver') ? true : false) || ($model->isNewRecord ? false : true);
@@ -54,7 +54,7 @@ $disable = false;
     <div class="col-8">
 
         <?=$form->field($model, 'ref')->hiddenInput(['maxlength' => true])->label(false)?>
-        
+
         <div class="alert alert-primary" role="alert">ข้อมูลการเดินทาง</div>
 
         <div class="row justify-content-between">
@@ -240,12 +240,12 @@ echo $form->field($model, 'province_id', [
             </div>
         </div>
 
-        <div class="alert alert-primary" role="alert">การจัดสรรค์</div>
 
         <?php if($model->isNewRecord):?>
-            <?=$form->field($model, 'status_id')->hiddenInput()->label(false)?>
-            <?php else:?>
-                <?php
+        <div class="alert alert-primary" role="alert">การจัดสรรค์</div>
+        <?=$form->field($model, 'status_id')->hiddenInput()->label(false)?>
+        <?php else:?>
+        <?php
 // if(Yii::$app->user->can('driver'))
 // {
 //     $datastatus = ['success','cancel'];
@@ -259,7 +259,7 @@ $datastatus = ['await','approve','success','cancel'];
                 ->all(), 
                 'code','title');
 
-echo $form->field($model, 'status_id')->inline(true)->radioList($status)->label('สถานะ');
+echo Yii::$app->user->can('driver') ? $form->field($model, 'status_id')->inline(true)->radioList($status)->label('สถานะ') : '';
 ?>
         <?php endif;?>
 
@@ -274,17 +274,11 @@ echo $form->field($model, 'status_id')->inline(true)->radioList($status)->label(
     <div class="col-4">
 
         <div class="card border-0 mt-3" style="width:100%;">
-            <div class="driver-profile">
-           
-                        <?=Html::img(['/file', 'id' => $model->driver_id], ['class' => 'card-driver', 'id' => 'driver-photo','style' => $model->isNewRecord ? 'display:none' : ''])?>
-                       
-            </div>
-            <br><br>
             <?=Html::img(['/file', 'id' => $car_id, ['class' => 'card-img-top']])?>
             <div class="card-body">
-
-        
-        <?php
+            <?php  if(Yii::$app->user->can('driver')):?>
+               
+                <?php
 echo $form->field($model, 'driver_id', [
     'inputTemplate' => '<div class="input-group">
     <div class="input-group-prepend">
@@ -303,12 +297,8 @@ echo $form->field($model, 'driver_id', [
     ],
 ])->label('พนักงานขับรถ');
 ?>
-    <?php if(!$model->isNewRecord):?>
-                <table class="table table-light">
-                    <tbody>
-                        <tr>
-                            <td>
-                            <?=$form->field($model, 'data_json[mileage_start]', [
+           
+                <?=$form->field($model, 'data_json[mileage_start]', [
 
     'inputTemplate' => '<div class="input-group">
                                 <div class="input-group-prepend">
@@ -319,13 +309,10 @@ echo $form->field($model, 'driver_id', [
 
 ])->textInput()->label('เลขไมค์ก่อนออกเดินทาง')?>
 
-                                <?php // print_r($car->data_json['car_regis']);?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
+                <?php // print_r($car->data_json['car_regis']);?>
 
-        <?=$form->field($model, 'data_json[mileage_end]', [
+
+                <?=$form->field($model, 'data_json[mileage_end]', [
 
     'inputTemplate' => '<div class="input-group">
                                 <div class="input-group-prepend">
@@ -336,12 +323,8 @@ echo $form->field($model, 'driver_id', [
 
 ])->textInput()->label('เลขไมค์หลังเสร็จสินภาระกิจ')?>
 
-                            </td>
-                        </tr>
 
-                    </tbody>
-                </table>
-<?php endif; ?>
+                <?php endif; ?>
             </div>
         </div>
 

@@ -22,6 +22,7 @@ class m221021_080757_create_category_table extends Migration
             'title' => $this->text()->comment(''),
             'description' => $this->text()->comment(''),
             'status' => $this->boolean()->comment('สถานะ'),
+            'photo' => $this->integer(),
             'data_json' => $this->json()
         ]);
 

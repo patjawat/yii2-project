@@ -39,4 +39,4 @@ switch ($model->status_id) {
 
 ?>
 
-<?=Html::a($status['icon'].' '.$model->status->title,['/'],['class' => 'btn btn-'.$status['color'].' position-relative'])?>
+<?=Html::a($status['icon'].' '.$model->status->title,['/'],['class' => 'btn btn-sm btn-'.$status['color'].' position-relative'])?>

@@ -38,7 +38,7 @@ class Category extends \yii\db\ActiveRecord
             [['status'], 'integer'],
             [['ref'], 'string', 'max' => 200],
             [['group_name', 'type_name'], 'string', 'max' => 255],
-            [['data_json','code'], 'safe'],
+            [['data_json','code','photo'], 'safe'],
         ];
     }
 
@@ -48,7 +48,7 @@ class Category extends \yii\db\ActiveRecord
             [
                 'class' => 'mdm\upload\UploadBehavior',
                 'attribute' => 'file', // required, use to receive input file
-                'savedAttribute' => 'id', // optional, use to link model with saved file.
+                'savedAttribute' => 'photo', // optional, use to link model with saved file.
                 'uploadPath' => Yii::getAlias('@webroot').'/uploads', // saved directory. default to '@runtime/upload'
                 'autoSave' => true, // when true then uploaded file will be save before ActiveRecord::save()
                 'autoDelete' => true, // when true then uploaded file will deleted before ActiveRecord::delete()
@@ -87,6 +87,27 @@ class Category extends \yii\db\ActiveRecord
         } else {
             return false;
         }
+    }
+
+
+
+    public function CheckCar($start, $end,$car_id) 
+    {
+        // $sql = "SELECT count(id) FROM booking WHERE start >= :start or end <= :end AND car_id = :car_id AND status_id in ('cancel','success')";
+        $sql = "SELECT count(c.id) FROM `category` c  
+        LEFT JOIN booking b ON b.car_id = c.id
+
+        WHERE c.type_name = 'car'
+        AND c.id = :car_id
+        AND b.start > :start
+        AND b.end > :end";
+        $query = Yii::$app->db->CreateCommand($sql)
+        ->bindValue(':start', $start)
+        ->bindValue(':end', $end)
+        ->bindValue(':car_id', $car_id)
+        ->queryScalar();
+        // ->getRawSql();
+        return $query;
     }
 
 

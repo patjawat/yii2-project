@@ -21,12 +21,12 @@ $this->params['breadcrumbs'][] = $this->title;
 }
 
 .card-driver {
-    border-radius: 50%;
+    /* border-radius: 50%;
     width: 116px;
     height: 116px;
     position: absolute;
     top: -10;
-    box-shadow: 0px 5px 50px 0px #084298, 0px 0px 0px 2px rgb(107 74 255 / 50%);
+    box-shadow: 0px 5px 50px 0px #084298, 0px 0px 0px 2px rgb(107 74 255 / 50%); */
     
 }
 </style>
@@ -34,9 +34,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-8">
         
 <p>
-        <?= Html::a('<i class="fa-regular fa-pen-to-square"></i> แก้ไข', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('<i class="fa-regular fa-pen-to-square"></i> แก้ไข', ['update', 'id' => $model->id], ['class' => 'btn btn-sm btn-primary']) ?>
         <?= Html::a('<i class="fa-solid fa-trash"></i> ลบทิ้ง', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
+            'class' => 'btn btn-sm btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
                 'method' => 'post',
@@ -109,16 +109,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                 ],
             ],
-            [
-                'columns' => [
-                    [
-                        'attribute'=>'car_id',
-                        'label' =>'พนักงานขับรถ',
-                        'format'=>'raw', 
-                        'value'=> $model->driverName(),
-                    ],
-                ],
-            ],
+
             [
                 'columns' => [
                     [
@@ -149,6 +140,26 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                 ],
             ],
+            [
+                'columns' => [
+                    [
+                        'attribute'=>'driver_id', 
+                        'label' =>'ภาพพนักงานขับรถ',
+                         'format' => ['image',['width'=>'100','height'=>'100']],
+                        'value' => isset($model->driver) ? ['/file?id='.$model->driver->photo] :''
+                    ],
+                ],
+            ],
+            [
+                'columns' => [
+                    [
+                        'attribute'=>'driver_id', 
+                        'label' =>'พนักงานขับรถ',
+                        'format'=>'raw', 
+                        'value'=> $model->driverName(),
+                    ],
+                ],
+            ],
             
         ],
     ]) ?>
@@ -157,14 +168,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-4">
 
 <div class="card border-0 mt-5" style="width:100%;">
-<div class="driver-profile">
-<?= $model->driver_id == null  ?  null : Html::img(['/file', 'id' => $model->driver_id], ['class' => 'card-driver', 'id' => 'driver-photo','style' => $model->isNewRecord ? 'display:none' : ''])?>
-                <?php // Html::img(['/file', 'id' => $model->driver_id], ['class' => 'card-driver', 'id' => 'driver-photo'])?>
-            </div>
-            <br><br>
-    <?=Html::img(['/file', 'id' => $model->car_id, ['class' => 'card-img-top']])?>
+
+<?=Html::img(['/file', 'id' => $model->car->photo, ['class' => 'card-img-top']])?>
 
 </div>
+
 
 </div>
 </div>

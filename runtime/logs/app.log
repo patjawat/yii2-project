@@ -1,0 +1,111 @@
+2022-11-14 04:27:11 [192.168.112.1][2][9c539b0c6bfa914e6f0501be0519dda0][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request: vehicle/default/events in /app/vendor/yiisoft/yii2/base/Controller.php:149
+Stack trace:
+#0 /app/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('events', Array)
+#1 /app/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('vehicle/default...', Array)
+#2 /app/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#3 /app/web/index.php(12): yii\base\Application->run()
+#4 {main}
+
+Next yii\web\NotFoundHttpException: Page not found. in /app/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /app/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /app/web/index.php(12): yii\base\Application->run()
+#2 {main}
+2022-11-14 04:27:10 [192.168.112.1][2][9c539b0c6bfa914e6f0501be0519dda0][info][application] $_GET = [
+    'id' => '1111'
+    'start' => '2022-10-30'
+    'end' => '2022-12-11'
+    '_' => '1668400030738'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'PHPSESSID' => '9c539b0c6bfa914e6f0501be0519dda0'
+    '_csrf' => 'babff2ef7bddfc40457435b3820fbb7ad1a26f176f17733dbfc043ccf4241fc7a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"WtHEd9MzYGQZFll5NVywu-JPYpZjsuD1\";}'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__returnUrl' => 'http://localhost:81/'
+    'yii\\authclient\\clients\\Google_google_token' => yii\authclient\OAuthToken#1
+    (
+        [tokenParamKey] => 'access_token'
+        [tokenSecretParamKey] => 'oauth_token_secret'
+        [createTimestamp] => 1668399816
+        [yii\authclient\OAuthToken:_expireDurationParamKey] => 'expires_in'
+        [yii\authclient\OAuthToken:_params] => [
+            'access_token' => 'ya29.a0AeTM1idkd46fqvEu2R6sYHbIzcAKl1aoyqOUB9PnycyxuapeoI40yjMlai8Uut753nHlBULwZ_Ai_TKEWR7ofWfYTKYbOdhBvgRdQxDdfOGpUtuLUF0Mvmq52yc4T_S4G9t5o7VUpbDx6zUPimsOz-AQzx55EgaCgYKATESARMSFQHWtWOmNvPb9JjMJIduZVicVpkuCg0165'
+            'expires_in' => 3599
+            'scope' => 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email openid'
+            'token_type' => 'Bearer'
+            'id_token' => 'eyJhbGciOiJSUzI1NiIsImtpZCI6IjcxM2ZkNjhjOTY2ZTI5MzgwOTgxZWRjMDE2NGEyZjZjMDZjNTcwMmEiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiMjYxODcwNjA5MDM3LWFjaHZmdHFoNjVyYWxuZjhhaXVscnYwNGMwMTlzZDNqLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMjYxODcwNjA5MDM3LWFjaHZmdHFoNjVyYWxuZjhhaXVscnYwNGMwMTlzZDNqLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTA1MTk0MTczNDA1ODYxODY1NTY1IiwiZW1haWwiOiJwYXRqYXdhdEBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6IkVKdlliR3hwbmx6WVgxcU9QRm5tZVEiLCJpYXQiOjE2NjgzOTk4MTYsImV4cCI6MTY2ODQwMzQxNn0.ZqPeHrV8Oc_kyIHbXGXb3NHwr-npdi-ySbQZKfwjgDloaXuqt5jo4B0mIbWadHKuQDHx-Ich-8h_lARiUIJsX64jPV7TE6YMO6uI5tIkcFoB68IiyfVUl8-37pp02c6doJ_JUYuQJYXSlbTxBjv7cG2kRhPm47ncZEVhH4FJfvB1nYJ9IgCUCM_k41oag24_goiORVUwqs6vCTxmWmCGO4yXN-3puYOFbS3ZnMSIrdGtGdtIpzlBCs6dwkyDUY99D173ZChwwahCjFJjoALq46O9G0o2uxn2wVK80ecl22PjYgZD5l-kkuuOHIJ9cROx3atC8dXB6lTODOO0wbbRCw'
+        ]
+    )
+    'yii\\authclient\\clients\\Facebook_facebook_token' => yii\authclient\OAuthToken#2
+    (
+        [tokenParamKey] => 'access_token'
+        [tokenSecretParamKey] => 'oauth_token_secret'
+        [createTimestamp] => 1668399819
+        [yii\authclient\OAuthToken:_expireDurationParamKey] => 'expires_in'
+        [yii\authclient\OAuthToken:_params] => [
+            'access_token' => 'EAAF2HXwpAWcBAHSkp3mEsPfOMZC37LaxPXZCrfmciRVZC2obSwZC3ovP6H6gvh01X62RJYdkQf2VvueYAUtR6CPGdG0q4y4Guw6ZAb8LaYHEn8cQZCBRZC8lAioL0M7W9PABQBoRrf385acvYLC9ZA2mRwgZA4ftBrXD5eIiVn8sbDx2xKS8DjDCQH1WFOMZCH1YUwSkVOcTvnenm7DJAaATvgW0ZBMxZBS6Rw56On6oGTD2gwZDZD'
+            'token_type' => 'bearer'
+            'expires_in' => 5138692
+        ]
+    )
+    '__id' => 2
+    '__authKey' => '2Q5rO5LDa5VADW67uRoqk_lcUqrdHdw4'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost:81'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"107\", \"Chromium\";v=\"107\", \"Not=A?Brand\";v=\"24\"'
+    'HTTP_ACCEPT' => 'application/json, text/javascript, */*; q=0.01'
+    'HTTP_X_CSRF_TOKEN' => '_njjLFvQxUTQ4v4DS-aeFqqaTH5parh3xHE7beaiVA2pDKtpP-mIPomlr1kNivIj5Mw1CRxH8iedAWEHldcQPA=='
+    'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"macOS\"'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'cors'
+    'HTTP_SEC_FETCH_DEST' => 'empty'
+    'HTTP_REFERER' => 'http://localhost:81/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'th-TH,th;q=0.9,en;q=0.8'
+    'HTTP_COOKIE' => 'PHPSESSID=9c539b0c6bfa914e6f0501be0519dda0; _csrf=babff2ef7bddfc40457435b3820fbb7ad1a26f176f17733dbfc043ccf4241fc7a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22WtHEd9MzYGQZFll5NVywu-JPYpZjsuD1%22%3B%7D'
+    'PATH' => '/app:/app/vendor/bin:/root/.composer/vendor/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.54 (Debian) Server at localhost Port 81</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Debian)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '192.168.112.4'
+    'SERVER_PORT' => '81'
+    'REMOTE_ADDR' => '192.168.112.1'
+    'DOCUMENT_ROOT' => '/app/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/app/web'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/app/web/index.php'
+    'REMOTE_PORT' => '62836'
+    'REDIRECT_URL' => '/vehicle/default/events'
+    'REDIRECT_QUERY_STRING' => 'id=1111&start=2022-10-30&end=2022-12-11&_=1668400030738'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'id=1111&start=2022-10-30&end=2022-12-11&_=1668400030738'
+    'REQUEST_URI' => '/vehicle/default/events?id=1111&start=2022-10-30&end=2022-12-11&_=1668400030738'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1668400030.7917
+    'REQUEST_TIME' => 1668400030
+    'argv' => [
+        0 => 'id=1111&start=2022-10-30&end=2022-12-11&_=1668400030738'
+    ]
+    'argc' => 1
+]

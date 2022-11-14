@@ -2,14 +2,12 @@
 
 namespace app\modules\vehicle\controllers;
 
-use Yii;
 use app\modules\vehicle\models\Category;
 use app\modules\vehicle\models\CategorySearch;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use yii\web\UploadedFile;
-use mdm\upload\FileModel;
 
 /**
  * CarController implements the CRUD actions for Category model.
@@ -71,20 +69,14 @@ class CarController extends Controller
     public function actionCreate()
     {
         $model = new Category([
-            'ref' => substr(Yii::$app->getSecurity()->generateRandomString(),10)
+            'ref' => substr(Yii::$app->getSecurity()->generateRandomString(), 10),
         ]);
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                // if($model->load(Yii::$app->request->post()) && $model->validate()){
-                //     $file = UploadedFile::getInstance($model, 'file');
-                //     if($fileModel = FileModel::saveAs($file,['uploadPath' => Yii::getAlias('@webroot').'/uploads'])){
-                //         $model->id = $fileModel->id;
-                //         $model->save(false);
-                //         return $this->redirect(['view', 'id' => $model->id]);
-                //     }
-                    
-                return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->validate()) {
+                if ($model->saveUploadedFile() !== false) {
+                    $model->save(false);
+                    return $this->redirect(['view', 'id' => $model->id]);
                 }
+            
         } else {
             $model->loadDefaultValues();
         }
@@ -107,14 +99,12 @@ class CarController extends Controller
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->validate()) {
 
-            // $file = UploadedFile::getInstance($model, 'file');
-            // if($fileModel = FileModel::saveAs($file,['uploadPath' => Yii::getAlias('@webroot').'/uploads'])){
-            // $model->id = $fileModel->id;
-            $model->save(false);
+            if ($model->saveUploadedFile() !== false) {
+             $model->save(false);
 
             return $this->redirect(['view', 'id' => $model->id]);
-        // }
-    }
+            }
+        }
 
         return $this->render('update', [
             'model' => $model,

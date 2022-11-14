@@ -43,10 +43,13 @@ class BookingController extends Controller
      */
     public function actionIndex()
     {
+        $status = $this->request->get('status');
         $searchModel = new BookingSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
+        isset($status) ? $dataProvider->query->where(['status_id' => $status]) : '';
         if(!Yii::$app->user->can('driver')){
-        $dataProvider->query->where(['created_by' => Yii::$app->user->id]);
+        $dataProvider->query->andWhere(['created_by' => Yii::$app->user->id]);
+        $dataProvider->query->andWhere(['<>','status_id','cancel']);
         }
 
         return $this->render('index', [
@@ -136,6 +139,26 @@ class BookingController extends Controller
         return $this->render('update', [
             'model' => $model,
             'driver' => $driver
+        ]);
+    }
+
+    public function actionCancel($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save(false)) {
+            Yii::$app->session->setFlash('position', [
+                'position' => 'center',
+                'icon' => Alert::TYPE_SUCCESS,
+                'title' => 'บันทึกสำเร็จ!',
+                'showConfirmButton' => false,
+                'timer' => 1500
+            ]);
+            return $this->redirect(['index']);
+        }
+
+        return $this->render('cancel_booking', [
+            'model' => $model
         ]);
     }
 

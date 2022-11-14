@@ -44,8 +44,8 @@ class User extends ActiveRecord implements IdentityInterface {
             [
                 'class' => 'mdm\upload\UploadBehavior',
                 'attribute' => 'file', // required, use to receive input file
-                'savedAttribute' => 'id', // optional, use to link model with saved file.
-                'uploadPath' => Yii::getAlias('@webroot').'/uploads', // saved directory. default to '@runtime/upload'
+                'savedAttribute' => 'photo', // optional, use to link model with saved file.
+                'uploadPath' => Yii::getAlias('@webroot').'/uploads/user', // saved directory. default to '@runtime/upload'
                 'autoSave' => true, // when true then uploaded file will be save before ActiveRecord::save()
                 'autoDelete' => true, // when true then uploaded file will deleted before ActiveRecord::delete()
             ],
@@ -79,7 +79,7 @@ class User extends ActiveRecord implements IdentityInterface {
             ['confirm_password', 'string', 'min' => 6],
             ['confirm_password', 'compare', 'compareAttribute' => 'password'],
             ['phone', 'string', 'min' => 10, 'max' => 10],
-            [['roles', 'doctor_id', 'fullname','fullname_en','license_number','q', 'old_password','phone'], 'safe'],
+            [['roles', 'doctor_id', 'fullname','fullname_en','license_number','q', 'old_password','phone','photo'], 'safe'],
             
         ];
     }
@@ -253,7 +253,6 @@ class User extends ActiveRecord implements IdentityInterface {
         $roleUser = $auth->getRolesByUser($this->id);
         $auth->revokeAll($this->id);
         if($this->roles){
-
             foreach ($this->roles as $key => $roleName) {
                 $auth->assign($auth->getRole($roleName), $this->id);
             }

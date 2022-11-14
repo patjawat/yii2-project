@@ -44,8 +44,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php foreach ($dataProviderCar->getModels() as $model):?>
             <?php
             $start = explode(' ',$searchModel->start);
-            $bookingCount = Booking::find()->where(['like', 'start', $start[0] . '%', false])
+            // $bookingCount = Booking::find()->where(['like', 'start', $start[0] . '%', false])
+            $bookingCount = Booking::find()->where(['like', 'start', $start[0], false])
             ->andWhere(['car_id' => $model->id])
+            ->andWhere(['<>','status_id','cancel'])
             ->count();
             ?>
 
@@ -53,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <td><?=$i++;?></td>
             <td>
                 <div class="box-img" data-aos="fade-right" data-aos-delay="<?=($delay++) * 100?>">
-                    <?= Html::img(['/file','id'=>$model->id]) ?>
+                    <?= Html::img(['/file','id'=>$model->photo]) ?>
                 </div>
                
             </td>
@@ -62,11 +64,13 @@ $this->params['breadcrumbs'][] = $this->title;
            
             </td>
             <td>
-            <?php if($bookingCount > 0): ?>
+            <?php // if($bookingCount > 0): ?>
+                <?=$model->checkCar($searchModel->start,$searchModel->end,$model->id)?>
+            <?php if($model->checkCar($searchModel->start,$searchModel->end,$model->id) > 0): ?>
                 <button type="button" class="btn btn-warning" disabled><i class="fa-solid fa-minus"></i> ไม่ว่าง</button>
 
                 <?php else: ?>
-                    <?= Html::a('<i class="fa-solid fa-check"></i> เลือก', ['/vehicle/booking/create', 'car_id' => $model->id,'start' => $searchModel->start,'end' => $searchModel->end], ['class' => 'btn btn-primary']) ?>
+                    <?= Html::a('<i class="fa-solid fa-check"></i> เลือก', ['/vehicle/booking/create', 'car_id' => $model->photo,'start' => $searchModel->start,'end' => $searchModel->end], ['class' => 'btn btn-primary']) ?>
 
                     <?php endif; ?>
             </td>
