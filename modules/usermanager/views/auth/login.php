@@ -12,10 +12,10 @@ $this->title = 'Authentication';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-    <div class="container">
+
   <div class="row justify-content-md-center">
 
-    <div class="col-md-auto">
+    <div class="col-3">
    
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -34,18 +34,24 @@ $this->params['breadcrumbs'][] = $this->title;
                 If you forgot your password you can <?= Html::a('reset it', ['site/request-password-reset']) ?>.
             </div>
 
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                <?=Html::a('สมัครสมาชิก',['/auth/signup'],['class' => 'btn btn-success']);?>
             </div>
+ 
 
         <?php ActiveForm::end(); ?>
 
 
 
     </div>
-    <div class="col col-6">
+    <div class="col-3">
     
-    <div class="d-grid gap-2" style="margin-top:128px">
+
+    <div class="card" style="margin-top: 117px;">
+                <div class="card-body">
+                   
+          
     <?php $authAuthChoice = yii\authclient\widgets\AuthChoice::begin(['baseAuthUrl' => ['auth/auth']]); ?>
 
     <?php foreach ($authAuthChoice->getClients() as $client): ?>
@@ -53,25 +59,27 @@ $this->params['breadcrumbs'][] = $this->title;
                 switch ($client->getName()){
                     case 'facebook':
                         $class = 'primary';
+                        $icon = '<i class="fa-brands fa-facebook"></i>';
                         break;
                     case 'google':
                         $class = 'danger';
+                        $icon = '<i class="fa-brands fa-google"></i>';
                         break;
                     case 'live':
                         $class = 'warning';
                         break;
 
                 }
-
-               // echo $authAuthChoice->clientLink($client, 'Login with '.ucfirst($client->getName()), ['class' => 'btn btn-'.$class.' btn-block']) ?>
-<?=$authAuthChoice->clientLink($client, 'Login with '.ucfirst($client->getName()), ['class' => 'btn btn-'.$class])?>
+ ?>
+                  <div class="d-grid gap-2">
+<?=$authAuthChoice->clientLink($client, $icon.' Login with '.ucfirst($client->getName()), ['class' => 'btn btn-'.$class])?>
 
 <?php endforeach; ?>
-<?php yii\authclient\widgets\AuthChoice::end(); ?>
-
 </div>
+<?php yii\authclient\widgets\AuthChoice::end(); ?>
+</div>
+            </div>
 
 
     </div>
-  </div>
   </div>

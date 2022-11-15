@@ -23,8 +23,8 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $searchModel = new BookingSearch([
-            'start' => date("Y-m-d H:i:s"),
-            'end' => date("Y-m-d H:i:s")
+            'start' => date("Y-m-d").' 08:00:00',
+            'end' => date("Y-m-d").' 16:30:00',
         ]);
         $dataProvider = $searchModel->search($this->request->queryParams);
 

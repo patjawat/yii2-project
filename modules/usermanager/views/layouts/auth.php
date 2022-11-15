@@ -3,7 +3,7 @@
 /** @var yii\web\View $this */
 /** @var string $content */
 
-use app\assets\AppAsset;
+use app\modules\vehicle\AppAsset;
 use app\widgets\Alert;
 use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
@@ -11,6 +11,8 @@ use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
 
 AppAsset::register($this);
+// $myAssetBundle = AppAsset::register($this);
+$myAsset = $this->assetManager->getBundle('\\app\modules\vehicle\AppAsset');
 
 $this->registerCsrfMetaTags();
 $this->registerMetaTag(['charset' => Yii::$app->charset], 'charset');
@@ -26,6 +28,14 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => '@w
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
+<style>
+    body {
+ background-image: url("<?=$myAsset->baseUrl.'/images/bg1.jpg'?>");
+ background-color: #cccccc;
+ background-repeat: no-repeat;
+    background-size: 100%;
+}
+</style>
 <body class="d-flex flex-column h-100">
 <?php $this->beginBody() ?>
 
@@ -34,22 +44,11 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => '@w
         <br>
         <br>
         <br>
-        <?php if (!empty($this->params['breadcrumbs'])): ?>
-            <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
-        <?php endif ?>
+
         <?= Alert::widget() ?>
         <?=  $content ?>
     </div>
 </main>
-
-<footer id="footer" class="mt-auto py-3 bg-light">
-    <div class="container">
-        <div class="row text-muted">
-            <div class="col-md-6 text-center text-md-start">&copy; My Company <?= date('Y') ?></div>
-            <div class="col-md-6 text-center text-md-end"><?= Yii::powered() ?></div>
-        </div>
-    </div>
-</footer>
 
 <?php $this->endBody() ?>
 </body>

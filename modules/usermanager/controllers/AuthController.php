@@ -5,7 +5,7 @@ namespace app\modules\usermanager\controllers;
 use Yii;
 use app\modules\usermanager\models\User;
 use app\modules\usermanager\models\LoginForm;
-use app\components\AuthHandler;
+use app\modules\usermanager\components\AuthHandler;
 
 class AuthController extends \yii\web\Controller
 {

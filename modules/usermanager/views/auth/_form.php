@@ -96,7 +96,7 @@ use yii\bootstrap4\ActiveForm;
 
                     <?= Html::submitButton('<i class="fa-solid fa-check"></i> บันทึก', ['class' => 'btn btn-success']) ?>
 
-<?= Html::a('<i class="fas fa-redo"></i> ยกเลิก', ['/usermanager/user'], ['class' => 'btn btn-sm btn-secondary link-loading', 'title' =>  'Reset Grid']) ?>
+<?= Html::a('<i class="fas fa-redo"></i> ยกเลิก', ['/usermanager/user'], ['class' => 'btn btn-secondary link-loading', 'title' =>  'Reset Grid']) ?>
 
                 <?php ActiveForm::end(); ?>
     </div>

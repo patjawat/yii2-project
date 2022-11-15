@@ -31,9 +31,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <thead>
         <tr>
             <th width="30px">#</th>
-            <th width="30%">รูปรถ</th>
-            <th width="100px">รายการ</th>
-            <th width="100">ดำเนินการ</th>
+            <th width="80%">รายการ</th>
+            <th width="30%">ดำเนินการ</th>
         </tr>
     </thead>
     <tbody>
@@ -53,24 +52,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <tr class="align-middle" >
             <td><?=$i++;?></td>
-            <td>
-                <div class="box-img" data-aos="fade-right" data-aos-delay="<?=($delay++) * 100?>">
-                    <?= Html::img(['/file','id'=>$model->photo]) ?>
-                </div>
-               
+            <td >
+            <?=$this->render('view_car',['model'=>$model])?>
+        
             </td>
-            <td>
-            <?php // $model->data_json['band'];?>
-           
-            </td>
-            <td>
-            <?php // if($bookingCount > 0): ?>
-                <?=$model->checkCar($searchModel->start,$searchModel->end,$model->id)?>
+            <td >
             <?php if($model->checkCar($searchModel->start,$searchModel->end,$model->id) > 0): ?>
                 <button type="button" class="btn btn-warning" disabled><i class="fa-solid fa-minus"></i> ไม่ว่าง</button>
 
                 <?php else: ?>
-                    <?= Html::a('<i class="fa-solid fa-check"></i> เลือก', ['/vehicle/booking/create', 'car_id' => $model->photo,'start' => $searchModel->start,'end' => $searchModel->end], ['class' => 'btn btn-primary']) ?>
+                    <?= Html::a('<i class="fa-solid fa-check"></i> เลือก', ['/vehicle/booking/create', 'car_id' => $model->id,'start' => $searchModel->start,'end' => $searchModel->end], ['class' => 'btn btn-primary']) ?>
 
                     <?php endif; ?>
             </td>
