@@ -66,7 +66,7 @@ tbody tr::after {
     // background-color: #fff;
     /* background-color: #f1f2f5; */
     background-color: #dbdfe4;
-    height: 80px;
+    height: 120px;
     z-index: 0;
     border-radius: 8px;
 }
@@ -77,11 +77,11 @@ tbody td {
 
 .box-img {
     position: relative;
-    /* width:500px; */
+    width: 186px;
 }
 
 .box-img>img {
-    width: 200px;
+    max-width: 176px;
 }
 </style>
 
@@ -109,28 +109,28 @@ tbody td {
             $delay = 3;
             ?>
         <?php foreach ($dataProvider->getModels() as $model):?>
-        <tr class="align-middle" >
+        <tr class="align-middle">
             <td><?=$i++;?></td>
             <td>
-                <div class="box-img" data-aos="fade-right" data-aos-delay="<?=($delay++) * 100?>">
-                    <?= Html::img(['/file','id'=>$model->id]) ?>
+                <div class="box-img">
+                    <?= Html::img(['/file','id'=>$model->photo]) ?>
                 </div>
-               
+
             </td>
             <td>
-            <?=$model->data_json['band'];?>
+                <?=$model->data_json['band'];?>
             </td>
             <td>
 
-            <?= Html::a('<i class="fa-regular fa-pen-to-square"></i> แก้ไข', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('<i class="fa-solid fa-trash"></i> ลบทิ้ง', ['delete', 'id' => $model->id], [
+                <?= Html::a('<i class="fa-regular fa-pen-to-square"></i> แก้ไข', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+                <?= Html::a('<i class="fa-solid fa-trash"></i> ลบทิ้ง', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
                 'method' => 'post',
             ],
         ]) ?>
-              
+
             </td>
         </tr>
         <?php endforeach;?>

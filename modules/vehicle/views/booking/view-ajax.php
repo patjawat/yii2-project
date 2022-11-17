@@ -34,30 +34,16 @@ $this->params['breadcrumbs'][] = $this->title;
 }
 </style>
 <div class="row">
-    <div class="col-8">
-        
-<p>
-        <?= Html::a('<i class="fa-regular fa-pen-to-square"></i> แก้ไข', ['update', 'id' => $model->id], ['class' => 'btn btn-sm btn-primary']) ?>
-       
-        <?php if($model->status_id == 'approve'):?>
-            <?= Html::a('<i class="fa-solid fa-ban"></i> การจองยกเลิก', ['cancel', 'id' => $model->id], [
-            'class' => 'btn btn-sm btn-secondary dis_cancel',
-        ]) ?>
-            <?php else :?>
-    <?= Html::a('<i class="fa-solid fa-ban"></i> การจองยกเลิก', ['cancel', 'id' => $model->id], [
-            'class' => 'btn btn-sm btn-danger',
-        ]) ?>
-        <?php endif;?>
+    <div class="col-12">
 
-    </p>
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            [
-                'group'=>true,
-                'label'=> '<i class="fa-solid fa-list-check"></i> วัตถุประสงค์การจอง : <code>'.$model->title.'</code>',
-                'rowOptions'=>['class'=>'table-info']
-            ],
+            // [
+            //     'group'=>true,
+            //     'label'=> '<i class="fa-solid fa-list-check"></i> วัตถุประสงค์การจอง : <code>'.$model->title.'</code>',
+            //     'rowOptions'=>['class'=>'table-info']
+            // ],
             [
                 'columns' => [
                     [
@@ -172,13 +158,6 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
     </div>
-    <div class="col-4">
-
-<div class="card border-0 mt-5" style="width:100%;">
-
-<?=Html::img(['/file', 'id' => $model->car->photo, ['class' => 'card-img-top']])?>
-
-</div>
 
 
 </div>

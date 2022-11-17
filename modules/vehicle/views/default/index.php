@@ -1,4 +1,5 @@
 <?php
+use yii\web\View;
 use app\modules\vehicle\AppAsset;
 use yii\helpers\Url;
 use yii\web\JsExpression;
@@ -25,25 +26,21 @@ $AssetBundle = AppAsset::register($this);
         'weekNumbers' => true,
         'selectable' => true,
         'defaultView' => 'month',
+        'eventClick' => new JsExpression("
+        function(event, delta, revertFunc, jsEvent, ui, view) {
+            $(this).css('border-color', 'red');
+            BookingView(event.id);
+        }
+        "),
         'eventResize' => new JsExpression("
                 function(event, delta, revertFunc, jsEvent, ui, view) {
                     console.log(event);
                 }
             "),
-            'eventClick' => "function(calEvent, jsEvent, view) {
-                $(this).css('border-color', 'red');
-                $.get('index.php?r=event/update',{'id':calEvent.id}, function(data){
-                    $('.modal').modal('show')
-                    .find('#modelContent')
-                    .html(data);
-                })
-                $('#calendar').fullCalendar('removeEvents', function (calEvent) {
-                    return true;
-                });
-           }",
-
+        
     ],
-    'events' => Url::to(['/vehicle/default/events', 'id' => '1111']),
+    'events' => Url::to(['/vehicle/booking/events', 'id' => '']),
+    
 ]);
 ?>
         </div>
@@ -68,3 +65,34 @@ $AssetBundle = AppAsset::register($this);
 </div>
 
 
+
+<?php
+$viewUrl = Url::to(['/vehicle/booking/view']);
+$js = <<< JS
+
+function BookingView(id){
+    $.ajax({
+        type: "get",
+        url: "$viewUrl",
+        data: {
+            id:id
+        },
+        beforeSend: function(){
+            beforLoadModal()
+        },
+        dataType: "json",
+        success: function (response) {
+            $('#main-modal').modal('show');
+            $('#main-modal-label').html(response.title);
+            $('.modal-body').html(response.content);
+            $('.modal-footer').html(response.footer);
+            $(".modal-dialog").removeClass('modal-sm');
+            $(".modal-dialog").addClass('modal-lg');
+            $('.modal-content').addClass('card-outline card-primary');
+        }
+    });
+}
+
+JS;
+$this->registerJs($js,View::POS_END)
+?>

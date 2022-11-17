@@ -21,11 +21,6 @@ class User extends ActiveRecord implements IdentityInterface {
     public $old_password;
     public $file;
 
-    public function scenarios() {
-        $scenarios = parent::scenarios();
-        $scenarios['registration'] = ['username', 'email'];
-        return $scenarios;
-    }
 
     /**
      * @inheritdoc
@@ -60,7 +55,7 @@ class User extends ActiveRecord implements IdentityInterface {
     public function rules() {
         return [
             
-            // [['username'], 'required'],
+            [['username'], 'required'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
             ['username', 'filter', 'filter' => 'trim'],
@@ -70,6 +65,7 @@ class User extends ActiveRecord implements IdentityInterface {
             //  ['email', 'required'],
             ['email', 'email'],
             ['email', 'unique', 'targetClass' => '\app\modules\usermanager\models\User', 'message' => 'This email address has already been taken.'],
+            ['phone', 'unique', 'targetClass' => '\app\modules\usermanager\models\User', 'message' => 'This phone has already been taken.'],
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
             ['doctor_id', 'unique'],
@@ -82,6 +78,13 @@ class User extends ActiveRecord implements IdentityInterface {
             [['roles', 'doctor_id', 'fullname','fullname_en','license_number','q', 'old_password','phone','photo'], 'safe'],
             
         ];
+    }
+
+
+    public function scenarios() {
+        $scenarios = parent::scenarios();
+        $scenarios['registration'] = ['username', 'email'];
+        return $scenarios;
     }
 
     public function attributeLabels() {

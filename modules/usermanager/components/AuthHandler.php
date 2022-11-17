@@ -27,7 +27,7 @@ class AuthHandler
         $attributes = $this->client->getUserAttributes();
         $email = ArrayHelper::getValue($attributes, 'email');
         $id = ArrayHelper::getValue($attributes, 'id');
-        // $nickname = ArrayHelper::getValue($attributes, 'name');
+        $fullname = ArrayHelper::getValue($attributes, 'name');
         $nickname = ArrayHelper::getValue($attributes, 'login') =='' ? ArrayHelper::getValue($attributes, 'email') : ArrayHelper::getValue($attributes, 'name');
 
         /* @var Auth $auth */
@@ -57,8 +57,10 @@ class AuthHandler
                         'username' => $nickname,
                         'github' => $nickname,
                         'email' => $email,
+                        'fullname' => $fullname,
                         'password' => $password,
-                        'password_hash' => $password
+                        'password_hash' => $password,
+                        'confirm_password' => $password
                         // 'status' => User::STATUS_ACTIVE // make sure you set status properly
                     ]);
                     $user->generateAuthKey();

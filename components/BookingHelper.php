@@ -21,10 +21,17 @@ class BookingHelper extends Component
 
     public static function MyBooking()
     {
-        $sql = "SELECT COUNT(id) as total FROM `booking` WHERE created_by = :id AND status_id <> 'cancel'";
-        $model = Yii::$app->db->createCommand($sql)
-            ->bindValue(':id', Yii::$app->user->id)
-            ->queryScalar();
+        if(Yii::$app->user->can('user')){
+            $sql = "SELECT COUNT(id) as total FROM `booking` WHERE created_by = :id AND status_id <> 'cancel'";
+            $model = Yii::$app->db->createCommand($sql)
+                ->bindValue(':id', Yii::$app->user->id)
+                ->queryScalar();
+            
+        }else{
+            $sql = "SELECT COUNT(id) as total FROM `booking` WHERE  status_id <> 'cancel'";
+            $model = Yii::$app->db->createCommand($sql)
+                ->queryScalar();
+        }
         return $model;
     }
 
@@ -52,6 +59,40 @@ class BookingHelper extends Component
 
     }
 
+    public static function CountByStatusDriver()
+    {
+
+        $all = Yii::$app->db->createCommand("SELECT COUNT(id) as total FROM booking WHERE driver_id = :id")
+        ->bindValue(':id', Yii::$app->user->id)
+        ->queryScalar();
+        $await = Yii::$app->db->createCommand("SELECT COUNT(id) as total FROM booking WHERE status_id = 'await' AND driver_id = :id")
+        ->bindValue(':id', Yii::$app->user->id)
+        ->queryScalar();
+        $approve = Yii::$app->db->createCommand("SELECT COUNT(id) as total FROM booking WHERE status_id = 'approve' AND driver_id = :id")
+        ->bindValue(':id', Yii::$app->user->id)
+        ->queryScalar();
+        $success = Yii::$app->db->createCommand("SELECT COUNT(id) as total FROM booking WHERE status_id = 'success' AND driver_id = :id")
+        ->bindValue(':id', Yii::$app->user->id)
+        ->queryScalar();
+        $cancel = Yii::$app->db->createCommand("SELECT COUNT(id) as total FROM booking WHERE status_id = 'cancel' AND driver_id = :id")
+        ->bindValue(':id', Yii::$app->user->id)
+        ->queryScalar();
+
+        return [
+            'all' => $all,
+            'await' => $await,
+            'approve' => $approve,
+            'success' => $success,
+            'cancel' => $cancel,
+            'allBadgeTotal' => self::BadgeTotal($all),
+            'awaitBadgeTotal' => self::BadgeTotal($await),
+            'approveBadgeTotal' => self::BadgeTotal($approve),
+            'successBadgeTotal' => self::BadgeTotal($success),
+            'cancelBadgeTotal' => self::BadgeTotal($cancel),
+        ];
+
+    }
+
     public static function BadgeTotal($count)
     {
         if($count > 0 )
@@ -59,6 +100,7 @@ class BookingHelper extends Component
             return '<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">'.$count.'<span class="visually-hidden">unread messages</span></span>';
         }
     }
+    
 
 
 }

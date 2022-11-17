@@ -77,8 +77,6 @@ use yii\bootstrap4\ActiveForm;
     ],
     'layout' => 'horizontal',
 ]); ?>
-
-
     <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'confirm_password')->passwordInput(['maxlength' => true]) ?>
@@ -87,6 +85,7 @@ use yii\bootstrap4\ActiveForm;
                     <?php //  $form->field($model, 'doctor_id')->textInput(['maxlength' => true]) ?>
                     <?php //  $form->field($model, 'license_number')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
                     <div class="box-img text-center">
                     <?= Html::img(['/file','id'=>$model->photo],['class' => 'rounded','style' => 'width:200px']) ?>
                         <?= $form->field($model,'file')->fileInput(); ?>

@@ -5,6 +5,7 @@
 
 use app\modules\vehicle\AppAsset;
 use app\widgets\Alert;
+use yii\bootstrap5\Modal;
 use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
@@ -24,32 +25,36 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => '@w
 <?php $this->beginPage()?>
 <!DOCTYPE html>
 <html lang="<?=Yii::$app->language?>" class="h-100">
+
 <head>
     <title><?=Html::encode($this->title)?></title>
     <?php $this->head()?>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
-<body class="d-flex flex-column h-100" style="background-color:#edf2f8;">
-<?php $this->beginBody()?>
 
-<header id="header">
-    <?php
+<body class="d-flex flex-column h-100" style="background-color:#edf2f8;">
+    <?php $this->beginBody()?>
+
+    <header id="header">
+        <?php
 NavBar::begin([
     'brandLabel' => 'ระบบบริหารยานพาหนะ',
     'brandUrl' => Yii::$app->homeUrl,
     'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark'],
 ]);
+
 echo Nav::widget([
     'encodeLabels' => false,
     'options' => ['class' => 'navbar-nav ms-auto flex-nowrap'],
     'items' => [
-        ['label' => '<i class="fa-solid fa-user-tag"></i> หนักงานคนขับ', 'url' => ['/vehicle/default/driver-list']],
-        ['label' => '<i class="fa-solid fa-info"></i> เกี่ยวกับระบบ', 'url' => ['/vehicle/about']],
+        // ['label' => '<i class="fa-solid fa-user-tag"></i> หนักงานคนขับ', 'url' => ['/vehicle/default/driver-list']],
+        ['label' => '<i class="fa-solid fa-users"></i> พนักงานขับรถ', 'url' => ['/vehicle/driver']],
         ['label' => '<i class="fa-solid fa-book-open-reader"></i> รายการจอง'.(BookingHelper::MyBooking() > 0 ? ' <span class="badge bg-danger">'.BookingHelper::MyBooking().'</span>' : null), 'url' => ['/vehicle/booking']],
         Yii::$app->user->can('driver') ? ['label' => '<i class="fa-solid fa-user-tag"></i> ภาระกิจ'.(BookingHelper::Myjob() > 0 ? ' <span class="badge bg-danger">'.BookingHelper::Myjob().'</span>' : null), 'url' => ['/vehicle/myjob']] : '',
         Yii::$app->user->can('driver') ? ['label' => '<i class="fa-solid fa-list-ul"></i> รายการขอใช้ยานพหนะ', 'url' => ['/vehicle/booking']] : '',
         ['label' => '<i class="fa-solid fa-user-check"></i> โปรไฟล์', 'url' => '/me'],
-        [
+        Yii::$app->user->can('manager') ? [
             'label' => 'ตั้งค่า', 
             'items' => [
                 ['label' => '<i class="fa-solid fa-user-shield"></i> ผู้ใช้งานระบบ', 'url' => '/usermanager'],
@@ -61,17 +66,11 @@ echo Nav::widget([
                      'items' => [
                          ['label' => 'Section 3.1', 'url' => '/'],
                          ['label' => 'Section 3.2', 'url' => '#'],
-                         [
-                             'label' => 'Section 3.3', 
-                             'items' => [
-                                 ['label' => 'Section 3.3.1', 'url' => '/'],
-                                 ['label' => 'Section 3.3.2', 'url' => '#'],
-                             ],
-                         ],
+                         
                      ],
                  ],
             ],
-        ],
+        ] : '',
 
        
         Yii::$app->user->isGuest
@@ -95,62 +94,76 @@ echo Nav::widget([
 ]);
 NavBar::end();
 ?>
-</header>
+    </header>
 
-<style>
+    <style>
     #main {
-        font-weight:100;
+        font-weight: 100;
         font-family: 'Sarabun', sans-serif;
     }
-</style>
+    </style>
 
-<main id="main" class="flex-shrink-0" role="main">
-    <div class="container">
-        <?php if (!empty($this->params['breadcrumbs'])): ?>
+    <main id="main" class="flex-shrink-0" role="main">
+        <div class="container">
+            <?php if (!empty($this->params['breadcrumbs'])): ?>
             <?=Breadcrumbs::widget(['links' => $this->params['breadcrumbs']])?>
-        <?php endif?>
-        <?=Alert::widget()?>
-        <?php \dominus77\sweetalert2\Alert::widget([
+            <?php endif?>
+
+            <?php
+
+
+        Modal::begin([
+            'id' => 'main-modal',
+            'title' => '<h4 class="modal-title"></h4>',
+            // 'size' => 'modal-sm',
+            'footer' => '',
+            'clientOptions' => ['backdrop' => 'static', 'keyboard' => false],
+        ]);
+        Modal::end();
+        ?>
+            <?=Alert::widget()?>
+            <?php \dominus77\sweetalert2\Alert::widget([
     'useSessionFlash' => true,
     'customAnimate' => true
 ]); ?>
 
- <!-- Loading-box -->
- <div id="awaitLogin" style="display:none;margin-top:100px">
-            <div   class="d-flex justify-content-center">
-                <div style="position:relative;width:10%;">
-                    <?=Html::img('@web/images/cctv-logo.svg',['style' => 'position: absolute;width: 60px;top: 25px;left: 16px;']);?>
-                    <div class="dbl-spinner"></div>
-                    <div class="dbl-spinner"></div>
-                    <h6 style="position: absolute;top:115px;left:8%;">กำลังโหลด...</h6>
+            <!-- Loading-box -->
+            <div id="awaitLogin" style="display:none;margin-top:100px">
+                <div class="d-flex justify-content-center">
+                    <div style="position:relative;width:10%;">
+                        <?=Html::img('@web/images/cctv-logo.svg',['style' => 'position: absolute;width: 60px;top: 25px;left: 16px;']);?>
+                        <div class="dbl-spinner"></div>
+                        <div class="dbl-spinner"></div>
+                        <h6 style="position: absolute;top:115px;left:8%;">กำลังโหลด...</h6>
+                    </div>
                 </div>
             </div>
+            <div id="content-container">
+                <?= $content ?>
+            </div>
         </div>
-        <div id="content-container">
-            <?= $content ?>
+    </main>
+
+
+
+    <footer id="footer" class="mt-auto py-3 bg-light">
+        <div class="container">
+            <div class="row text-muted">
+                <div class="col-md-6 text-center text-md-start">&copy; My Company <?=date('Y')?></div>
+                <div class="col-md-6 text-center text-md-end"><?=Yii::powered()?></div>
+            </div>
         </div>
-    </div>
-</main>
+    </footer>
 
-
-
-<footer id="footer" class="mt-auto py-3 bg-light">
-    <div class="container">
-        <div class="row text-muted">
-            <div class="col-md-6 text-center text-md-start">&copy; My Company <?=date('Y')?></div>
-            <div class="col-md-6 text-center text-md-end"><?=Yii::powered()?></div>
-        </div>
-    </div>
-</footer>
-
-<?php
+    <?php
 $js = <<<JS
     AOS.init();
 JS;
 $this->registerJS($js);
 ?>
 
-<?php $this->endBody()?>
+    <?php $this->endBody()?>
 </body>
+
 </html>
 <?php $this->endPage()?>

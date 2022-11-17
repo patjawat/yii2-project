@@ -66,9 +66,22 @@ class BookingController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if(Yii::$app->request->isAjax){
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $model = $this->findModel($id);
+            return[
+                'title' =>'เรื่อง # '.$model->title,
+                'content' =>  $this->renderAjax('view-ajax', [
+                    'model' =>$model,
+                ])
+                ];
+            
+        }else{
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }
+       
     }
 
     /**
@@ -136,10 +149,26 @@ class BookingController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('update', [
-            'model' => $model,
-            'driver' => $driver
-        ]);
+
+        if(Yii::$app->user->can('user') && $model->status_id == 'approve')
+        {
+            Yii::$app->session->setFlash('position', [
+                'icon' => Alert::TYPE_WARNING,
+                'title' => 'ไม่สามารถแก้ไขได้!',
+                'text' => 'เนื่องจากอนุมัติแล้วกรุณาติดต่อผู้กูแลระบบ!',
+                'showConfirmButton' => false,
+                'timer' => 1500
+            ]);
+            return $this->render('view', [
+                'model' => $model,
+            ]);
+        }else{
+
+            return $this->render('update', [
+                'model' => $model,
+                'driver' => $driver
+            ]);
+        }
     }
 
     public function actionCancel($id)
@@ -211,18 +240,45 @@ class BookingController extends Controller
     }
 
 
-    public function actionMyjob() 
-    {
+    // public function actionMyjob() 
+    // {
+
+    //     $searchModel = new BookingSearch();
+    //     $dataProvider = $searchModel->search($this->request->queryParams);
+    //     $dataProvider->query->where(['driver_id' => Yii::$app->user->id]);
+    //     $dataProvider->query->andWhere(['in', 'status_id',['approve']]);
+
+    //     return $this->render('myjob', [
+    //         'searchModel' => $searchModel,
+    //         'dataProvider' => $dataProvider,
+    //     ]);
+    // }
+
+
+    public function actionEvents($start, $end)
+	{
+		\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
         $searchModel = new BookingSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
-        $dataProvider->query->where(['driver_id' => Yii::$app->user->id]);
-        $dataProvider->query->andWhere(['in', 'status_id',['approve']]);
+       $dataProvider->query->where(['status_id' => 'approve']);
+       
+        
 
-        return $this->render('myjob', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
+
+        $datas = [];
+        foreach ( $dataProvider->getModels() as $event)
+        {
+            $datas[] = [
+                'id' => $event->id,
+				'title' => 'เรื่อง #' . $event->title,
+				'start' => $event->start,
+				'end' => $event->end,
+			];
+            
+        }
+
+		return $datas;
+	}
 
 }

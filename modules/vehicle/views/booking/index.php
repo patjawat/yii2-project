@@ -5,8 +5,11 @@ use yii\helpers\Url;
 use kartik\grid\ActionColumn;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
+use yii\web\View;
 use app\modules\vehicle\models\Booking;
 use app\components\BookingHelper;
+use dominus77\sweetalert2\assets\ThemeAsset;
+ThemeAsset::register($this, ThemeAsset::THEME_MATERIAL_UI);
 $status = BookingHelper::CountByStatus();
 
 
@@ -103,3 +106,23 @@ td>img {
     <?php Pjax::end(); ?>
 
 </div>
+
+<?php 
+
+$js = <<< JS
+
+$('.dis_cancel').click(function (e) { 
+    e.preventDefault();
+    console.log('Calcel')
+    Swal.fire(
+  'ไม่สามารถยกเลิกได้!',
+  'เนื่องจากอนุมัติแล้วกรุณาติดต่อผู้กูแลระบบ!',
+  'warning'
+)    
+});
+function CancelWarnings() {
+  
+}
+JS;
+$this->registerJs($js,View::POS_END)
+?>
