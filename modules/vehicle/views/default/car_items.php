@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <button type="button" class="btn btn-warning" disabled><i class="fa-solid fa-minus"></i> ไม่ว่าง</button>
 
                 <?php else: ?>
-                    <?= Html::a('<i class="fa-solid fa-check"></i> เลือก', ['/vehicle/booking/create', 'car_id' => $model->id,'start' => $searchModel->start,'end' => $searchModel->end], ['class' => 'btn btn-primary']) ?>
+                    <?= Html::a('<i class="fa-solid fa-check"></i> เลือก', ['/vehicle/booking/create', 'car_id' => $model->id,'start' => $searchModel->start,'end' => $searchModel->end], ['class' => 'btn btn-success']) ?>
 
                     <?php endif; ?>
             </td>
