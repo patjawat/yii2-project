@@ -266,7 +266,7 @@ echo Yii::$app->user->can('driver') ? $form->field($model, 'status_id')->inline(
 
         <div class="form-group">
             <?=Html::submitButton('<i class="fa-solid fa-check"></i> บันทึก', ['class' => 'btn btn-success'])?>
-            <?=html::a('<i class="fa-solid fa-xmark"></i> ยกเลิกการแก้ไข', ['/vehicle/booking'], ['class' => 'btn btn-danger']);?>
+            <?=html::a('<i class="fa-solid fa-xmark"></i> ยกเลิกการ', ['/vehicle/booking'], ['class' => 'btn btn-danger']);?>
         </div>
 
         <?php ActiveForm::end();?>
