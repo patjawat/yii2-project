@@ -150,7 +150,7 @@ NavBar::end();
         <div class="container">
             <div class="row text-muted">
                 <div class="col-md-6 text-center text-md-start">&copy; โรงพยาบาลบึงกาฬ <?=date('Y')?></div>
-                <div class="col-md-6 text-center text-md-end">นายปัจวัฒน์ ศรีบุญเรือง : ผู้พัฒนาระบบ </div>
+                <div class="col-md-6 text-center text-md-end">นายปัจวัฒน์ ศรีบุญเรือง : ผู้พัฒนา <a href="https://www.facebook.com/patjawat"><i class="fa-brands fa-facebook"></i></a> </div>
             </div>
         </div>
     </footer>
