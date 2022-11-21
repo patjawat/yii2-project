@@ -14,7 +14,7 @@ use yii\helpers\Html;
 <div class="row g-0 border-0 rounded overflow-hidden flex-md-row h-md-250 position-relative">
     <div class="col-3 d-none d-lg-block">
     <div class="box-img" data-aos="fade-left">
-        <?=Html::img(['/file', 'id' => $model->car->photo,['class' =>'bd-placeholder-img']])?>
+        <?= isset($model->car) ? Html::img(['/file', 'id' => $model->car->photo,['class' =>'bd-placeholder-img']]) : ''?>
          </div>
     </div>
         <div class="col d-flex flex-column position-static">

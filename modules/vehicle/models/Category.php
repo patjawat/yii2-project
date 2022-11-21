@@ -23,6 +23,7 @@ class Category extends \yii\db\ActiveRecord
      * {@inheritdoc}
      */
     public $file;
+    public $q;
     public static function tableName()
     {
         return 'category';
@@ -38,7 +39,7 @@ class Category extends \yii\db\ActiveRecord
             [['status'], 'integer'],
             [['ref'], 'string', 'max' => 200],
             [['group_name', 'type_name'], 'string', 'max' => 255],
-            [['data_json','code','photo'], 'safe'],
+            [['data_json','code','photo','q'], 'safe'],
         ];
     }
 
@@ -71,6 +72,7 @@ class Category extends \yii\db\ActiveRecord
             'description' => 'Description',
             'status' => 'สถานะ',
             'data_json' => 'Data Json',
+            'q' => 'ค้นหา'
         ];
     }
 

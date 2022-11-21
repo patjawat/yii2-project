@@ -39,8 +39,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => '@w
     <header id="header">
         <?php
 NavBar::begin([
-    'brandLabel' => 'ระบบบริหารยานพาหนะ',
-    'brandUrl' => Yii::$app->homeUrl,
+    'brandLabel' => 'ระบบจองห้องประชุม',
+    'brandUrl' => ['/meeting'],
     'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark'],
 ]);
 
@@ -49,7 +49,7 @@ echo Nav::widget([
     'options' => ['class' => 'navbar-nav ms-auto flex-nowrap'],
     'items' => [
         // ['label' => '<i class="fa-solid fa-user-tag"></i> หนักงานคนขับ', 'url' => ['/vehicle/default/driver-list']],
-        ['label' => '<i class="fa-solid fa-users"></i> พนักงานขับรถ', 'url' => ['/vehicle/driver']],
+        ['label' => '<i class="fa-solid fa-users"></i> ห้องประชุม', 'url' => ['/meeting/room/list']],
         ['label' => '<i class="fa-solid fa-book-open-reader"></i> รายการจอง'.(BookingHelper::MyBooking() > 0 ? ' <span class="badge bg-danger">'.BookingHelper::MyBooking().'</span>' : null), 'url' => ['/vehicle/booking']],
         Yii::$app->user->can('driver') ? ['label' => '<i class="fa-solid fa-user-tag"></i> ภาระกิจ'.(BookingHelper::Myjob() > 0 ? ' <span class="badge bg-danger">'.BookingHelper::Myjob().'</span>' : null), 'url' => ['/vehicle/myjob']] : '',
         Yii::$app->user->can('driver') ? ['label' => '<i class="fa-solid fa-list-ul"></i> รายการขอใช้ยานพหนะ', 'url' => ['/vehicle/booking']] : '',
@@ -60,6 +60,15 @@ echo Nav::widget([
                 ['label' => '<i class="fa-solid fa-user-shield"></i> ผู้ใช้งานระบบ', 'url' => '/usermanager'],
                 ['label' => '<i class="fa-solid fa-car"></i> รถ', 'url' => '/vehicle/car'],
                 ['label' => '<i class="fa-solid fa-car"></i> ประเภทรถ', 'url' => '/vehicle/car-type'],
+                
+                [
+                     'label' => 'Section 3', 
+                     'items' => [
+                         ['label' => 'Section 3.1', 'url' => '/'],
+                         ['label' => 'Section 3.2', 'url' => '#'],
+                         
+                     ],
+                 ],
             ],
         ] : '',
 

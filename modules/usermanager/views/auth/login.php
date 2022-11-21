@@ -10,76 +10,100 @@ use yii\authclient\widgets\AuthChoice;
 
 $this->title = 'Authentication';
 $this->params['breadcrumbs'][] = $this->title;
+$myAsset = $this->assetManager->getBundle('\\app\modules\vehicle\AppAsset');
 ?>
 
+<style>
+    #w0 > div{
+        margin-bottom:10px;
+    }
+    h1{
+        background: -webkit-linear-gradient(#b584dc, #163adf);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    }
 
-  <div class="row justify-content-md-center">
+    .btn-primary{
+        background-image: linear-gradient( 135deg, #8ba9f8 10%, #0749f3 100%);
+        border: none;
+}
 
-    <div class="col-3">
-   
-    <h1><?= Html::encode($this->title) ?></h1>
-
-<p>กรุณายืนยันตัวตนเพื่อเข้าสู่ระบบ:</p>
-
+.btn-danger{
+    background-image: linear-gradient( 135deg, #f06572 10%, #ed1227 100%);
+    border: none;
+}
+    
+</style>
+<div class="row justify-content-between align-items-center">
+    <div class="col-lg-4 col-md-6 col-sm-12">
+        <h1><?= Html::encode($this->title) ?></h1>
+        <p>กรุณายืนยันตัวตนเพื่อเข้าสู่ระบบ:</p>
 
         <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
-            <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+        <?= $form->field($model, 'username',[
+    'inputTemplate' => '<div class="input-group">
+    <div class="input-group-prepend">
+    <span class="input-group-text"><i class="fa-solid fa-user-lock"></i>&nbsp;</span>
+    </div>
+    {input}
+    </div>',
+])->textInput(['autofocus' => true])->label('ชื่อเข้าใช้งาน') ?>
 
-            <?= $form->field($model, 'password')->passwordInput() ?>
+        <?= $form->field($model, 'password',[
+    'inputTemplate' => '<div class="input-group">
+    <div class="input-group-prepend">
+    <span class="input-group-text"><i class="fa-solid fa-lock"></i>&nbsp;</span>
+    </div>
+    {input}
+    </div>',
+])->passwordInput()->label('รหัสผ่าน'); ?>
 
-            <?= $form->field($model, 'rememberMe')->checkbox() ?>
+        <?= $form->field($model, 'rememberMe')->checkbox() ?>
 
-            <div style="color:#999;margin:1em 0">
-                If you forgot your password you can <?= Html::a('reset it', ['site/request-password-reset']) ?>.
-            </div>
+        <div style="color:#999;margin:1em 0">
+            If you forgot your password you can <?= Html::a('reset it', ['site/request-password-reset']) ?>.
+        </div>
 
-            <div class="form-group mb-3">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-                <?=Html::a('สมัครสมาชิก',['/auth/signup'],['class' => 'btn btn-success']);?>
-            </div>
- 
+        <div class="form-group mb-3">
+            <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+            <?=Html::a('สมัครสมาชิก',['/auth/signup'],['class' => 'btn btn-success']);?>
+        </div>
 
         <?php ActiveForm::end(); ?>
 
+                <?php $authAuthChoice = yii\authclient\widgets\AuthChoice::begin(['baseAuthUrl' => ['auth/auth']]); ?>
 
-
-    </div>
-    <div class="col-3">
-    
-
-    <div class="card" style="margin-top: 117px;">
-                <div class="card-body">
-                   
-          
-    <?php $authAuthChoice = yii\authclient\widgets\AuthChoice::begin(['baseAuthUrl' => ['auth/auth']]); ?>
-
-    <?php foreach ($authAuthChoice->getClients() as $client): ?>
+                <?php foreach ($authAuthChoice->getClients() as $client): ?>
                 <?php
-                switch ($client->getName()){
-                    case 'facebook':
-                        $class = 'primary';
-                        $icon = '<i class="fa-brands fa-facebook"></i>';
-                        break;
-                    case 'google':
-                        $class = 'danger';
-                        $icon = '<i class="fa-brands fa-google"></i>';
-                        break;
-                    case 'live':
-                        $class = 'warning';
-                        break;
+                    switch ($client->getName()){
+                        case 'facebook':
+                            $class = 'primary';
+                            $icon = '<i class="fa-brands fa-facebook"></i>';
+                            break;
+                        case 'google':
+                            $class = 'danger';
+                            $icon = '<i class="fa-brands fa-google"></i>';
+                            break;
+                        case 'live':
+                            $class = 'warning';
+                            break;
 
-                }
- ?>
-                  <div class="d-grid gap-2">
-<?=$authAuthChoice->clientLink($client, $icon.' Login with '.ucfirst($client->getName()), ['class' => 'btn btn-'.$class])?>
+                    }?>
+                <div class="d-grid gap-2">
+                    <?=$authAuthChoice->clientLink($client, $icon.' Login with '.ucfirst($client->getName()), ['class' => 'btn btn-'.$class])?>
 
-<?php endforeach; ?>
-</div>
-<?php yii\authclient\widgets\AuthChoice::end(); ?>
-</div>
-            </div>
+                </div>
+                    <?php endforeach; ?>
+                <?php yii\authclient\widgets\AuthChoice::end(); ?>
+       
+
+    </div>
+    <div class="col-auto mr-auto">
+
+       <?=Html::img($myAsset->baseUrl.'/images/bg3-2.png',['style' => 'width:500px;margin-top:100px;'])?>
 
 
     </div>
-  </div>
+</div>
+

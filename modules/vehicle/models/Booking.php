@@ -44,7 +44,7 @@ class Booking extends \yii\db\ActiveRecord
             [['ref'], 'string', 'max' => 200],
             [['created_by', 'updated_by'], 'integer'],
             [['start', 'end', 'province_id', 'district_id'], 'string', 'max' => 255],
-            [['data_json','status_id','driver_id','updated_at', 'created_at'], 'safe'],
+            [['data_json','status_id','driver_id','updated_at', 'created_at','booking_type'], 'safe'],
         ];
     }
 
@@ -62,6 +62,7 @@ class Booking extends \yii\db\ActiveRecord
             'district_id' => 'อำเภอ',
             'car_id' => 'รถ',
             'data_json' => 'json',
+            'booking_type' => 'ประเภทการจอง'
         ];
     }
 
@@ -102,7 +103,6 @@ class Booking extends \yii\db\ActiveRecord
     public function beforeSave($insert) {
         if (parent::beforeSave($insert)) {
             $this->data_json = Json::encode($this->data_json, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-         
             return true;
         } else {
             return false;

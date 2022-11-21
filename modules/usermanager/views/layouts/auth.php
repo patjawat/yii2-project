@@ -30,8 +30,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => '@w
 </head>
 <style>
     body {
- background-image: url("<?=$myAsset->baseUrl.'/images/bg1.jpg'?>");
- background-color: #cccccc;
+ background-image: url("<?=$myAsset->baseUrl.'/images/bg3-1.png'?>");
+ /* background-color: #cccccc; */
  background-repeat: no-repeat;
     background-size: 100%;
 }

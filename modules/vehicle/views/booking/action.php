@@ -9,11 +9,11 @@ use yii\helpers\Html;
             'data-pjax' => false
         ]) ?>
         <?php if($model->status_id == 'approve'):?>
-            <?= Html::a('<i class="fa-solid fa-ban"></i> การจองยกเลิก', ['cancel', 'id' => $model->id], [
+            <?= Html::a('<i class="fa-solid fa-ban"></i> ยกเลิกการจอง', ['cancel', 'id' => $model->id], [
             'class' => 'btn btn-sm btn-secondary dis_cancel',
         ]) ?>
             <?php else :?>
-    <?= Html::a('<i class="fa-solid fa-ban"></i> การจองยกเลิก', ['cancel', 'id' => $model->id], [
+    <?= Html::a('<i class="fa-solid fa-ban"></i> ยกเลิกการจอง', ['cancel', 'id' => $model->id], [
             'class' => 'btn btn-sm btn-danger',
         ]) ?>
         <?php endif;?>

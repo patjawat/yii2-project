@@ -11,68 +11,11 @@ use yii\helpers\Json;
 /** @var app\modules\vehicle\models\CategorySearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'รถ';
+$this->title = 'ห้องประชุม';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <style>
-/* table {
-    white-space: nowrap;
-    border-collapse: separate;
-    border-spacing: 0 10px;
-
-}
-
-.table {
-    position: relative;
-    border-collapse: separate;
-    border-spacing: 0 10px;
-
-}
-
-.table td,
-.table th,
-.table tr,
-.table thead,
-.table tbody {
-    border: none;
-    position: relative;
-}
-
-.table thead th {
-    border: none;
-    padding-top: 0;
-    padding-bottom: 0;
-}
-
-tbody {
-    position: relative;
-
-}
-
-tbody tr {
-    border-radius: 8px;
-    margin-bottom: 200px;
-    position: relative;
-    height: 50px;
-}
-
-tbody tr::after {
-    content: '';
-    width: 100%;
-    position: absolute;
-    left: 0;
-    right: 0;
-    // background-color: #fff;
-    background-color: #dbdfe4;
-    height: 120px;
-    z-index: 0;
-    border-radius: 8px;
-}
-
-tbody td {
-    z-index: 1;
-} */
 
 .box-img {
     position: relative;
@@ -86,16 +29,9 @@ tbody td {
 
 <h1><?= Html::encode($this->title) ?></h1>
 
-<div class="row justify-content-between">
-    <div class="col-4">
-    <p>
-        <?= Html::a('<i class="fa-solid fa-plus"></i> สร้างใหม่', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-    </div>
-    <div class="col-4">
-        <?=$this->render('_search', ['model' => $searchModel]); ?>
-    </div>
-  </div>
+<p>
+    <?= Html::a('สร้างใหม่', ['create'], ['class' => 'btn btn-success']) ?>
+</p>
 
 <?php Pjax::begin(); ?>
 <table class="table no-wrap" style="
@@ -103,7 +39,7 @@ tbody td {
 ">
     <thead>
         <tr>
-            <th width="36">#</th>
+            <th width="36px">#</th>
             <th width="200px">รูปรถ</th>
             <th>รายการ</th>
             <th width="200">ดำเนินการ</th>
@@ -124,7 +60,7 @@ tbody td {
 
             </td>
             <td>
-                <?=$model->data_json['band'];?>
+                <?=$model->data_json['room_name'];?>
             </td>
             <td>
 

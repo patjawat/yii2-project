@@ -10,38 +10,40 @@ use yii\widgets\Pjax;
 /** @var app\modules\vehicle\models\CategorySearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Categories';
+$this->title = 'ประเภทรถ';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="category-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
+<h1><?=$this->title?></h1>
+<div class="row justify-content-between">
+    <div class="col-4">
     <p>
-        <?= Html::a('Create Category', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('<i class="fa-solid fa-plus"></i> สร้างใหม่', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+    </div>
+    <div class="col-4">
+        <?=$this->render('_search', ['model' => $searchModel]); ?>
+    </div>
+  </div>
 
     <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'ref',
-            'sort',
-            'code',
-            'group_name',
-            //'type_name',
-            //'title:ntext',
-            //'description:ntext',
-            //'status',
-            //'data_json:ntext',
+            
+            [
+                'label' => 'รายการ',
+                'value' => function ($model) {
+                   return  $model->title;
+                }
+            ],
             [
                 'class' => ActionColumn::className(),
+                'header' => 'ดำเนินการ',
+                'headerOptions' => ['style' => 'width:120px'],
                 'urlCreator' => function ($action, Category $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }

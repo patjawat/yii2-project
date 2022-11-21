@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /** @var app\modules\vehicle\models\Category $model */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'ประเภทรถ', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -15,30 +15,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+    <?= Html::a('<i class="fa-regular fa-pen-to-square"></i> แก้ไข', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('<i class="fa-solid fa-trash"></i> ลบทิ้ง', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
                 'method' => 'post',
             ],
         ]) ?>
-    </p>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'ref',
-            'sort',
-            'code',
-            'group_name',
-            'type_name',
-            'title:ntext',
-            'description:ntext',
-            'status',
-            'data_json:ntext',
+            'title',
         ],
     ]) ?>
 

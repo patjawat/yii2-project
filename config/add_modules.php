@@ -51,9 +51,9 @@ $modules['gridview'] = ['class' => '\kartik\grid\Module']; //system
 $modules['gridviewKrajee'] = ['class' => '\kartik\grid\Module']; //system
 $modules['usermanager'] = ['class' => 'app\modules\usermanager\Module']; //จัดการผู้ใช้งานระบบ
 // $modules['usermanager'] = ['class' => 'app\modules\yii2-user-master\Module']; //จัดการผู้ใช้งานระบบ
-$modules['bookingcar'] = ['class' => 'app\modules\bookingcar\Module']; //system
-$modules['booking'] = ['class' => 'app\modules\booking\Module']; //system
 $modules['vehicle'] = ['class' => 'app\modules\vehicle\Module']; //system
+$modules['meeting'] = ['class' => 'app\modules\meeting\Module']; //system
+$modules['userswicth'] = ['class' => 'sky\userswitch\Module']; //Swicth
 $modules['admin'] = [
     'class' => 'mdm\admin\Module',
     'layout' => 'left-menu',

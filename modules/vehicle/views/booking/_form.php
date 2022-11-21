@@ -11,9 +11,7 @@ use yii\helpers\Url;
 use yii\web\View;
 use app\modules\vehicle\AppAsset;
 $myAssetBundle = AppAsset::register($this);
-/** @var yii\web\View $this */
-/** @var app\modules\bookingcar\models\Booking $model */
-/** @var yii\widgets\ActiveForm $form */
+
 
 $car_id = isset($car_id) ? $car_id : $model->car->photo;
 $car = Category::findOne($car_id);
@@ -54,6 +52,7 @@ $disable = false;
     <div class="col-8">
 
         <?=$form->field($model, 'ref')->hiddenInput(['maxlength' => true])->label(false)?>
+        <?=$form->field($model, 'booking_type')->hiddenInput(['value' => 'vehicle'])->label(false)?>
 
         <div class="alert alert-primary" role="alert">ข้อมูลการเดินทาง</div>
 
