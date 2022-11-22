@@ -26,8 +26,12 @@ use yii\helpers\Html;
             ยี่ห้อ : <b><?=isset($model->car->data_json['band']) ? $model->car->data_json['band'] : null?></b> | 
             รุ่น : <b><?=isset($model->car->data_json['model']) ? $model->car->data_json['model'] : null?></b>
         </div>
-        <p class="card-text" style="margin-bottom: 0px;"><i class="fa-solid fa-user-tie"></i> ผู้ขับ : <?=isset($model->driver) ? $model->driver->fullname : '-'?></p>
-        
+        <div class="d-flex justify-content-between">
+
+            <p class="card-text" style="margin-bottom: 0px;"><i class="fa-solid fa-user-tie"></i> ผู้ขอใช้รถ : <?=isset($model->data_json['fullname']) ? $model->data_json['fullname'] : '-'?></p>
+            <p class="card-text" style="margin-bottom: 0px;"><i class="fa-solid fa-user-tie"></i> ผู้ขับ : <?=isset($model->driver) ? $model->driver->fullname : '-'?></p>
+            
+        </div>
         </div>
       </div>
 

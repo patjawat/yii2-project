@@ -13,8 +13,8 @@ use app\modules\vehicle\AppAsset;
 $myAssetBundle = AppAsset::register($this);
 
 
-$car_id = isset($car_id) ? $car_id : $model->car->photo;
-$car = Category::findOne($car_id);
+$car_id = isset($car_id) ? Category::findOne($car_id)->photo : $model->car->photo;
+// $car = $model->isNewRecord ? Category::findOne($car_id) : $model->car->photo;
 
 // $disable = $model->isNewRecord ? false : (Yii::$app->user->can('driver') ? true : false); // (Yii::$app->user->can('driver') ? true : false) || ($model->isNewRecord ? false : true);
 $disable = false;
@@ -245,12 +245,7 @@ echo $form->field($model, 'province_id', [
         <?=$form->field($model, 'status_id')->hiddenInput()->label(false)?>
         <?php else:?>
         <?php
-// if(Yii::$app->user->can('driver'))
-// {
-//     $datastatus = ['success','cancel'];
-// }else{
-//     $datastatus = ['approve','success','cancel'];
-// }
+
 $datastatus = ['await','approve','success','cancel'];
                 $status = yii\helpers\ArrayHelper::map(Category::find()
                 ->where(['type_name' => 'booking_sttaus'])
@@ -275,8 +270,8 @@ echo Yii::$app->user->can('driver') ? $form->field($model, 'status_id')->inline(
         <div class="card border-0 mt-3" style="width:100%;">
             <?=Html::img(['/file', 'id' => $car_id, ['class' => 'card-img-top']])?>
             <div class="card-body">
-            <?php  if(Yii::$app->user->can('driver')):?>
-               
+                <?php  if(Yii::$app->user->can('driver') && !$model->isNewRecord):?>
+
                 <?php
 echo $form->field($model, 'driver_id', [
     'inputTemplate' => '<div class="input-group">
@@ -296,7 +291,10 @@ echo $form->field($model, 'driver_id', [
     ],
 ])->label('พนักงานขับรถ');
 ?>
-           
+
+                <?php
+           $mileage_last = $model->mileageLast();
+           ?>
                 <?=$form->field($model, 'data_json[mileage_start]', [
 
     'inputTemplate' => '<div class="input-group">
@@ -306,7 +304,7 @@ echo $form->field($model, 'driver_id', [
                                 {input}
                                 </div>',
 
-])->textInput()->label('เลขไมค์ก่อนออกเดินทาง')?>
+])->textInput(['value' => $mileage_last])->label('เลขไมค์ก่อนออกเดินทาง')?>
 
                 <?php // print_r($car->data_json['car_regis']);?>
 

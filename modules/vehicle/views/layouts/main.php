@@ -33,6 +33,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => '@w
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 
+
 <body class="d-flex flex-column h-100" style="background-color:#edf2f8;">
     <?php $this->beginBody()?>
 
@@ -50,6 +51,7 @@ echo Nav::widget([
     'items' => [
         // ['label' => '<i class="fa-solid fa-user-tag"></i> หนักงานคนขับ', 'url' => ['/vehicle/default/driver-list']],
         ['label' => '<i class="fa-solid fa-users"></i> พนักงานขับรถ', 'url' => ['/vehicle/driver']],
+        ['label' => '<i class="fa-solid fa-chart-simple"></i> รายงานการใช้รถ', 'url' => ['/vehicle/report']],
         ['label' => '<i class="fa-solid fa-book-open-reader"></i> รายการจอง'.(BookingHelper::MyBooking() > 0 ? ' <span class="badge bg-danger">'.BookingHelper::MyBooking().'</span>' : null), 'url' => ['/vehicle/booking']],
         Yii::$app->user->can('driver') ? ['label' => '<i class="fa-solid fa-user-tag"></i> ภาระกิจ'.(BookingHelper::Myjob() > 0 ? ' <span class="badge bg-danger">'.BookingHelper::Myjob().'</span>' : null), 'url' => ['/vehicle/myjob']] : '',
         Yii::$app->user->can('driver') ? ['label' => '<i class="fa-solid fa-list-ul"></i> รายการขอใช้ยานพหนะ', 'url' => ['/vehicle/booking']] : '',

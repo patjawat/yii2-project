@@ -66,7 +66,7 @@ use yii\bootstrap4\ActiveForm;
 </style>
 <div class="row justify-content-md-center">
 
-    <div class="col-md-auto">
+    <div class="col-6">
 <?php $form = ActiveForm::begin([
     'id' => 'form-usermanager',
     'fieldConfig' => [

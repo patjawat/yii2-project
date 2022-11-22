@@ -15,11 +15,12 @@ class CategorySearch extends Category
      * {@inheritdoc}
      */
     public $q;
+    public $q_date;
     public function rules()
     {
         return [
             [['id', 'status'], 'integer'],
-            [['ref', 'group_name', 'type_name', 'title', 'description', 'data_json','q'], 'safe'],
+            [['ref', 'group_name', 'type_name', 'title', 'description', 'data_json','q','q_date'], 'safe'],
         ];
     }
 

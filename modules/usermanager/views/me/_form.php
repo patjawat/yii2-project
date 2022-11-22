@@ -64,9 +64,9 @@ use yii\bootstrap4\ActiveForm;
     width: 200px;
 }
 </style>
-<div class="row justify-content-md-center">
+<div class="row">
 
-    <div class="col-md-auto">
+    <div class="col-6">
 <?php $form = ActiveForm::begin([
     'id' => 'form-usermanager',
     'fieldConfig' => [
@@ -88,14 +88,24 @@ use yii\bootstrap4\ActiveForm;
                     <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
                     <div class="box-img text-center">
                     <?= Html::img(['/file','id'=>$model->photo],['class' => 'rounded','style' => 'width:200px']) ?>
-                        <?= $form->field($model,'file')->fileInput(); ?>
+                        <?= $form->field($model,'file')->fileInput()->label('&nbsp'); ?>
                     </div>
 
                     <br>
 
+                    <div class="form-group row field-user-phone">
+<label class="col-lg-4 col-md-4 col-sm-4" for="user-phone">&nbsp;</label>
+<div class="col-lg-8 col-md-8 col-sm-8">
+
+
                     <?= Html::submitButton('<i class="fa-solid fa-check"></i> บันทึก', ['class' => 'btn btn-success']) ?>
 
 <?= Html::a('<i class="fas fa-redo"></i> ยกเลิก', ['/me/index'], ['class' => 'btn btn-secondary link-loading', 'title' =>  'Reset Grid']) ?>
+
+<div class="invalid-feedback "></div>
+
+</div>
+</div>
 
                 <?php ActiveForm::end(); ?>
     </div>

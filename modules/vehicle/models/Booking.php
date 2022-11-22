@@ -6,6 +6,7 @@ use Yii;
 use yii\helpers\Json;
 use yii\helpers\Html;
 use yii\db\Expression;
+
 use \yii\db\ActiveRecord;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -139,6 +140,27 @@ class Booking extends \yii\db\ActiveRecord
         ->bindValue(':id', $this->driver_id)
         ->queryScalar();
         return $driver;
+    }
+
+    public function MileageRang()
+    {
+        $start = isset($this->data_json['mileage_start']) ? $this->data_json['mileage_start'] : null;
+        $end = isset($this->data_json['mileage_end']) ? $this->data_json['mileage_end'] : null;
+        if($start !== null && $end !== null){
+            return (int)$end - (int)$start;;
+        }else{
+            return '-';
+        }
+    }
+
+    public function MileageLast()
+    {
+            $model = self::find()->where(['status_id' => 'success','car_id' => $this->car_id])->orderBy(['id' =>SORT_DESC])->one();
+            if($model && $this->status_id == 'approve'){
+                return isset($model->data_json['mileage_end']) ? $model->data_json['mileage_end'] : null;
+            }else{
+                return null;
+            }
     }
 
     public function CountByStatus()

@@ -26,6 +26,7 @@ td>img {
 <h1>admin</h1>
 <?php endif; ?>
 
+<?php Pjax::begin()?>
 <div class="booking-index">
 
     <div class="d-flex bd-highlight">
@@ -123,3 +124,4 @@ function CancelWarnings() {
 JS;
 $this->registerJs($js,View::POS_END)
 ?>
+<?php Pjax::end()?>

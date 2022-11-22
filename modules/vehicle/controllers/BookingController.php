@@ -50,6 +50,11 @@ class BookingController extends Controller
         if(!Yii::$app->user->can('driver')){
         $dataProvider->query->andWhere(['created_by' => Yii::$app->user->id]);
         $dataProvider->query->andWhere(['<>','status_id','cancel']);
+        $dataProvider->setSort([
+            'defaultOrder' => [
+                'created_at' => SORT_ASC,
+            ]
+        ]);
         }
 
         return $this->render('index', [
@@ -66,7 +71,17 @@ class BookingController extends Controller
      */
     public function actionView($id)
     {
-        if(Yii::$app->request->isAjax){
+        $model = $this->findModel($id);
+    
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+
+       
+    }
+
+    public function actionViewAjax($id)
+    {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $model = $this->findModel($id);
             return[
@@ -76,12 +91,7 @@ class BookingController extends Controller
                 ])
                 ];
             
-        }else{
-            return $this->render('view', [
-                'model' => $this->findModel($id),
-            ]);
-        }
-       
+
     }
 
     /**

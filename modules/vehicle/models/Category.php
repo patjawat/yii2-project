@@ -24,6 +24,7 @@ class Category extends \yii\db\ActiveRecord
      */
     public $file;
     public $q;
+    public $q_date;
     public static function tableName()
     {
         return 'category';
@@ -39,7 +40,7 @@ class Category extends \yii\db\ActiveRecord
             [['status'], 'integer'],
             [['ref'], 'string', 'max' => 200],
             [['group_name', 'type_name'], 'string', 'max' => 255],
-            [['data_json','code','photo','q'], 'safe'],
+            [['data_json','code','photo','q','q_date'], 'safe'],
         ];
     }
 
@@ -113,6 +114,13 @@ class Category extends \yii\db\ActiveRecord
         return $query;
     }
 
+    public function getBooking() {
+        return $this->hasMany(Booking::className(), ['car_id' => 'id']);
+    }
 
+    public function getBookingSuccess() {
+        return $this->hasMany(Booking::className(), ['car_id' => 'id'])
+        ->andOnCondition(['status_id' => 'success']);
+    }
 
 }
