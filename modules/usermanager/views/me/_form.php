@@ -86,6 +86,7 @@ use yii\bootstrap4\ActiveForm;
                     <?php //  $form->field($model, 'license_number')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'data_json[link]')->textInput(['maxlength' => true,'placeholder' =>'เช่น https://docs.google.com/'])->label('แบบประเมิน Link') ?>
                     <div class="box-img text-center">
                     <?= Html::img(['/file','id'=>$model->photo],['class' => 'rounded','style' => 'width:200px']) ?>
                         <?= $form->field($model,'file')->fileInput()->label('&nbsp'); ?>

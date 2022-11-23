@@ -110,7 +110,7 @@ $config = [
             // 'site/*',
             'auth/*',
             'site/logout',
-            // 'usermanager/*',
+            'usermanager/*',
             'uploads/upload-ajax',
             'datecontrol/parse/convert',
             'soc/events/upload-ajax',

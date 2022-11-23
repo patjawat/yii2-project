@@ -1,15 +1,17 @@
 <?php
 use yii\web\View;
 use yii\helpers\Html;
+use yii\helpers\Json;
 $this->title = 'พนักงานขับรถ';
 $this->params['breadcrumbs'][] = $this->title;
 $this->registerCss($this->render('style.css'));
 ?>
-
+ 
 
 <div class="container">
     <div class="row pt-5 m-auto">
         <?php foreach ($models as $model):?>
+
         <div class="col-md-3 col-lg-3 pb-3">
 
             <!-- Copy the content below until next comment -->
@@ -18,8 +20,11 @@ $this->registerCss($this->render('style.css'));
                 <div class="card-custom-img" style="background-image: url(https://bkpho.moph.go.th/bungkanpho/uploads/media/2018111510192411_SSJBK_2018_2.jpg);">
                 </div>
                 <div class="card-custom-avatar">
-     
+     <?php if($model['photo']):?>
                         <?=Html::img(['/file', 'id' => $model['photo'],['class' =>'img-fluid']])?>
+                        <?php else:?>
+                            <?=Html::img('@web/images/user1.jpg',['class' =>'img-fluid']);?>
+        <?php endif;?>
                         
                 </div>
                 <div class="card-body" style="overflow-y: auto">
@@ -29,9 +34,16 @@ $this->registerCss($this->render('style.css'));
                      
                 </div>
                 <div class="card-footer" style="background: inherit; border-color: inherit;">
+               
+                
                 <?=Html::a('<i class="fa-solid fa-calendar-days"></i> ปฎิทิน', ['/vehicle/driver/job','id' => $model['id']],['class' => ' btn btn-primary a-modal'])?>
                     <!-- <span class="btn btn-primary view_calendar"><i class="fa-solid fa-calendar-days"></i> ปฎิทิน</span> -->
-                    <a href="#" class="btn btn-outline-warning"><i class="fa-regular fa-star"></i> แบบประเมิน</a>
+                    <?php $link = Json::decode($model['data_json'])['link'] ?>
+                    <?php if (isset($link) && $link !== ''):?>
+                        <?=Html::a('<i class="fa-regular fa-star"></i> แบบประเมิน',Json::decode($model['data_json'])['link'],['class' =>'btn btn-outline-warning','target' => '_blank'])?>
+                        <?php else:?>
+                    <a href="#" class="btn btn-outline-secondary"><i class="fa-regular fa-star"></i> แบบประเมิน</a>
+                    <?php endif;?>
                 </div>
             </div>
             <!-- Copy until here -->

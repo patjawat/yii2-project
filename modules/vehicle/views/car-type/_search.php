@@ -19,13 +19,10 @@ use yii\bootstrap5\ActiveForm;
     ]); ?>
 
     <?= $form->field($model, 'title',[
-    'inputTemplate' => '<div class="input-group">
-    {input}
-    <div class="input-group-prepend">
-    '.Html::submitButton('<i class="fa-solid fa-magnifying-glass"></i> ค้นหา', ['class' => 'btn btn-primary']).'
-    </div>
-    </div>',
-])->label(false) ?>
+        'inputTemplate' => 
+        '<div class="input-group">{input}'.Html::submitButton('<i class="fas fa-search"></i>', 
+        ['class' => 'btn btn-primary']).'</div>',
+    ])->label(false) ?>
 
     <?php ActiveForm::end(); ?>
 

@@ -17,6 +17,20 @@ class SiteController extends Controller
     /**
      * {@inheritdoc}
      */
+
+    public function beforeAction( $action ) {
+        if ( parent::beforeAction ( $action ) ) {
+    
+             //change layout for error action after 
+             //checking for the error action name 
+             //so that the layout is set for errors only
+            if ( $action->id == 'error' ) {
+                $this->layout = 'blank';
+            }
+            return true;
+        } 
+    }
+
     public function behaviors()
     {
         return [

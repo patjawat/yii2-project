@@ -10,7 +10,7 @@ class DriverController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        $sql = "SELECT u.id,u.fullname,u.phone,u.photo FROM auth_assignment a INNER JOIN user u ON u.id = a.user_id where item_name='driver';";
+        $sql = "SELECT u.id,u.fullname,u.phone,u.photo,u.data_json FROM auth_assignment a INNER JOIN user u ON u.id = a.user_id where item_name='driver';";
         $models = Yii::$app->db->createCommand($sql)->queryAll();
         return $this->render('index',['models' => $models]);
     }

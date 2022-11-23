@@ -8,6 +8,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Json;
 
 class User extends ActiveRecord implements IdentityInterface {
 
@@ -75,7 +76,7 @@ class User extends ActiveRecord implements IdentityInterface {
             ['confirm_password', 'string', 'min' => 6],
             ['confirm_password', 'compare', 'compareAttribute' => 'password'],
             ['phone', 'string', 'min' => 10, 'max' => 10],
-            [['roles', 'doctor_id', 'fullname','fullname_en','license_number','q', 'old_password','phone','photo'], 'safe'],
+            [['roles', 'doctor_id', 'fullname','fullname_en','license_number','q', 'old_password','phone','photo','data_json'], 'safe'],
             
         ];
     }
@@ -98,6 +99,20 @@ class User extends ActiveRecord implements IdentityInterface {
             'fullname_en' => 'ชื่อ - สกุลแพทย์(อังกฤษ)',
             'phone' => 'หมายเลขโทรศัพท์'
         ];
+    }
+
+    public function afterFind() {
+        $this->data_json = Json::decode($this->data_json, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        return parent::afterFind();
+    }
+
+    public function beforeSave($insert) {
+        if (parent::beforeSave($insert)) {
+            $this->data_json = Json::encode($this->data_json, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

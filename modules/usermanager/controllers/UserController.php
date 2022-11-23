@@ -78,12 +78,12 @@ class UserController extends Controller
             $model->setPassword($model->password);
             $model->generateAuthKey();
 
-             // Upload image
-             $file = UploadedFile::getInstance($model, 'file');
-             if($fileModel = FileModel::saveAs($file,['uploadPath' => Yii::getAlias('@webroot').'/uploads/users'])){
-             $model->id = $fileModel->id;
-             // End Upload File
-             }
+            //  // Upload image
+            //  $file = UploadedFile::getInstance($model, 'file');
+            //  if($fileModel = FileModel::saveAs($file,['uploadPath' => Yii::getAlias('@webroot').'/uploads/users'])){
+            //  $model->photo = $fileModel->id;
+            //  // End Upload File
+            //  }
              
             if($model->save()){
               $model->assignment();

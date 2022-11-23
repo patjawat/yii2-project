@@ -1,5 +1,6 @@
 
 window.onbeforeunload = function () { 
+    alert('Please');
     $('#main-modal').modal('hide');
     $('#awaitLogin').show();
     $('#content-container').hide();

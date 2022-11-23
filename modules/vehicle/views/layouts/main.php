@@ -56,7 +56,7 @@ echo Nav::widget([
         Yii::$app->user->can('driver') ? ['label' => '<i class="fa-solid fa-user-tag"></i> ภาระกิจ'.(BookingHelper::Myjob() > 0 ? ' <span class="badge bg-danger">'.BookingHelper::Myjob().'</span>' : null), 'url' => ['/vehicle/myjob']] : '',
         Yii::$app->user->can('driver') ? ['label' => '<i class="fa-solid fa-list-ul"></i> รายการขอใช้ยานพหนะ', 'url' => ['/vehicle/booking']] : '',
         ['label' => '<i class="fa-solid fa-user-check"></i> โปรไฟล์', 'url' => '/me'],
-        Yii::$app->user->can('manager') ? [
+        Yii::$app->user->can('admin') ? [
             'label' => 'ตั้งค่า', 
             'items' => [
                 ['label' => '<i class="fa-solid fa-user-shield"></i> ผู้ใช้งานระบบ', 'url' => '/usermanager'],
@@ -124,7 +124,7 @@ NavBar::end();
             <div id="awaitLogin" style="display:none;margin-top:100px">
                 <div class="d-flex justify-content-center">
                     <div style="position:relative;width:10%;">
-                        <?=Html::img('@web/images/cctv-logo.svg',['style' => 'position: absolute;width: 60px;top: 25px;left: 16px;']);?>
+                        <?=Html::img('@web/images/moph_logo.png',['style' => 'position: absolute;width: 100px;top:1px;left:1px;']);?>
                         <div class="dbl-spinner"></div>
                         <div class="dbl-spinner"></div>
                         <h6 style="position: absolute;top:115px;left:8%;">กำลังโหลด...</h6>
