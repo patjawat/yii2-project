@@ -145,7 +145,7 @@ NavBar::end();
                 <div class="col-md-6 text-center text-md-start">&copy; โรงพยาบาลบึงกาฬ <?=date('Y')?></div>
                 <div class="col-md-6 text-center text-md-end">นายปัจวัฒน์ ศรีบุญเรือง : ผู้พัฒนา 
                     <a href="https://www.facebook.com/patjawat"><i class="fa-brands fa-facebook"></i></a> | 
-                    <a href="https://www.facebook.com/patjawat" class="text-success"><i class="fa-brands fa-line"></i></a> 
+                    <a href="https://line.me/ti/p/VYINEcV-kE" class="text-success"><i class="fa-brands fa-line"></i></a> 
                  </div>
             </div>
         </div>
