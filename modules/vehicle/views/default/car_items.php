@@ -41,14 +41,6 @@ $this->params['breadcrumbs'][] = $this->title;
             $delay = 3;
             ?>
         <?php foreach ($dataProviderCar->getModels() as $model):?>
-            <?php
-            $start = explode(' ',$searchModel->start);
-            // $bookingCount = Booking::find()->where(['like', 'start', $start[0] . '%', false])
-            $bookingCount = Booking::find()->where(['like', 'start', $start[0], false])
-            ->andWhere(['car_id' => $model->id])
-            ->andWhere(['<>','status_id','cancel'])
-            ->count();
-            ?>
 
         <tr class="align-middle" >
             <td><?=$i++;?></td>
