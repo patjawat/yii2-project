@@ -39,7 +39,7 @@ $this->registerCss($this->render('style.css'));
                 <?=Html::a('<i class="fa-solid fa-calendar-days"></i> ปฎิทิน', ['/vehicle/driver/job','id' => $model['id']],['class' => ' btn btn-primary a-modal'])?>
                     <!-- <span class="btn btn-primary view_calendar"><i class="fa-solid fa-calendar-days"></i> ปฎิทิน</span> -->
                     <?php $link = Json::decode($model['data_json']); ?>
-                    <?php if (isset($link) && $link['link']):?>
+                    <?php if (isset($link) && isset($link['link'])):?>
                         <?=Html::a('<i class="fa-regular fa-star"></i> แบบประเมิน',[$link['link']],['class' =>'btn btn-outline-warning','target' => '_blank'])?>
                         <?php else:?>
                     <a href="#" class="btn btn-outline-secondary"><i class="fa-regular fa-star"></i> แบบประเมิน</a>
