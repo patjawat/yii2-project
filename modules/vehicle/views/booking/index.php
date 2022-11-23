@@ -21,11 +21,6 @@ td>img {
     width: 100px;
 }
 </style>
-
-<?php if(Yii::$app->user->can('admin')):?>
-<h1>admin</h1>
-<?php endif; ?>
-
 <?php Pjax::begin()?>
 <div class="booking-index">
 

@@ -17,7 +17,7 @@ $this->registerCss($this->render('style.css'));
             <!-- Copy the content below until next comment -->
             <div class="card card-custom bg-white border-white border-0">
                 <!-- <div class="card-custom-img" style="background-image: url(http://res.cloudinary.com/d3/image/upload/c_scale,q_auto:good,w_1110/trianglify-v1-cs85g_cc5d2i.jpg);"> -->
-                <div class="card-custom-img" style="background-image: url(https://bkpho.moph.go.th/bungkanpho/uploads/media/2018111510192411_SSJBK_2018_2.jpg);">
+                <div class="card-custom-img" style="background-image: url(https://bkpho.moph.go.th/bungkanpho/uploads/media/2018111510192411_SSJBK_2018_2.jpg);filter: brightness(91%);">
                 </div>
                 <div class="card-custom-avatar">
      <?php if($model['photo']):?>

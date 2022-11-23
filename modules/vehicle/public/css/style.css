@@ -12,6 +12,8 @@ html, body {
 
 h1,h2,h3,h4,h5,h6 {
     font-family: 'Prompt', sans-serif !important;
+    color: #198754;
+
 }
 .bd-masthead {
     --bd-pink-rgb: 214,51,132;
