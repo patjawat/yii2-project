@@ -6,6 +6,8 @@ use app\models\Uploads;
 use Yii;
 use yii\base\Component;
 use yii\helpers\Html;
+use app\modules\usermanager\models\User;
+use app\modules\usermanager\models\Auth;
 
 //use yii\helpers\Url;
 
@@ -41,6 +43,14 @@ class SystemHelper extends Component
         // ]);
        return  \Yii::$app->session->get('data');
         
+    }
+
+
+    public static function ProfileLine(){
+        $userId = Yii::$app->user->id;
+    
+        $user = Auth::find()->where(['user_id' => $userId,'source' => 'line'])->one();
+        return $user;
     }
 
     
@@ -131,36 +141,10 @@ class SystemHelper extends Component
   
             }
         }
-        // if (file_exists($file_path)) {
-        //     return $file_path;
-        // $file_path = "/soc/events/image?file_path=$file_path&width=800&height=800";
-        // return Html::img($file_path, ['class' => 'file-preview-image', 'loading' => 'lazy']);
-        // }
-        // return Html::img('@web/img/image-placeholder.png', ['class' => 'file-preview-image', 'loading' => 'lazy']);
+
     }
 
-    public static function getImageUploadxx($id)
-    {
-        $model = Uploads::find()->where(['upload_id' => $id])->One();
-        //self::setOwner(self::getUploadPath() . $hn);
-        if ($model) {
-            $file_path = self::getUploadPath() . $model->ref . '/' . $model->real_filename;
-            $file_ = pathinfo($file_path);
-            if (file_exists($file_path)) {
-                $file_path = "/soc/events/image?file_path=$file_path&width=800&height=800";
-                if (strtolower($file_['extension']) == 'png') {
-                    return Html::img($file_path, ['class' => 'file-preview-image', 'loading' => 'lazy']);
-
-                }
-            }
-        }
-        // if (file_exists($file_path)) {
-        //     return $file_path;
-        // $file_path = "/soc/events/image?file_path=$file_path&width=800&height=800";
-        // return Html::img($file_path, ['class' => 'file-preview-image', 'loading' => 'lazy']);
-        // }
-        // return Html::img('@web/img/image-placeholder.png', ['class' => 'file-preview-image', 'loading' => 'lazy']);
-    }
+ 
 
     /**
      * แปลงไฟล์สำหรับใช้งาน

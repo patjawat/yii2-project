@@ -1,7 +1,8 @@
 <?php
-
+use yii\web\View;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use app\components\SystemHelper;
 
 /** @var yii\web\View $this */
 /** @var app\modules\vehicle\models\Category $model */
@@ -26,6 +27,11 @@ $this->params['breadcrumbs'][] = 'Profile';
 
     <p data-aos="fade-up">
         <?= Html::a('<i class="fa-regular fa-pen-to-square"></i> แก้ไข', ['update'], ['class' => 'btn btn-primary']) ?>
+
+        <?php if(!SystemHelper::ProfileLine()):?>
+
+        <?= Html::a('<i class="fa-brands fa-line"></i> เชื่อม Line Officail', ['/usermanager/line'], ['class' => 'btn btn-success']) ?>
+        <?php endif;?>
     </p>
 
     <div class="row">
@@ -47,5 +53,5 @@ $this->params['breadcrumbs'][] = 'Profile';
         </div>
     </div>
     </div>
-
 </div>
+

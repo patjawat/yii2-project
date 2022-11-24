@@ -1,6 +1,5 @@
 
 window.onbeforeunload = function () { 
-    alert('Please');
     $('#main-modal').modal('hide');
     $('#awaitLogin').show();
     $('#content-container').hide();
@@ -53,6 +52,15 @@ try {
             $('#main-modal-label').html(response.title);
             $('.modal-body').html(response.content);
             $('.modal-footer').html(response.footer);
+            $(".modal-dialog").removeClass('modal-sm');
+            $(".modal-dialog").addClass('modal-lg');
+            $('.modal-content').addClass('card-outline card-primary');
+        },
+        error:function (xhr, ajaxOptions, thrownError){
+            $('#main-modal').modal('show');
+            $('#main-modal-label').html(xhr.status);
+            $('.modal-body').html(thrownError);
+            // $('.modal-footer').html(response.footer);
             $(".modal-dialog").removeClass('modal-sm');
             $(".modal-dialog").addClass('modal-lg');
             $('.modal-content').addClass('card-outline card-primary');

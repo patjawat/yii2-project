@@ -62,6 +62,16 @@ class MeController extends \yii\web\Controller
         }
     }
 
+
+    public function actionLineConnect()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return [
+            'title' =>'Line Connect',
+            'content' => $this->renderAjax('@app/modules/usermanager/views/me/line_connect')
+        ];
+    }
+
     protected function findModel()
     {
         if (($model = User::findOne(Yii::$app->user->id)) !== null) {
