@@ -33,8 +33,24 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => '@w
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 
-
+<style>
+    html, body {
+    font-family: 'Prompt', sans-serif;
+    font-size: 0.95rem;
+    background: #fafafa;
+    overflow-x: hidden;
+    overflow-y: auto;
+    letter-spacing: 0.05px;
+    font-weight: 200;
+    background: linear-gradient( 180deg, rgba(178, 223, 219, 0.6965379901960784) 0%, rgba(224, 242, 241, 0) 100% ), URL("<?=$myAssetBundle->baseUrl.'/images/5570863.jpg'?>");
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center center;
+    /* font-family: 'THSarabunNew',Tahoma; */
+}
+</style>
 <body class="d-flex flex-column h-100" style="background-color:#edf2f8;">
+<!-- <body class="d-flex flex-column h-100" style="background-image: url('<?=$myAssetBundle->baseUrl.'/images/bg-image.png'?>'); -->
     <?php $this->beginBody()?>
 
     <header id="header">
@@ -42,7 +58,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => '@w
 NavBar::begin([
     'brandLabel' => 'ระบบบริหารยานพาหนะ',
     'brandUrl' => Yii::$app->homeUrl,
-    'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark'],
+    'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top'],
 ]);
 
 echo Nav::widget([
@@ -72,12 +88,12 @@ echo Nav::widget([
         . Html::beginForm(['/auth/logout'])
         // . Html::submitButton(
         //     '<i class="fa-solid fa-power-off"></i> (' . Yii::$app->user->identity->username . ')',
-        //     ['class' => 'btn btn-outline-danger btn-sm logout']
+        //     ['class' => 'btn btn-outline-danger logout']
         // )
         // . Html::endForm()
         . Html::submitButton(
             '<i class="fa-solid fa-power-off"></i> ออกจากระบบ ',
-            ['class' => 'btn btn-danger btn-sm logout']
+            ['class' => 'btn btn-danger logout']
         )
         . Html::endForm()
         . '</li>',
@@ -132,6 +148,7 @@ NavBar::end();
                 </div>
             </div>
             <div id="content-container">
+                <br><br>
                 <?= $content ?>
             </div>
         </div>

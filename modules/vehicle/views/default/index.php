@@ -12,7 +12,7 @@ $AssetBundle = AppAsset::register($this);
 
         <div class="col-6">
             <br>
-            <div class="card">
+            <div class="card border-0">
                 <div class="card-body">
                    
         
@@ -67,7 +67,7 @@ $AssetBundle = AppAsset::register($this);
 
 
 <?php
-$viewUrl = Url::to(['/vehicle/booking/view']);
+$viewUrl = Url::to(['/vehicle/booking/view-ajax']);
 $js = <<< JS
 
 function BookingView(id){

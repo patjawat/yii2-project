@@ -45,11 +45,23 @@ $disable = false;
     top: -10;
     box-shadow: 0px 5px 50px 0px #084298, 0px 0px 0px 2px rgb(107 74 255 / 50%);
 }
+
+.form-control {
+    /* border-radius: 1.2em !important; */
+    border: 1px solid #eceff1 !important;
+    letter-spacing: 0px !important;
+    font-weight: normal !important;
+    background-color: #eceff1 !important;
+}
 </style>
 
 <?php $form = ActiveForm::begin();?>
 <div class="row">
     <div class="col-8">
+
+    <div class="card border-0 border-radius-lg">
+                    <div class="card-body">
+                     
 
         <?=$form->field($model, 'ref')->hiddenInput(['maxlength' => true])->label(false)?>
         <?=$form->field($model, 'booking_type')->hiddenInput(['value' => 'vehicle'])->label(false)?>
@@ -59,33 +71,32 @@ $disable = false;
         <div class="row justify-content-between">
             <div class="col-4">
                 <?=$form->field($model, 'start')->widget(DateTimePicker::classname(), [
-    'options' => ['placeholder' => 'เลือกวันเวลาที่ออกเดินทาง ...'],
-    'language' => 'th',
-    'readonly' => true,
-    'disabled' =>$disable,
-    'pluginOptions' => [
-        'autoclose' => true,
-    ],
-])->label('วันเวลาที่ออกเดินทาง');
-?>
+                    'options' => ['placeholder' => 'เลือกวันเวลาที่ออกเดินทาง ...'],
+                    'language' => 'th',
+                    'readonly' => true,
+                    'disabled' =>$disable,
+                    'pluginOptions' => [
+                        'autoclose' => true,
+                    ],
+                ])->label('วันเวลาที่ออกเดินทาง');
+                ?>
             </div>
             <div class="col-8">
 
                 <?=$form->field($model, 'title', [
+                'inputTemplate' => '<div class="input-group">
+                            <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa-regular fa-pen-to-square"></i>&nbsp;</span>
+                            </div>
+                            {input}
+                            </div>',
+                'inputOptions' =>
+                [
+                    'autofocus' => 'autofocus',
+                    'tabindex' => '1',
+                ],
 
-    'inputTemplate' => '<div class="input-group">
-                <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fa-regular fa-pen-to-square"></i>&nbsp;</span>
-                </div>
-                {input}
-                </div>',
-    'inputOptions' =>
-    [
-        'autofocus' => 'autofocus',
-        'tabindex' => '1',
-    ],
-
-])->textInput(['disabled' =>$disable])->label('วัตถุประสงค์การจอง')?>
+            ])->textInput(['disabled' =>$disable])->label('วัตถุประสงค์การจอง')?>
 
             </div>
         </div>
@@ -93,34 +104,35 @@ $disable = false;
         <div class="row">
             <div class="col-4">
                 <?=$form->field($model, 'data_json[point]', [
-    'inputTemplate' => '<div class="input-group">
-                <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fa-solid fa-map-location-dot"></i>&nbsp;</span>
-                </div>
-                {input}
-                </div>',
-    'inputOptions' =>
-    [
-        'required' => true,
-    ],
-])->textInput(['disabled' =>$disable])->label('จุดหมายปลายทาง')?>
+                'inputTemplate' => '<div class="input-group">
+                            <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa-solid fa-map-location-dot"></i>&nbsp;</span>
+                            </div>
+                            {input}
+                            </div>',
+                'inputOptions' =>
+                [
+                    'required' => true,
+                ],
+            ])->textInput(['disabled' =>$disable])->label('จุดหมายปลายทาง')?>
             </div>
             <div class="col-4">
                 <?php
-echo $form->field($model, 'province_id', [
-    'inputTemplate' => '<div class="input-group">
-    <div class="input-group-prepend">
-    <span class="input-group-text"><i class="fa-solid fa-building-circle-check"></i>&nbsp;</span>
-    </div>
-    {input}
-    </div>',
-])->widget(Select2::classname(), [
-    'options' => ['placeholder' => 'เลือกจังหวัด ...'],
-    'disabled' =>$disable,
-    'data' => ArrayHelper::map(Provinces::find()->all(), 'id', 'name_th'),
-]);
-?>
-            </div>
+                    echo $form->field($model, 'province_id', [
+                        'inputTemplate' => '<div class="input-group">
+                        <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fa-solid fa-building-circle-check"></i>&nbsp;</span>
+                        </div>
+                        {input}
+                        </div>',
+                    ])->widget(Select2::classname(), [
+                        'options' => ['placeholder' => 'เลือกจังหวัด ...'],
+                        'disabled' =>$disable,
+                        'data' => ArrayHelper::map(Provinces::find()->all(), 'id', 'name_th'),
+                    ]);
+                    ?>
+                 
+                </div>
             <div class="col-4">
                 <?=$form->field($model, 'district_id', [
     'inputTemplate' => '<div class="input-group">
@@ -264,10 +276,17 @@ echo Yii::$app->user->can('driver') ? $form->field($model, 'status_id')->inline(
         </div>
 
         <?php ActiveForm::end();?>
+
+
+        </div>
+                   </div>
+                   <!-- emd body -->
+
     </div>
+    <!-- end col-8 -->
     <div class="col-4">
 
-        <div class="card border-0 mt-3" style="width:100%;">
+        <div class="card border-0" style="width:100%;">
             <?=Html::img(['/file', 'id' => $car_id, ['class' => 'card-img-top']])?>
             <div class="card-body">
                 <?php  if(Yii::$app->user->can('driver') && !$model->isNewRecord):?>

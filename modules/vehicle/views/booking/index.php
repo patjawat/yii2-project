@@ -20,6 +20,10 @@ $this->params['breadcrumbs'][] = $this->title;
 td>img {
     width: 100px;
 }
+table {
+    background-color: #fff;
+}
+
 </style>
 <?php Pjax::begin()?>
 <div class="booking-index">

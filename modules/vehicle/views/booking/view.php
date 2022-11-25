@@ -22,7 +22,9 @@ $this->params['breadcrumbs'][] = $this->title;
     position: relative;
     margin-bottom: 20px;
 }
-
+table {
+    background-color: #fff;
+}
 .card-driver {
     /* border-radius: 50%;
     width: 116px;
@@ -37,15 +39,15 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-8">
         
 <p>
-        <?= Html::a('<i class="fa-regular fa-pen-to-square"></i> แก้ไข', ['update', 'id' => $model->id], ['class' => 'btn btn-sm btn-primary']) ?>
+        <?= Html::a('<i class="fa-regular fa-pen-to-square"></i> แก้ไข', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
        
         <?php if($model->status_id == 'approve'):?>
             <?= Html::a('<i class="fa-solid fa-ban"></i> ยกเลิกการจอง', ['cancel', 'id' => $model->id], [
-            'class' => 'btn btn-sm btn-secondary dis_cancel',
+            'class' => 'btn btn-secondary dis_cancel',
         ]) ?>
             <?php else :?>
     <?= Html::a('<i class="fa-solid fa-ban"></i> ยกเลิกการจอง', ['cancel', 'id' => $model->id], [
-            'class' => 'btn btn-sm btn-danger',
+            'class' => 'btn btn-danger',
         ]) ?>
         <?php endif;?>
 
