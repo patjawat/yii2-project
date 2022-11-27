@@ -28,8 +28,8 @@ h1,h2,h3,h4,h5,h6 {
 }
 .bg-dark {
     --bs-bg-opacity: 1;
-    /* background-color: #3b3f5c !important;  */
-    background: linear-gradient(132deg,#1b8b84 15%,#338861 48%,#055160 79%);
+    /* background-color: #3b3f5c !important; */
+    background: linear-gradient(132deg,#178681 15%,#055160 48%,#283746 79%);
 }
 /* btn */
 
