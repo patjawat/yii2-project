@@ -55,7 +55,8 @@
         "kalyabin/yii2-select-google-map-location": "*",
         "mdmsoft/yii2-upload-file": "~2.0",
         "yiisoft/yii2-authclient": "^2.2",
-        "sky/yii2-user-switch": "*"
+        "sky/yii2-user-switch": "*",
+        "phpoffice/phpword": "^1.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
