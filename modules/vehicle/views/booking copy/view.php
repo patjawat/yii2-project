@@ -37,12 +37,8 @@ table {
 </style>
 <div class="row">
     <div class="col-8">
-
         
 <p>
-<?= Html::a('<i class="fa-regular fa-pen-to-square"></i> พิมพ์ใบเบิกค่าเดินทาง', ['view', 'id' => $model->id], ['class' => 'btn btn-success',[
-    'data' => ['pjax' => false]
-    ]]) ?>
         <?= Html::a('<i class="fa-regular fa-pen-to-square"></i> แก้ไข', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
        
         <?php if($model->status_id == 'approve'):?>
@@ -54,10 +50,8 @@ table {
             'class' => 'btn btn-danger',
         ]) ?>
         <?php endif;?>
-        
 
     </p>
-    
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [

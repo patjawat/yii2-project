@@ -39,5 +39,5 @@ switch ($model->status_id) {
 
 ?>
 
-<span class="text-<?=$status['color'];?>"><?=$status['icon'].' '.$model->status->title?></span>
+<span class="-<?=$status['color'];?>"><?=$status['icon'].' '.$model->status->title?></span>
 <?php // Html::a($status['icon'].' '.$model->status->title,['/'],['class' => 'btn btn-'.$status['color'].' position-relative'])?>

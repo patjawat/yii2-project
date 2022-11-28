@@ -63,57 +63,13 @@ table {
                 'header'=>'#',
             ],
             [
-                'header' => 'เรื่อง',
-                'vAlign' => 'middle',
+                'header' => 'รายละเอียดการขอใช้ยานพาหนะ',
+                'width' => '60%',
                 'format' => 'raw',
                 'value' => function($model){
-                    return $model->title;
+                    return $this->render('view_car',['model' => $model]);
                 }
             ],
-
-           
-            
-            [
-                'header' => 'ผู้ขอใช้',
-                'vAlign' => 'middle',
-                'width' => '100px',
-                'format' => 'raw',
-                'value' => function($model){
-                    return $model->data_json['fullname'];
-                }
-            ],
-            [
-                'header' => 'ยานพาหนะ',
-                'vAlign' => 'middle',
-                'width' => '100px',
-                // 'width' => '40%',
-                'format' => 'raw',
-                'value' => function($model){
-                    return $model->car->data_json['car_regis'];
-                }
-            ],
-            [
-                'header' => 'ผู้ขับ',
-                'vAlign' => 'middle',
-                // 'width' => '40%',
-                'format' => 'raw',
-                'value' => function($model){
-                    return isset($model->driver) ? $model->driver->fullname : '-';
-                }
-            ],
-            
-            
-            
-            [
-                'header' => 'วันออกเดินทาง',
-                'width' => '150px',
-                'format' => 'raw',
-                'vAlign' => 'middle',
-                'value' => function($model){
-                    return $model->start;
-                }
-            ],
-            
             [
                 'attribute' =>'status_id',
                 'format' =>'raw',
@@ -129,7 +85,6 @@ table {
             [
                 'header' => 'ดำเนินการ',
                 'format' =>'raw',
-                 'width' => '280px',
                 'hAlign' => 'center',
                 'vAlign' => 'middle',
                 'value' => function($model){
