@@ -107,7 +107,7 @@ $config = [
     'as access' => [
         'class' => 'mdm\admin\components\AccessControl',
         'allowActions' => [
-            '*',
+            // '*',
             // 'site/*',
             'authenticator/default/scan/*',
             'auth/*',
