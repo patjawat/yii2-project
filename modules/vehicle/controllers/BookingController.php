@@ -300,7 +300,7 @@ class BookingController extends Controller
 
     public function actionDocument(){
 
-        Settings::setTempDir(Yii::getAlias('@webroot').'/temp/');
+        // Settings::setTempDir(Yii::getAlias('@webroot').'/temp/');
         $id = $this->request->get('id');
 
         $model = $this->findModel($id);
