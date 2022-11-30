@@ -5,8 +5,6 @@ services:
     volumes:
       - ~/.composer-docker/cache:/root/.composer/cache:delegated
       - ./:/app:delegated
-      # - ./docker/php/php-config/php.ini:/usr/local/etc/php
-      - ./docker/php/php.ini:/usr/local/etc/php/conf.d/php.ini
       
     ports:
       - '81:80'
