@@ -8,9 +8,10 @@ $modules = require __DIR__ . '/add_modules.php';
 $config = [
     'id' => 'basic',
     'timeZone' => 'Asia/Bangkok',
+    'language' => 'th-TH',
     'defaultRoute' =>'vehicle',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log','authenticator'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
@@ -106,8 +107,9 @@ $config = [
     'as access' => [
         'class' => 'mdm\admin\components\AccessControl',
         'allowActions' => [
-            // '*',
+            '*',
             // 'site/*',
+            'authenticator/default/scan/*',
             'auth/*',
             'site/logout',
             'usermanager/*',

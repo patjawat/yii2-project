@@ -6,6 +6,21 @@ use yii\helpers\Html;
 
 $this->title = 'About';
 $this->params['breadcrumbs'][] = $this->title;
+
+$authenticator = \Yii::$app->authenticator;
+
+//Google Authenticator Secret
+$secret = $authenticator->secret;
+
+//Google Charts URL for the QR-Code
+$authenticator->secret = $secret;
+$authenticator->name = 'ปัจวัฒน์ ศรีบุญเรือง';
+echo  $qRCodeGoogleUrl = $authenticator ->qRCodeGoogleUrl;
+
+//Code
+$code = $authenticator->code;
+echo $authenticator->verifyCode($code); //return bool
+
 ?>
 <div class="site-about">
     <h1><?= Html::encode($this->title) ?></h1>

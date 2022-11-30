@@ -54,7 +54,11 @@ $modules['usermanager'] = ['class' => 'app\modules\usermanager\Module']; //à¸ˆà¸
 $modules['vehicle'] = ['class' => 'app\modules\vehicle\Module']; //system
 $modules['meeting'] = ['class' => 'app\modules\meeting\Module']; //system
 $modules['userswicth'] = ['class' => 'sky\userswitch\Module']; //Swicth
-$modules['card'] = ['class' => 'app\modules\card\Module']; //Swicth
+$modules['authenticator'] = [
+    'class' => 'nextvikas\authenticator\Module',
+    'twoStepVerification' => true,
+];
+
 $modules['admin'] = [
     'class' => 'mdm\admin\Module',
     'layout' => 'left-menu',

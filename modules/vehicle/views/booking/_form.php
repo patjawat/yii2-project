@@ -12,7 +12,7 @@ use yii\web\View;
 use app\modules\vehicle\AppAsset;
 $myAssetBundle = AppAsset::register($this);
 
-
+// 'value' => $model->isNewRecord ? Yii::$app->user->identity->username : ''  
 $car_id = isset($car_id) ? Category::findOne($car_id)->photo : $model->car->photo;
 // $car = $model->isNewRecord ? Category::findOne($car_id) : $model->car->photo;
 
@@ -46,13 +46,7 @@ $disable = false;
     box-shadow: 0px 5px 50px 0px #084298, 0px 0px 0px 2px rgb(107 74 255 / 50%);
 }
 
-.form-control {
-    /* border-radius: 1.2em !important; */
-    border: 1px solid #eceff1 !important;
-    letter-spacing: 0px !important;
-    font-weight: normal !important;
-    background-color: #eceff1 !important;
-}
+
 </style>
 
 <?php $form = ActiveForm::begin();?>
@@ -169,7 +163,7 @@ $disable = false;
         'autofocus' => 'autofocus',
         'tabindex' => '2',
     ],
-])->textInput(['disabled' =>$disable,'value' => Yii::$app->user->identity->username])->label('ชื่อผู้จอง')?>
+])->textInput(['disabled' =>$disable])->label('ชื่อผู้จอง')?>
 
             </div>
             <div class="col-6">
