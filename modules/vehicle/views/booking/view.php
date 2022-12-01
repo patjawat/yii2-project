@@ -40,10 +40,10 @@ table {
 
         
 <p>
+    <?= Html::a('<i class="fa-regular fa-pen-to-square"></i> แก้ไข', ['update', 'id' => $model->id], ['class' => 'btn btn-warning','style' => 'margin-right: 5px;']) ?>
 <?= Html::a('<i class="fa-regular fa-pen-to-square"></i> พิมพ์ใบเบิกค่าเดินทาง', ['document', 'id' => $model->id], ['class' => 'btn btn-success',[
     'data' => ['pjax' => false]
     ]]) ?>
-        <?= Html::a('<i class="fa-regular fa-pen-to-square"></i> แก้ไข', ['update', 'id' => $model->id], ['class' => 'btn btn-warning']) ?>
        
         <?php if($model->status_id == 'approve'):?>
             <?= Html::a('<i class="fa-solid fa-ban"></i> ยกเลิกการจอง', ['cancel', 'id' => $model->id], [

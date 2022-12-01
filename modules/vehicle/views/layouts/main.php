@@ -58,7 +58,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => '@w
 NavBar::begin([
     'brandLabel' => 'ระบบบริหารยานพาหนะ',
     'brandUrl' => Yii::$app->homeUrl,
-    'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top'],
+    'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark'],
 ]);
 
 echo Nav::widget([
@@ -148,7 +148,6 @@ NavBar::end();
                 </div>
             </div>
             <div id="content-container">
-                <br><br>
                 <?= $content ?>
             </div>
         </div>

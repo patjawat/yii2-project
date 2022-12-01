@@ -46,25 +46,50 @@ $disable = false;
     box-shadow: 0px 5px 50px 0px #084298, 0px 0px 0px 2px rgb(107 74 255 / 50%);
 }
 
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
+    color: #198754 !important;
+}
 
+.nav-tabs .nav-link {
+    color: #6c757d !important;
+}
 </style>
+
+
+
 
 <?php $form = ActiveForm::begin();?>
 <div class="row">
     <div class="col-8">
 
-    <div class="card border-0 border-radius-lg">
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
+                    type="button" role="tab" aria-controls="nav-home" aria-selected="true"><i
+                        class="fa-regular fa-pen-to-square"></i> ส่วนที่ 1 ข้อมูลการจอง</button>
+                <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
+                    type="button" role="tab" aria-controls="nav-profile" aria-selected="false"><i
+                        class="fa-regular fa-pen-to-square"></i> ส่วนที่ 2 ข้อมูลการเบิกค่าเดินทาง</button>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"
+                tabindex="0">
+
+
+
+                <div class="card border-0 border-radius-lg">
                     <div class="card-body">
-                     
 
-        <?=$form->field($model, 'ref')->hiddenInput(['maxlength' => true])->label(false)?>
-        <?=$form->field($model, 'booking_type')->hiddenInput(['value' => 'vehicle'])->label(false)?>
+                        <?=$form->field($model, 'ref')->hiddenInput(['maxlength' => true])->label(false)?>
+                        <?=$form->field($model, 'booking_type')->hiddenInput(['value' => 'vehicle'])->label(false)?>
 
-        <div class="alert alert-primary" role="alert">ข้อมูลการเดินทาง</div>
+                        <div class="alert alert-primary" role="alert">ข้อมูลการเดินทาง</div>
 
-        <div class="row justify-content-between">
-            <div class="col-4">
-                <?=$form->field($model, 'start')->widget(DateTimePicker::classname(), [
+                        <div class="row justify-content-between">
+                            <div class="col-4">
+                                <?=$form->field($model, 'start')->widget(DateTimePicker::classname(), [
                     'options' => ['placeholder' => 'เลือกวันเวลาที่ออกเดินทาง ...'],
                     'language' => 'th',
                     'readonly' => true,
@@ -74,10 +99,10 @@ $disable = false;
                     ],
                 ])->label('วันเวลาที่ออกเดินทาง');
                 ?>
-            </div>
-            <div class="col-8">
+                            </div>
+                            <div class="col-8">
 
-                <?=$form->field($model, 'title', [
+                                <?=$form->field($model, 'title', [
                 'inputTemplate' => '<div class="input-group">
                             <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa-regular fa-pen-to-square"></i>&nbsp;</span>
@@ -92,12 +117,12 @@ $disable = false;
 
             ])->textInput(['disabled' =>$disable])->label('วัตถุประสงค์การจอง')?>
 
-            </div>
-        </div>
+                            </div>
+                        </div>
 
-        <div class="row">
-            <div class="col-4">
-                <?=$form->field($model, 'data_json[point]', [
+                        <div class="row">
+                            <div class="col-4">
+                                <?=$form->field($model, 'data_json[point]', [
                 'inputTemplate' => '<div class="input-group">
                             <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa-solid fa-map-location-dot"></i>&nbsp;</span>
@@ -106,12 +131,13 @@ $disable = false;
                             </div>',
                 'inputOptions' =>
                 [
+                    'tabindex' => '2',
                     'required' => true,
                 ],
             ])->textInput(['disabled' =>$disable])->label('จุดหมายปลายทาง')?>
-            </div>
-            <div class="col-4">
-                <?php
+                            </div>
+                            <div class="col-4">
+                                <?php
                     echo $form->field($model, 'province_id', [
                         'inputTemplate' => '<div class="input-group">
                         <div class="input-group-prepend">
@@ -120,15 +146,15 @@ $disable = false;
                         {input}
                         </div>',
                     ])->widget(Select2::classname(), [
-                        'options' => ['placeholder' => 'เลือกจังหวัด ...'],
+                        'options' => ['placeholder' => 'เลือกจังหวัด ...','tabindex' => '2'],
                         'disabled' =>$disable,
                         'data' => ArrayHelper::map(Provinces::find()->all(), 'id', 'name_th'),
                     ]);
                     ?>
-                 
-                </div>
-            <div class="col-4">
-                <?=$form->field($model, 'district_id', [
+
+                            </div>
+                            <div class="col-4">
+                                <?=$form->field($model, 'district_id', [
     'inputTemplate' => '<div class="input-group">
     <div class="input-group-prepend">
     <span class="input-group-text"><i class="fa-solid fa-building-circle-check"></i>&nbsp;</span>
@@ -137,7 +163,7 @@ $disable = false;
     </div>',
 ])->widget(DepDrop::className(), [
     'type' => DepDrop::TYPE_SELECT2,
-    'options' => ['id' => 'subcat1-id', 'placeholder' => 'เลือก ...'],
+    'options' => ['id' => 'subcat1-id', 'placeholder' => 'เลือก ...','tabindex' => '3',],
     'disabled' =>$disable,
     'pluginOptions' => [
         'depends' => [Html::getInputId($model, 'province_id')],
@@ -145,13 +171,13 @@ $disable = false;
         'url' => Url::to(['district-list']),
     ],
 ])?>
-            </div>
-        </div>
+                            </div>
+                        </div>
 
-        <div class="alert alert-primary" role="alert">รายละเอียดการขอใช้</div>
-        <div class="row">
-            <div class="col-6">
-                <?=$form->field($model, 'data_json[fullname]', [
+                        <div class="alert alert-primary" role="alert">รายละเอียดการขอใช้</div>
+                        <div class="row">
+                            <div class="col-6">
+                                <?=$form->field($model, 'data_json[fullname]', [
     'inputTemplate' => '<div class="input-group">
                 <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fa-solid fa-user-check"></i>&nbsp;</span>
@@ -161,13 +187,29 @@ $disable = false;
     'inputOptions' =>
     [
         'autofocus' => 'autofocus',
-        'tabindex' => '2',
+        'tabindex' => '4',
     ],
 ])->textInput(['disabled' =>$disable])->label('ชื่อผู้จอง')?>
 
-            </div>
-            <div class="col-6">
-                <?=$form->field($model, 'data_json[phone]', [
+ <?=$form->field($model, 'data_json[position_name]', [
+    'inputTemplate' => '<div class="input-group">
+                <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa-solid fa-user-check"></i>&nbsp;</span>
+                </div>
+                {input}
+                </div>',
+    'inputOptions' =>
+    [
+        'autofocus' => 'autofocus',
+        'tabindex' => 6,
+        'required' => true,
+        
+    ],
+])->textInput(['disabled' =>$disable])->label('ตำแหน่ง')?>
+
+                            </div>
+                            <div class="col-6">
+                                <?=$form->field($model, 'data_json[phone]', [
     'inputTemplate' => '<div class="input-group">
                 <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fa-solid fa-mobile-screen"></i>&nbsp;</span>
@@ -177,16 +219,33 @@ $disable = false;
     'inputOptions' =>
     [
         'autofocus' => 'autofocus',
-        'tabindex' => '3',
+        'tabindex' => 5,
     ],
 ])->textInput(['disabled' =>$disable])->label('เบอร์โทรศัพท์ติดต่อ')?>
-            </div>
-        </div>
+
+<?=$form->field($model, 'data_json[group_name]', [
+    'inputTemplate' => '<div class="input-group">
+                <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa-solid fa-user-check"></i>&nbsp;</span>
+                </div>
+                {input}
+                </div>',
+    'inputOptions' =>
+    [
+        'autofocus' => 'autofocus',
+        'tabindex' => 7,
+        'required' => true,
+    ],
+])->textInput(['disabled' =>$disable])->label('สังกัด')?>
 
 
-        <div class="row">
-            <div class="col-4">
-                <?=$form->field($model, 'data_json[passenger_number]', [
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-4">
+                                <?=$form->field($model, 'data_json[passenger_number]', [
     'inputTemplate' => '<div class="input-group">
                 <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fa-solid fa-users"></i>&nbsp;</span>
@@ -196,12 +255,12 @@ $disable = false;
     'inputOptions' =>
     [
         'autofocus' => 'autofocus',
-        'tabindex' => '4',
+        'tabindex' => 8,
     ],
 ])->textInput(['type' => 'number','disabled' =>$disable])->label('จำนวนผู้โดยสาร')?>
-            </div>
-            <div class="col-8">
-                <?=$form->field($model, 'car_id', [
+                            </div>
+                            <div class="col-8">
+                                <?=$form->field($model, 'car_id', [
     'inputTemplate' => '<div class="input-group">
                 <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fa-solid fa-car"></i>&nbsp;</span>
@@ -214,15 +273,15 @@ $disable = false;
     'data' => $model->carsMap(),
 ]);?>
 
-            </div>
-        </div>
+                            </div>
+                        </div>
 
 
 
-        <div class="row">
-            <div class="col-4">
-                <?=$form->field($model, 'end')->widget(DateTimePicker::classname(), [
-    'options' => ['placeholder' => 'เลือกวันเวลาที่วันกลับ ...'],
+                        <div class="row">
+                            <div class="col-4">
+                                <?=$form->field($model, 'end')->widget(DateTimePicker::classname(), [
+    'options' => ['placeholder' => 'เลือกวันเวลาที่วันกลับ ...','tabindex' => 9],
     'language' => 'th',
     'disabled' =>$disable,
     'pluginOptions' => [
@@ -230,27 +289,27 @@ $disable = false;
     ],
 ])->label('วันเวลาที่วันกลับ');
 ?>
-            </div>
-            <div class="col-8">
+                            </div>
+                            <div class="col-8">
 
-                <?=$form->field($model, 'data_json[pick_up_point]', [
+                                <?=$form->field($model, 'data_json[pick_up_point]', [
     'inputTemplate' => '<div class="input-group">
                                         <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fa-solid fa-location-pin"></i>&nbsp;</span>
                                         </div>
                                         {input}
                                         </div>',
-])->textInput(['disabled' =>$disable])->label('จุดรับกลับ')?>
+])->textInput(['disabled' =>$disable,'tabindex' => 10])->label('จุดรับกลับ')?>
 
-            </div>
-        </div>
+                            </div>
+                        </div>
 
 
-        <?php if($model->isNewRecord):?>
-        <div class="alert alert-primary" role="alert">การจัดสรรค์</div>
-        <?=$form->field($model, 'status_id')->hiddenInput()->label(false)?>
-        <?php else:?>
-        <?php
+                        <?php if($model->isNewRecord):?>
+
+                        <?=$form->field($model, 'status_id')->hiddenInput()->label(false)?>
+                        <?php else:?>
+                        <?php
 
 $datastatus = ['await','approve','success','cancel'];
                 $status = yii\helpers\ArrayHelper::map(Category::find()
@@ -261,20 +320,81 @@ $datastatus = ['await','approve','success','cancel'];
 
 echo Yii::$app->user->can('driver') ? $form->field($model, 'status_id')->inline(true)->radioList($status)->label('สถานะ') : '';
 ?>
-        <?php endif;?>
+                        <?php endif;?>
 
 
-        <div class="form-group">
-            <?=Html::submitButton('<i class="fa-solid fa-check"></i> บันทึก', ['class' => 'btn btn-success'])?>
-            <?=html::a('<i class="fa-solid fa-xmark"></i> ยกเลิกการ', ['/vehicle/booking'], ['class' => 'btn btn-danger']);?>
-        </div>
+                       
+<div class="body-footer">
 
-        <?php ActiveForm::end();?>
+<div class="form-group">
+                            <?=Html::submitButton('<i class="fa-solid fa-check"></i> บันทึก', ['class' => 'btn btn-success'])?>
+                            <?=html::a('<i class="fa-solid fa-xmark"></i> ยกเลิกการ', ['/vehicle/booking'], ['class' => 'btn btn-danger']);?>
+                        </div>
+
+</div>
+
+                    </div>
+                </div>
+                <!-- emd body -->
+
+            </div>
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+
+            <div class="card">
+                <div class="card-body">
+
+                <div class="row">
+                            <div class="col-6">
+                            <?=$form->field($model, 'data_json[travel_allowance]', [
+    'inputTemplate' => '<div class="input-group">
+                                        <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa-solid fa-dollar-sign"></i>&nbsp;</span>
+                                        </div>
+                                        {input}
+                                        </div>',
+])->textInput(['disabled' =>$disable])->label('ค่าเบี้ยเลี้ยงเดินทาง')?>
+
+ <?=$form->field($model, 'data_json[rent]', [
+    'inputTemplate' => '<div class="input-group">
+                                        <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa-solid fa-dollar-sign"></i>&nbsp;</span>
+                                        </div>
+                                        {input}
+                                        </div>',
+])->textInput(['disabled' =>$disable])->label('ค่าเช่าที่พักประเภท')?>
+             
+             
+             <?=$form->field($model, 'data_json[vehicle_cost]', [
+    'inputTemplate' => '<div class="input-group">
+                                        <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa-solid fa-dollar-sign"></i>&nbsp;</span>
+                                        </div>
+                                        {input}
+                                        </div>',
+])->textInput(['disabled' =>$disable])->label('ค่าพาหนะ')?>
 
 
-        </div>
+<?=$form->field($model, 'data_json[other_cost]', [
+    'inputTemplate' => '<div class="input-group">
+                                        <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa-solid fa-dollar-sign"></i>&nbsp;</span>
+                                        </div>
+                                        {input}
+                                        </div>',
+])->textInput(['disabled' =>$disable])->label('ค่าใช้จ่ายอื่น')?>
+                            </div>
+                            <div class="col-6"></div>
+                </div>
+
                    </div>
-                   <!-- emd body -->
+            </div>
+
+            </div>
+
+        </div>
+
+        <!-- end tabs -->
+
 
     </div>
     <!-- end col-8 -->
@@ -341,7 +461,8 @@ echo $form->field($model, 'driver_id', [
     </div>
 
 </div>
-
+<!-- end Row -->
+<?php ActiveForm::end();?>
 <?php
 $urlDriverPhoto = Url::to('/bookingcar/booking/get-driver-photo');
 $js = <<< JS

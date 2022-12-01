@@ -17,6 +17,7 @@ use PhpOffice\PhpWord\TemplateProcessor;
 use PhpOffice\PhpWord\Settings;
 use app\components\Processor;
 use app\components\DateTimeHelper;
+use app\components\SystemHelper;
 
 /**
  * BookingController implements the CRUD actions for Booking model.
@@ -313,25 +314,49 @@ class BookingController extends Controller
         $dateTime = DateTimeHelper::Duration($model->start,$model->end)['hour'];
         // return $dateTime;
         $date = Yii::$app->thaiFormatter->asDate($time, 'medium');
+        $doc_day = explode(' ',$date)[0];
+        $doc_month = explode(' ',$date)[1];
+        $doc_year = explode(' ',$date)[2];
 
         $dateTimeStart = explode(" ",$model->start);
         $dateTimeEnd = explode(" ",$model->end);
         $total_day = DateTimeHelper::Duration($model->start,$model->end)['day'];
         $total_hour = DateTimeHelper::Duration($model->start,$model->end)['hour'];
         $total_minute = DateTimeHelper::Duration($model->start,$model->end)['minute'];
+        $fix_day = $total_day != null ? $total_day : 1;
+
+        $travel_allowance = (int)$model->data_json['travel_allowance'];
+        $travel_allowance_sum = ((int)$model->data_json['travel_allowance'] * (int)$fix_day);
+        $vehicle_cost = (int)$model->data_json['vehicle_cost'] * (int)$fix_day;
+        $rent = (int)$model->data_json['rent'];
+        $rent_sum = (int)$model->data_json['rent'] * (int)$fix_day;
+        $other_cost = $model->data_json['other_cost'];
+        $total = (int)($travel_allowance_sum+$vehicle_cost+$rent_sum+$other_cost);
 
         $templateProcessor->setValue('title', $model->title);
         $templateProcessor->setValue('created_at', $date);
+        $templateProcessor->setValue('doc_day', $doc_day);
+        $templateProcessor->setValue('doc_month', $doc_month);
+        $templateProcessor->setValue('doc_year', $doc_year);
         $templateProcessor->setValue('start_date', Yii::$app->thaiFormatter->asDate($dateTimeStart[0],'medium'));
         $templateProcessor->setValue('start_time',substr($dateTimeStart[1], 0, -3));
         $templateProcessor->setValue('end_date', Yii::$app->thaiFormatter->asDate($dateTimeEnd[0],'medium'));
         $templateProcessor->setValue('end_time', substr($dateTimeEnd[1], 0, -3));
-        $templateProcessor->setValue('total_day',$total_day != null ? $total_day : '-');
-        $templateProcessor->setValue('total_hour', $total_hour != null ?  $total_hour : '-');
-        $templateProcessor->setValue('total_minute', $total_minute != null ? $total_minute :'-');
+        $templateProcessor->setValue('day',$total_day != null ? $total_day : '-');
+        $templateProcessor->setValue('hour', $total_hour != null ?  $total_hour : '-');
+        $templateProcessor->setValue('minute', $total_minute != null ? $total_minute :'-');
+        $templateProcessor->setValue('fix_day',$fix_day);
         $templateProcessor->setValue('fullname', 'นายปัจวัฒน์ ศรีบุญเรือง');
-        $templateProcessor->setValue('position_name', 'เจ้าพนักงานคอมพิวเตอร์');
-        $templateProcessor->setValue('group_name', 'กองป้องกันและรักษาความปลอดภัย');
+        $templateProcessor->setValue('position_name', $model->data_json['position_name']);
+        $templateProcessor->setValue('group_name', $model->data_json['group_name']);
+        $templateProcessor->setValue('travel_allowance', number_format($travel_allowance),2);
+        $templateProcessor->setValue('travel_allowance_sum',number_format($travel_allowance_sum,2));
+        $templateProcessor->setValue('vehicle_cost',number_format($vehicle_cost,2));
+        $templateProcessor->setValue('rent',number_format($rent,2));
+        $templateProcessor->setValue('rent_sum',number_format($rent_sum,2));
+        $templateProcessor->setValue('other_cost',number_format($other_cost,2));
+        $templateProcessor->setValue('total', number_format($total,2));
+        $templateProcessor->setValue('total_string', SystemHelper::Convert($total));
         // $templateProcessor->setValue('src1', Yii::getAlias('@webroot') . '/images/auth/login-bg.jpg');
         // $templateProcessor->setImageValue('img1', ['src' => Yii::getAlias('@webroot') . '/images/logo2.jpg','swh'=>'250']);//ที่อยู่รูป frontend/web/img/logo.png, swh ความกว้าง/สูง 150 
         $templateProcessor->setImg('img1', ['src' => Yii::getAlias('@webroot') . '/images/logo2.jpg','swh'=>'250']);//ที่อยู่รูป frontend/web/img/logo.png, swh ความกว้าง/สูง 150 

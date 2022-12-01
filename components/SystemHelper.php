@@ -3,11 +3,11 @@
 namespace app\components;
 
 use app\models\Uploads;
+use app\modules\usermanager\models\Auth;
+use app\modules\usermanager\models\User;
 use Yii;
 use yii\base\Component;
 use yii\helpers\Html;
-use app\modules\usermanager\models\User;
-use app\modules\usermanager\models\Auth;
 
 //use yii\helpers\Url;
 
@@ -20,53 +20,112 @@ class SystemHelper extends Component
 
     const UPLOAD_FOLDER = '../var/files';
 
-
     public static function initialDataSession()
     {
 
-        \Yii::$app->session->set('data','');
-        
+        \Yii::$app->session->set('data', '');
+
     }
     public static function initialsetDataSession($ref)
     {
         $data = array_merge([
-            'ref' => $ref
+            'ref' => $ref,
         ]);
         \Yii::$app->session->set('data', $data);
-        
+
     }
 
+     // ฟังก์ชั่นแปลงค่าเงินตัวเลขเป็นตัวอักษรภาษาไทย
+     public static function Convert($amount_number)
+     {
+         $amount_number = number_format($amount_number, 2, ".", "");
+         $pt = strpos($amount_number, ".");
+         $number = $fraction = "";
+         if ($pt === false) {
+             $number = $amount_number;
+         } else {
+             $number = substr($amount_number, 0, $pt);
+             $fraction = substr($amount_number, $pt + 1);
+         }
+ 
+         $ret = "";
+         $baht = self::ReadNumber($number);
+         if ($baht != "") {
+             $ret .= $baht . "บาท";
+         }
+ 
+         $satang = self::ReadNumber($fraction);
+         if ($satang != "") {
+             $ret .= $satang . "สตางค์";
+         } else {
+             $ret .= "ถ้วน";
+         }
+ 
+         return $ret;
+     }
+ 
+     public static function ReadNumber($number)
+     {
+         $position_call = array("แสน", "หมื่น", "พัน", "ร้อย", "สิบ", "");
+         $number_call = array("", "หนึ่ง", "สอง", "สาม", "สี่", "ห้า", "หก", "เจ็ด", "แปด", "เก้า");
+         $number = $number + 0;
+         $ret = "";
+         if ($number == 0) {
+             return $ret;
+         }
+ 
+         if ($number > 1000000) {
+             $ret .= ReadNumber(intval($number / 1000000)) . "ล้าน";
+             $number = intval(fmod($number, 1000000));
+         }
+ 
+         $divider = 100000;
+         $pos = 0;
+         while ($number > 0) {
+             $d = intval($number / $divider);
+             $ret .= (($divider == 10) && ($d == 2)) ? "ยี่" :
+             ((($divider == 10) && ($d == 1)) ? "" :
+                 ((($divider == 1) && ($d == 1) && ($ret != "")) ? "เอ็ด" : $number_call[$d]));
+             $ret .= ($d ? $position_call[$pos] : "");
+             $number = $number % $divider;
+             $divider = $divider / 10;
+             $pos++;
+         }
+         return $ret;
+     }
 
-    public static function Duration($begin,$end){
-        $remain=intval(strtotime($end)-strtotime($begin));
-        $wan=floor($remain/86400);
-        $l_wan=$remain%86400;
-        $hour=floor($l_wan/3600);
-        $l_hour=$l_wan%3600;
-        $minute=floor($l_hour/60);
-        $second=$l_hour%60;
+
+
+    public static function Duration($begin, $end)
+    {
+        $remain = intval(strtotime($end) - strtotime($begin));
+        $wan = floor($remain / 86400);
+        $l_wan = $remain % 86400;
+        $hour = floor($l_wan / 3600);
+        $l_hour = $l_wan % 3600;
+        $minute = floor($l_hour / 60);
+        $second = $l_hour % 60;
         // return ($wan > 0 ? $wan." วัน " : "").($hour > 0 ? $hour ." ชั่วโมง " : "").($minute > 0 ? $minute ." นาที " : "").$second." วินาที";
-        return ($wan > 0 ? $wan." วัน " : "").($hour > 0 ? $hour ." ชั่วโมง " : "").($minute > 0 ? $minute ." นาที " : "");
+        return ($wan > 0 ? $wan . " วัน " : "") . ($hour > 0 ? $hour . " ชั่วโมง " : "") . ($minute > 0 ? $minute . " นาที " : "");
     }
-    
+
     public static function dataSession()
     {
         // $data = array_merge([
         //     'ref' => $ref
         // ]);
-       return  \Yii::$app->session->get('data');
-        
+        return \Yii::$app->session->get('data');
+
     }
 
-
-    public static function ProfileLine(){
+    public static function ProfileLine()
+    {
         $userId = Yii::$app->user->id;
-    
-        $user = Auth::find()->where(['user_id' => $userId,'source' => 'line'])->one();
+
+        $user = Auth::find()->where(['user_id' => $userId, 'source' => 'line'])->one();
         return $user;
     }
 
-    
     /**
      * เตรียมเอกสาร HIMS เพื่อใช้งานในระบบ
      * @param type $hn
@@ -135,8 +194,6 @@ class SystemHelper extends Component
      * @return string
      */
 
-     
-
     public static function getFileUpload($id)
     {
         $model = Uploads::find()->where(['upload_id' => $id])->One();
@@ -146,18 +203,15 @@ class SystemHelper extends Component
             $file_ = pathinfo($file_path);
             if (file_exists($file_path)) {
                 $file_path = "/soc/events/image?file_path=$file_path&width=100&height=100";
-              
+
                 if (strtolower($file_['extension']) == ('png' || 'jpg')) {
                     return Html::img($file_path, ['class' => 'file-preview-image', 'loading' => 'lazy']);
                 }
-                
-  
+
             }
         }
 
     }
-
- 
 
     /**
      * แปลงไฟล์สำหรับใช้งาน
@@ -169,7 +223,6 @@ class SystemHelper extends Component
      * @return \Imagick
      */
 
-
     public static function getFiles($file_path, int $width = 1080, int $height = 1080)
     {
 
@@ -179,7 +232,6 @@ class SystemHelper extends Component
                 // self::setOwner($file_path);
                 return self::getResizeImage($file_path, $width, $height, \Imagick::FILTER_BOX, 1, true, false);
             }
-
 
             // self::setOwner($file_['dirname']);
             // if (EmrHelper::isDocHide($file_)) {
@@ -444,5 +496,7 @@ class HimsEmr
         }
         closedir($dir);
     }
+
+   
 
 }

@@ -5,6 +5,7 @@ use yii\helpers\Url;
 use yii\web\JsExpression;
 AppAsset::register($this);
 $AssetBundle = AppAsset::register($this);
+$this->title = 'ระบบจองรถ';
 ?>
 <div class="container">
     <?php echo $this->render('_search', ['model' => $searchModel]); ?>
