@@ -11,6 +11,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\View;
 use app\modules\vehicle\AppAsset;
+use kartik\datecontrol\DateControl;
 $myAssetBundle = AppAsset::register($this);
 
 // 'value' => $model->isNewRecord ? Yii::$app->user->identity->username : ''  
@@ -355,15 +356,19 @@ echo Yii::$app->user->can('driver') ? $form->field($model, 'status_id')->inline(
 ])->textInput(['disabled' =>$disable])->label('ตามคำสั่ง/บันทึกที่')?>
                             </div>
                             <div class="col-6">
-                            <?=$form->field($model, 'data_json[doc_number_date]')->widget(DatePicker::classname(), [
-    'options' => ['placeholder' => 'เลือกลงวันที่ ...'],
+                                <?php
+                                
+                                echo $form->field($model, 'data_json[doc_number_date]')->widget(DateControl::classname(), [
+                                    'type'=>DateControl::FORMAT_DATE,
+                                    'options' => ['placeholder' => 'เลือกลงวันที่ ...'],
     'language' => 'th',
     'disabled' =>$disable,
     'pluginOptions' => [
         'autoclose' => true,
     ],
-])->label('ลงวันที่');
-?>
+                                ]);
+
+                                 ?>
                          
                             </div>
                             </div>
