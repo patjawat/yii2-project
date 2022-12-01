@@ -308,7 +308,7 @@ class BookingController extends Controller
         // $date2 = $this->request->get('date2');
 
         // $templateProcessor = new TemplateProcessor(Yii::getAlias('@webroot').'/msword/template_in.docx');//เลือกไฟล์ template ที่เราสร้างไว้
-        $templateProcessor = new Processor(Yii::getAlias('@webroot').'/msword/template_in.docx');//เลือกไฟล์ template ที่เราสร้างไว้
+        $templateProcessor = new Processor(Yii::getAlias('@webroot').'/msword/template_in_2.docx');//เลือกไฟล์ template ที่เราสร้างไว้
         // $templateProcessor->setValue('date1', $date1);
         $time = time();
         $dateTime = DateTimeHelper::Duration($model->start,$model->end)['hour'];
@@ -339,26 +339,26 @@ class BookingController extends Controller
         $templateProcessor->setValue('title', $model->title);
         $templateProcessor->setValue('created_at', $date_long);
         $templateProcessor->setValue('doc_number', isset($model->data_json['doc_number']) ? $model->data_json['doc_number'] : '-');
-        $templateProcessor->setValue('doc_number_date', isset($model->data_json['doc_number_date']) ? $model->data_json['doc_number_date'] : '-');
+        $templateProcessor->setValue('doc_number_date', isset($model->data_json['doc_number_date']) ? Yii::$app->thaiFormatter->asDate($model->data_json['doc_number_date'], 'long') : '-');
         $templateProcessor->setValue('member', isset($model->data_json['member']) ? $model->data_json['member'] : '-');
-        $templateProcessor->setValue('doc_day', $doc_day);
+        $templateProcessor->setValue('d', $doc_day);
         $templateProcessor->setValue('doc_month', $doc_month);
-        $templateProcessor->setValue('doc_month_long', $doc_month_long);
-        $templateProcessor->setValue('doc_year', $doc_year);
+        $templateProcessor->setValue('m_long', $doc_month_long);
+        $templateProcessor->setValue('year', $doc_year);
         $templateProcessor->setValue('start_d', Yii::$app->thaiFormatter->asDate($dateTimeStart[0],'medium'));
-        $templateProcessor->setValue('start_t',substr($dateTimeStart[1], 0, -3));
+        $templateProcessor->setValue('st_t',substr($dateTimeStart[1], 0, -3));
         $templateProcessor->setValue('end_d', Yii::$app->thaiFormatter->asDate($dateTimeEnd[0],'medium'));
-        $templateProcessor->setValue('end_t', substr($dateTimeEnd[1], 0, -3));
+        $templateProcessor->setValue('en_t', substr($dateTimeEnd[1], 0, -3));
         $templateProcessor->setValue('day',$total_day != null ?  $total_day  : ($total_hour == 8 ? 1  : '-' ));
         $templateProcessor->setValue('hour', $total_hour != null ?  ($total_hour == 8 ? '-' : $total_hour ) : '-');
         $templateProcessor->setValue('minute', $total_minute != null ? $total_minute :'-');
-        $templateProcessor->setValue('fixd',$fix_day);
+        $templateProcessor->setValue('fd',$fix_day);
         $templateProcessor->setValue('fullname', 'นายปัจวัฒน์ ศรีบุญเรือง');
         $templateProcessor->setValue('position_name', isset($model->data_json['position_name']) ? $model->data_json['position_name'] : '-');
         $templateProcessor->setValue('group_name', $model->data_json['group_name']);
-        $templateProcessor->setValue('travel_allowance', number_format($travel_allowance),2);
-        $templateProcessor->setValue('travel_allowance_sum',number_format($travel_allowance_sum,2));
-        $templateProcessor->setValue('vehicle_cost',number_format($vehicle_cost,2));
+        $templateProcessor->setValue('tra', number_format($travel_allowance),2);
+        $templateProcessor->setValue('tra_sum',number_format($travel_allowance_sum,2));
+        $templateProcessor->setValue('v_cost',number_format($vehicle_cost,2));
         $templateProcessor->setValue('rent',number_format($rent,2));
         $templateProcessor->setValue('rent_sum',number_format($rent_sum,2));
         $templateProcessor->setValue('other_cost',number_format($other_cost,2));
