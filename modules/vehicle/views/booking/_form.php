@@ -3,6 +3,7 @@ use app\models\Provinces;
 use app\modules\vehicle\models\Category;
 use kartik\depdrop\DepDrop;
 use kartik\select2\Select2;
+use kartik\widgets\DatePicker;
 use kartik\widgets\DateTimePicker;
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\ArrayHelper;
@@ -342,9 +343,39 @@ echo Yii::$app->user->can('driver') ? $form->field($model, 'status_id')->inline(
 
             <div class="card">
                 <div class="card-body">
-
                 <div class="row">
                             <div class="col-6">
+                            <?=$form->field($model, 'data_json[doc_number]', [
+    'inputTemplate' => '<div class="input-group">
+                                        <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa-regular fa-folder-open"></i>&nbsp;</span>
+                                        </div>
+                                        {input}
+                                        </div>',
+])->textInput(['disabled' =>$disable])->label('ตามคำสั่ง/บันทึกที่')?>
+                            </div>
+                            <div class="col-6">
+                            <?=$form->field($model, 'data_json[doc_number_date]')->widget(DatePicker::classname(), [
+    'options' => ['placeholder' => 'เลือกลงวันที่ ...'],
+    'language' => 'th',
+    'disabled' =>$disable,
+    'pluginOptions' => [
+        'autoclose' => true,
+    ],
+])->label('ลงวันที่');
+?>
+                         
+                            </div>
+                            </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                        <?=$form->field($model, 'data_json[member]')->textArea(['disabled' =>$disable,'rows'=> 6,'placeholder' =>'นายตัวอย่าง นามสกุลทดสอบ1 นายตัวอย่าง นามสกุลทดสอบ2 นายตัวอย่าง นามสกุลทดสอบ3'])->label('พร้อมด้วย')?>
+                        </div>
+                    </div>
+                <div class="row">
+                            <div class="col-6">
+
                             <?=$form->field($model, 'data_json[travel_allowance]', [
     'inputTemplate' => '<div class="input-group">
                                         <div class="input-group-prepend">
@@ -363,8 +394,12 @@ echo Yii::$app->user->can('driver') ? $form->field($model, 'status_id')->inline(
                                         </div>',
 ])->textInput(['disabled' =>$disable])->label('ค่าเช่าที่พักประเภท')?>
              
+
+                            </div>
+                            <div class="col-6">
+
              
-             <?=$form->field($model, 'data_json[vehicle_cost]', [
+                            <?=$form->field($model, 'data_json[vehicle_cost]', [
     'inputTemplate' => '<div class="input-group">
                                         <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fa-solid fa-dollar-sign"></i>&nbsp;</span>
@@ -383,7 +418,6 @@ echo Yii::$app->user->can('driver') ? $form->field($model, 'status_id')->inline(
                                         </div>',
 ])->textInput(['disabled' =>$disable])->label('ค่าใช้จ่ายอื่น')?>
                             </div>
-                            <div class="col-6"></div>
                 </div>
 
                    </div>

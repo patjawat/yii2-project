@@ -313,9 +313,13 @@ class BookingController extends Controller
         $time = time();
         $dateTime = DateTimeHelper::Duration($model->start,$model->end)['hour'];
         // return $dateTime;
+        // $create_doc = Yii::$app->thaiFormatter->asDate($time, 'full');
         $date = Yii::$app->thaiFormatter->asDate($time, 'medium');
+        $date_long = Yii::$app->thaiFormatter->asDate($time, 'long');
+
         $doc_day = explode(' ',$date)[0];
         $doc_month = explode(' ',$date)[1];
+        $doc_month_long = explode(' ',$date_long)[1];
         $doc_year = explode(' ',$date)[2];
 
         $dateTimeStart = explode(" ",$model->start);
@@ -332,22 +336,25 @@ class BookingController extends Controller
         $rent_sum = (int)$model->data_json['rent'] * (int)$fix_day;
         $other_cost = $model->data_json['other_cost'];
         $total = (int)($travel_allowance_sum+$vehicle_cost+$rent_sum+$other_cost);
-
         $templateProcessor->setValue('title', $model->title);
-        $templateProcessor->setValue('created_at', $date);
+        $templateProcessor->setValue('created_at', $date_long);
+        $templateProcessor->setValue('doc_number', isset($model->data_json['doc_number']) ? $model->data_json['doc_number'] : '-');
+        $templateProcessor->setValue('doc_number_date', isset($model->data_json['doc_number_date']) ? $model->data_json['doc_number_date'] : '-');
+        $templateProcessor->setValue('member', isset($model->data_json['member']) ? $model->data_json['member'] : '-');
         $templateProcessor->setValue('doc_day', $doc_day);
         $templateProcessor->setValue('doc_month', $doc_month);
+        $templateProcessor->setValue('doc_month_long', $doc_month_long);
         $templateProcessor->setValue('doc_year', $doc_year);
-        $templateProcessor->setValue('start_date', Yii::$app->thaiFormatter->asDate($dateTimeStart[0],'medium'));
-        $templateProcessor->setValue('start_time',substr($dateTimeStart[1], 0, -3));
-        $templateProcessor->setValue('end_date', Yii::$app->thaiFormatter->asDate($dateTimeEnd[0],'medium'));
-        $templateProcessor->setValue('end_time', substr($dateTimeEnd[1], 0, -3));
-        $templateProcessor->setValue('day',$total_day != null ? $total_day : '-');
-        $templateProcessor->setValue('hour', $total_hour != null ?  $total_hour : '-');
+        $templateProcessor->setValue('start_d', Yii::$app->thaiFormatter->asDate($dateTimeStart[0],'medium'));
+        $templateProcessor->setValue('start_t',substr($dateTimeStart[1], 0, -3));
+        $templateProcessor->setValue('end_d', Yii::$app->thaiFormatter->asDate($dateTimeEnd[0],'medium'));
+        $templateProcessor->setValue('end_t', substr($dateTimeEnd[1], 0, -3));
+        $templateProcessor->setValue('day',$total_day != null ?  $total_day  : ($total_hour == 8 ? 1  : '-' ));
+        $templateProcessor->setValue('hour', $total_hour != null ?  ($total_hour == 8 ? '-' : $total_hour ) : '-');
         $templateProcessor->setValue('minute', $total_minute != null ? $total_minute :'-');
-        $templateProcessor->setValue('fix_day',$fix_day);
+        $templateProcessor->setValue('fixd',$fix_day);
         $templateProcessor->setValue('fullname', 'นายปัจวัฒน์ ศรีบุญเรือง');
-        $templateProcessor->setValue('position_name', $model->data_json['position_name']);
+        $templateProcessor->setValue('position_name', isset($model->data_json['position_name']) ? $model->data_json['position_name'] : '-');
         $templateProcessor->setValue('group_name', $model->data_json['group_name']);
         $templateProcessor->setValue('travel_allowance', number_format($travel_allowance),2);
         $templateProcessor->setValue('travel_allowance_sum',number_format($travel_allowance_sum,2));
@@ -357,13 +364,7 @@ class BookingController extends Controller
         $templateProcessor->setValue('other_cost',number_format($other_cost,2));
         $templateProcessor->setValue('total', number_format($total,2));
         $templateProcessor->setValue('total_string', SystemHelper::Convert($total));
-        // $templateProcessor->setValue('src1', Yii::getAlias('@webroot') . '/images/auth/login-bg.jpg');
-        // $templateProcessor->setImageValue('img1', ['src' => Yii::getAlias('@webroot') . '/images/logo2.jpg','swh'=>'250']);//ที่อยู่รูป frontend/web/img/logo.png, swh ความกว้าง/สูง 150 
-        $templateProcessor->setImg('img1', ['src' => Yii::getAlias('@webroot') . '/images/logo2.jpg','swh'=>'250']);//ที่อยู่รูป frontend/web/img/logo.png, swh ความกว้าง/สูง 150 
-        // $templateProcessor->setImageValue('img1', ['src' => Yii::getAlias('@webroot') . '/images/moph_logo.png','swh'=>'250']);//ที่อยู่รูป frontend/web/img/logo.png, swh ความกว้าง/สูง 150 
-        // $templateProcessor->setImageValue('img1', ['src' => Yii::getAlias('@webroot') . '/images/auth/login-bg.jpg', 'swh' => 150]);//ที่อยู่รูป frontend/web/img/logo.png, swh ความกว้าง/สูง 150 
-        // $templateProcessor->setImageValue('img1', ['src' => Yii::getAlias('@webroot') . '/images/auth/login-bg.jpg', 'swh' => 150]);//ที่อยู่รูป frontend/web/img/logo.png, swh ความกว้าง/สูง 150 
-        // $templateProcessor->setImg('img2', ['src' => Yii::getAlias('@webroot') . '/images/cctv.png', 'swh' => 350]);//ที่อยู่รูป frontend/web/images/cell.jpg, swh ความกว้าง/สูง 350
+        $templateProcessor->setImg('img1', ['src' => Yii::getAlias('@webroot') . '/images/logo2.jpg','swh'=>'250']);
 
 
 
