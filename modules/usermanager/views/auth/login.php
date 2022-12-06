@@ -17,11 +17,11 @@ $myAsset = $this->assetManager->getBundle('\\app\modules\vehicle\AppAsset');
     #w0 > div{
         margin-bottom:10px;
     }
-    h1{
+    /* h1{
         background: -webkit-linear-gradient(#b584dc, #163adf);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    }
+    } */
 
     .btn-primary{
         background-image: linear-gradient( 135deg, #8ba9f8 10%, #0749f3 100%);
@@ -32,9 +32,23 @@ $myAsset = $this->assetManager->getBundle('\\app\modules\vehicle\AppAsset');
     background-image: linear-gradient( 135deg, #f06572 10%, #ed1227 100%);
     border: none;
 }
+
+html, body {
+    font-family: 'Prompt', sans-serif;
+    font-size: 0.95rem;
+    background: #fafafa;
+    overflow-x: hidden;
+    overflow-y: auto;
+    letter-spacing: 0.05px;
+    font-weight: 200;
+    background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+    background-attachment: fixed;
+    background-size: cover;
+}
     
 </style>
-<div class="row justify-content-between align-items-center">
+<div class="row justify-content-center align-items-center">
+
     <div class="col-lg-4 col-md-6 col-sm-12">
         <h1><?= Html::encode($this->title) ?></h1>
         <p>กรุณายืนยันตัวตนเพื่อเข้าสู่ระบบ:</p>
@@ -48,7 +62,7 @@ $myAsset = $this->assetManager->getBundle('\\app\modules\vehicle\AppAsset');
     </div>
     {input}
     </div>',
-])->textInput(['autofocus' => true])->label('ชื่อเข้าใช้งาน') ?>
+])->textInput(['autofocus' => true,'placeholder' => 'ระบุชื่อเข้าใช้งาน'])->label(false) ?>
 
         <?= $form->field($model, 'password',[
     'inputTemplate' => '<div class="input-group">
@@ -57,7 +71,7 @@ $myAsset = $this->assetManager->getBundle('\\app\modules\vehicle\AppAsset');
     </div>
     {input}
     </div>',
-])->passwordInput()->label('รหัสผ่าน'); ?>
+])->passwordInput(['placeholder' => 'ระบุรหัสผ่าน'])->label('รหัสผ่าน')->label(false); ?>
 
         <?= $form->field($model, 'rememberMe')->checkbox() ?>
 
@@ -99,11 +113,6 @@ $myAsset = $this->assetManager->getBundle('\\app\modules\vehicle\AppAsset');
        
 
     </div>
-    <div class="col-auto mr-auto">
 
-       <?=Html::img($myAsset->baseUrl.'/images/bg3-2.png',['style' => 'width:500px;margin-top:100px;'])?>
-
-
-    </div>
 </div>
-
+<?php // Html::img('@web/images/bk.jpg',['width' => 800])?>

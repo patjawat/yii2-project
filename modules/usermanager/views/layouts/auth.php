@@ -29,18 +29,67 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => '@w
     <?php $this->head() ?>
 </head>
 <style>
+
 body {
-    background-image: url("<?=$myAsset->baseUrl.'/images/bg3-1.png'?>");
+    /* background-image: url("<?php // $myAsset->baseUrl.'/images/bg3-1.png'?>"); */
     /* background-color: #cccccc; */
+    /* background-repeat: no-repeat;
+    background-size: 100%; */
+}
+
+</style>
+<style>
+    /* html, body {
+    font-family: 'Prompt', sans-serif;
+    font-size: 0.95rem;
+    background: #fafafa;
+    overflow-x: hidden;
+    overflow-y: auto;
+    letter-spacing: 0.05px;
+    font-weight: 200;
+    background: linear-gradient( 180deg, rgba(178, 223, 219, 0.6965379901960784) 0%, rgba(224, 242, 241, 0) 100% ), URL("<?php // $myAsset->baseUrl.'/images/bk-background.jpg'?>");
+    /* background-image: url("<?=$myAsset->baseUrl.'/images/bk-background.jpg'?>");
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center center; */
+    /* font-family: 'THSarabunNew',Tahoma; */
+} */
+#main{
+    /* background-image: url("<?=$myAsset->baseUrl.'/images/bk.jpg'?>"); */
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: 1087px 827px;
+    background: linear-gradient( 180deg, rgba(178, 223, 219, 0.6965379901960784) 0%, rgba(224, 242, 241, 0) 100% ), URL("<?=$myAsset->baseUrl.'/images/bk.jpg'?>");
+    /* background-position-x: right; */
+}
+.bg-left{
+  
+    /* background-image: url("<?=$myAsset->baseUrl.'/images/bg-left.png'?>"); */
+    /* background-size: cover; */
+    width:300px;
+    height:300px;
+    top: 70px;
+    left: 0px;
+    position: absolute;
+
+}
+
+.bg-right{
+    
+    /* background-image: url("<?=$myAsset->baseUrl.'/images/bg-right.png'?>"); */
+    width: 500px;
+    height: 500px;
+    background-size: cover;
+    position: absolute;
+    /* top: 300px; */
+    right: 300px;
+    /* background-color: antiquewhite; */
 }
 </style>
 
 <body class="d-flex flex-column h-100">
     <?php $this->beginBody() ?>
 
-    <main id="main" class="flex-shrink-0" role="main">
+
         <div class="container">
             <br>
             <br>
