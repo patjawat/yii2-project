@@ -7,6 +7,7 @@
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 use yii\authclient\widgets\AuthChoice;
+$myAssetBundle =  \app\modules\vehicle\AppAsset::register($this);
 
 $this->title = 'Authentication';
 $this->params['breadcrumbs'][] = $this->title;
@@ -41,16 +42,22 @@ html, body {
     overflow-y: auto;
     letter-spacing: 0.05px;
     font-weight: 200;
-    background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+    /* background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%);
+    background-attachment: fixed;
+    background-size: cover; */
+    background: linear-gradient( 3deg, #e6e9f0 0%, rgba(224, 242, 241, 0) 100% ), URL("<?=$myAssetBundle->baseUrl.'/images/5570863.jpg'?>");
     background-attachment: fixed;
     background-size: cover;
+    background-position: center center;
 }
     
 </style>
 <div class="row justify-content-center align-items-center">
 
     <div class="col-lg-4 col-md-6 col-sm-12">
-        <h1><?= Html::encode($this->title) ?></h1>
+       <div class="text-center">
+           <?=Html::img('@web/images/car_logo.png',['width' =>300]);?>
+        </div>
         <p>กรุณายืนยันตัวตนเพื่อเข้าสู่ระบบ:</p>
 
         <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>

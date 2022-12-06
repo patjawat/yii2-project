@@ -92,8 +92,6 @@ body {
 
         <div class="container">
             <br>
-            <br>
-            <br>
 
             <?= Alert::widget() ?>
 

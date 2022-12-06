@@ -43,7 +43,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => '@w
     letter-spacing: 0.05px;
     font-weight: 200;
     background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
-    background: linear-gradient( 3deg, rgb(220 220 220 / 70%) 0%, rgba(224, 242, 241, 0) 100% ), URL("<?=$myAssetBundle->baseUrl.'/images/5570863.jpg'?>");
+    background: linear-gradient( 3deg, #e6e9f0 0%, rgba(224, 242, 241, 0) 100% ), URL("<?=$myAssetBundle->baseUrl.'/images/5570863.jpg'?>");
     background-attachment: fixed;
     background-size: cover;
     background-position: center center;
