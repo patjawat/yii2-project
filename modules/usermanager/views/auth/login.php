@@ -9,7 +9,7 @@ use yii\bootstrap5\ActiveForm;
 use yii\authclient\widgets\AuthChoice;
 $myAssetBundle =  \app\modules\vehicle\AppAsset::register($this);
 
-$this->title = 'Authentication';
+$this->title = 'ระบบบริหารยานพาหนะ';
 $this->params['breadcrumbs'][] = $this->title;
 $myAsset = $this->assetManager->getBundle('\\app\modules\vehicle\AppAsset');
 ?>
