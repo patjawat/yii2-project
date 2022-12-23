@@ -329,12 +329,12 @@ class BookingController extends Controller
         $total_minute = DateTimeHelper::Duration($model->start,$model->end)['minute'];
         $fix_day = $total_day != null ? $total_day : 1;
 
-        $travel_allowance = (int)$model->data_json['travel_allowance'];
-        $travel_allowance_sum = ((int)$model->data_json['travel_allowance'] * (int)$fix_day);
-        $vehicle_cost = (int)$model->data_json['vehicle_cost'] * (int)$fix_day;
-        $rent = (int)$model->data_json['rent'];
-        $rent_sum = (int)$model->data_json['rent'] * (int)$fix_day;
-        $other_cost = $model->data_json['other_cost'];
+        $travel_allowance = isset($model->data_json['travel_allowance']) ? (int)$model->data_json['travel_allowance'] : '-';
+        $travel_allowance_sum = isset($model->data_json['travel_allowance']) ? ((int)$model->data_json['travel_allowance'] * (int)$fix_day) : '-';
+        $vehicle_cost = isset($model->data_json['travel_allowance'])  ? (int)$model->data_json['vehicle_cost'] * (int)$fix_day : '-';
+        $rent = isset($model->data_json['rent']) ? (int)$model->data_json['rent'] : '-';
+        $rent_sum = isset($model->data_json['rent']) ? (int)$model->data_json['rent'] * (int)$fix_day : '-';
+        $other_cost = isset($model->data_json['other_cost']) ? $model->data_json['other_cost'] : '-';
         $total = (int)((int)$travel_allowance_sum+(int)$vehicle_cost+(int)$rent_sum+(int)$other_cost);
         $templateProcessor->setValue('title', $model->title);
         $templateProcessor->setValue('created_at', $date_long);
@@ -355,7 +355,7 @@ class BookingController extends Controller
         $templateProcessor->setValue('fd',$fix_day);
         $templateProcessor->setValue('fullname', 'นายปัจวัฒน์ ศรีบุญเรือง');
         $templateProcessor->setValue('position_name', isset($model->data_json['position_name']) ? $model->data_json['position_name'] : '-');
-        $templateProcessor->setValue('group_name', $model->data_json['group_name']);
+        $templateProcessor->setValue('group_name', isset($model->data_json['group_name']) ? $model->data_json['group_name'] : '-');
         $templateProcessor->setValue('tra', number_format((int)$travel_allowance),2);
         $templateProcessor->setValue('tra_sum',number_format((int)$travel_allowance_sum,2));
         $templateProcessor->setValue('v_cost',number_format((int)$vehicle_cost,2));

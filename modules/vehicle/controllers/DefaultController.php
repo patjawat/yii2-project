@@ -22,6 +22,11 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
+        \Yii::$app->view->registerMetaTag([
+            'name' => 'ระบบบริหารยานพาหนะ',
+            'content' => 'ระบบบริหารยานพาหนะโรงพยาบาลบึงการ'
+        ]);
+
         $searchModel = new BookingSearch([
             'start' => date("Y-m-d").' 08:00:00',
             'end' => date("Y-m-d").' 16:30:00',

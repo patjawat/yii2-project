@@ -439,7 +439,7 @@ echo Yii::$app->user->can('driver') ? $form->field($model, 'status_id')->inline(
     <!-- end col-8 -->
     <div class="col-4">
 
-        <div class="card border-0" style="width:100%;">
+        <div class="card border-0" style="width:100%;margin-top: 37px;">
             <?=Html::img(['/file', 'id' => $car_id, ['class' => 'card-img-top']])?>
             <div class="card-body">
                 <?php  if(Yii::$app->user->can('driver') && !$model->isNewRecord):?>

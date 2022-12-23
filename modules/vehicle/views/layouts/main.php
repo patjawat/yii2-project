@@ -48,6 +48,20 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => '@w
     background-size: cover;
     background-position: center center;
 }
+
+/* .navbar-brand{
+    position: relative;
+} */
+.navbar-brand > img {
+    position: absolute;
+    width: 65px;
+    top: 15px;
+}
+.navbar-brand > span {
+    position: absolute;
+    top: 26px;
+    margin-left:70px;
+}
 </style>
 <body class="d-flex flex-column h-100" style="background-color:#edf2f8;">
 <!-- <body class="d-flex flex-column h-100" style="background-image: url('<?=$myAssetBundle->baseUrl.'/images/bg-image.png'?>'); -->
@@ -56,12 +70,14 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => '@w
     <header id="header">
         <?php
 NavBar::begin([
-    'brandLabel' => 'ระบบบริหารยานพาหนะ',
+    'brandLabel' => Html::img('@web/images/moph_logo.png', ['alt'=>Yii::$app->name]).'<span>ระบบบริหารยานพาหนะ</span>',
+    // 'brandLabel' => 'ระบบบริหารยานพาหนะ',
     'brandUrl' => Yii::$app->homeUrl,
     'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark'],
 ]);
 
 echo Nav::widget([
+    
     'encodeLabels' => false,
     'options' => ['class' => 'navbar-nav ms-auto flex-nowrap'],
     'items' => [
@@ -113,14 +129,12 @@ NavBar::end();
     </style>
 
     <main id="main" class="flex-shrink-0" role="main">
-        <div class="container">
+        <div class="container mt-4">
             <?php if (!empty($this->params['breadcrumbs'])): ?>
             <?=Breadcrumbs::widget(['links' => $this->params['breadcrumbs']])?>
             <?php endif?>
 
             <?php
-
-
         Modal::begin([
             'id' => 'main-modal',
             'title' => '<h4 class="modal-title"></h4>',
