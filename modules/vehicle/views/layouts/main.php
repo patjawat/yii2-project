@@ -71,13 +71,13 @@ echo Nav::widget([
         ['label' => '<i class="fa-solid fa-book-open-reader"></i> รายการจอง'.(BookingHelper::MyBooking() > 0 ? ' <span class="badge bg-danger">'.BookingHelper::MyBooking().'</span>' : null), 'url' => ['/vehicle/booking']],
         Yii::$app->user->can('driver') ? ['label' => '<i class="fa-solid fa-user-tag"></i> ภาระกิจ'.(BookingHelper::Myjob() > 0 ? ' <span class="badge bg-danger">'.BookingHelper::Myjob().'</span>' : null), 'url' => ['/vehicle/myjob']] : '',
         Yii::$app->user->can('driver') ? ['label' => '<i class="fa-solid fa-list-ul"></i> รายการขอใช้ยานพหนะ', 'url' => ['/vehicle/booking']] : '',
-        ['label' => '<i class="fa-solid fa-user-check"></i> โปรไฟล์', 'url' => '/me'],
+        ['label' => '<i class="fa-solid fa-user-check"></i> โปรไฟล์', 'url' => ['/me']],
         Yii::$app->user->can('admin') ? [
             'label' => 'ตั้งค่า', 
             'items' => [
-                ['label' => '<i class="fa-solid fa-user-shield"></i> ผู้ใช้งานระบบ', 'url' => '/usermanager'],
-                ['label' => '<i class="fa-solid fa-car"></i> รถ', 'url' => '/vehicle/car'],
-                ['label' => '<i class="fa-solid fa-car"></i> ประเภทรถ', 'url' => '/vehicle/car-type'],
+                ['label' => '<i class="fa-solid fa-user-shield"></i> ผู้ใช้งานระบบ', 'url' => ['/usermanager']],
+                ['label' => '<i class="fa-solid fa-car"></i> รถ', 'url' => ['/vehicle/car']],
+                ['label' => '<i class="fa-solid fa-car"></i> ประเภทรถ', 'url' => ['/vehicle/car-type']],
             ],
         ] : '',
 
