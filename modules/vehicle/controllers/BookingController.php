@@ -356,13 +356,13 @@ class BookingController extends Controller
         $templateProcessor->setValue('fullname', 'นายปัจวัฒน์ ศรีบุญเรือง');
         $templateProcessor->setValue('position_name', isset($model->data_json['position_name']) ? $model->data_json['position_name'] : '-');
         $templateProcessor->setValue('group_name', $model->data_json['group_name']);
-        $templateProcessor->setValue('tra', number_format($travel_allowance),2);
-        $templateProcessor->setValue('tra_sum',number_format($travel_allowance_sum,2));
-        $templateProcessor->setValue('v_cost',number_format($vehicle_cost,2));
-        $templateProcessor->setValue('rent',number_format($rent,2));
-        $templateProcessor->setValue('rent_sum',number_format($rent_sum,2));
-        $templateProcessor->setValue('other_cost',number_format($other_cost,2));
-        $templateProcessor->setValue('total', number_format($total,2));
+        $templateProcessor->setValue('tra', number_format((int)$travel_allowance),2);
+        $templateProcessor->setValue('tra_sum',number_format((int)$travel_allowance_sum,2));
+        $templateProcessor->setValue('v_cost',number_format((int)$vehicle_cost,2));
+        $templateProcessor->setValue('rent',number_format((int)$rent,2));
+        $templateProcessor->setValue('rent_sum',number_format((int)$rent_sum,2));
+        $templateProcessor->setValue('other_cost',number_format((int)$other_cost,2));
+        $templateProcessor->setValue('total', number_format((int)$total,2));
         $templateProcessor->setValue('total_string', SystemHelper::Convert($total));
         $templateProcessor->setImg('img1', ['src' => Yii::getAlias('@webroot') . '/images/logo2.jpg','swh'=>'250']);
 
