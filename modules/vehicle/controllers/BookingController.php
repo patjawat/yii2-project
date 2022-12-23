@@ -335,7 +335,7 @@ class BookingController extends Controller
         $rent = (int)$model->data_json['rent'];
         $rent_sum = (int)$model->data_json['rent'] * (int)$fix_day;
         $other_cost = $model->data_json['other_cost'];
-        $total = (int)($travel_allowance_sum+$vehicle_cost+$rent_sum+$other_cost);
+        $total = (int)((int)$travel_allowance_sum+(int)$vehicle_cost+(int)$rent_sum+(int)$other_cost);
         $templateProcessor->setValue('title', $model->title);
         $templateProcessor->setValue('created_at', $date_long);
         $templateProcessor->setValue('doc_number', isset($model->data_json['doc_number']) ? $model->data_json['doc_number'] : '-');
