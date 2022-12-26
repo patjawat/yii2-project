@@ -4,12 +4,10 @@
 /** @var string $content */
 
 // use app\assets\AppAsset;
+use app\components\BookingHelper;
 use app\modules\vehicle\AppAsset;
-use app\widgets\Alert;
-use yii\bootstrap5\Breadcrumbs;
+use kartik\nav\NavX;
 use yii\bootstrap5\Html;
-use yii\bootstrap5\Nav;
-use yii\bootstrap5\NavBar;
 
 AppAsset::register($this);
 
@@ -20,13 +18,13 @@ $this->registerMetaTag(['name' => 'description', 'content' => $this->params['met
 $this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_keywords'] ?? '']);
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => '@web/favicon.ico']);
 ?>
-<?php $this->beginPage() ?>
+<?php $this->beginPage()?>
 <!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>" class="h-100">
+<html lang="<?=Yii::$app->language?>" class="h-100">
 
 <head>
-    <title><?= Html::encode($this->title) ?></title>
-    <?php $this->head() ?>
+    <title><?=Html::encode($this->title)?></title>
+    <?php $this->head()?>
 </head>
 <style>
 html,
@@ -45,11 +43,10 @@ body {
 </style>
 
 <body>
-    <?php $this->beginBody() ?>
+    <?php $this->beginBody()?>
     <header class="container d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-    <?php
+        <?php
 
-use kartik\nav\NavX;
 NavX::widget([
     'options' => ['class' => 'nav nav-pills'],
     'items' => [
@@ -65,35 +62,10 @@ NavX::widget([
     ],
     'encodeLabels' => false,
     'activateParents' => true,
-    'encodeLabels' => false
+    'encodeLabels' => false,
 ]);
 
-
-    // NavBar::begin([
-    //     'brandLabel' => Yii::$app->name,
-    //     'brandUrl' => Yii::$app->homeUrl,
-    //     'options' => ['class' => 'nav nav-pills']
-    // ]);
-    // echo Nav::widget([
-    //     'options' => ['class' => 'navbar-nav'],
-    //     'items' => [
-    //         ['label' => 'Home', 'url' => ['/site/index']],
-    //         ['label' => 'About', 'url' => ['/site/about']],
-    //         ['label' => 'Contact', 'url' => ['/site/contact']],
-    //         Yii::$app->user->isGuest
-    //             ? ['label' => 'Login', 'url' => ['/site/login']]
-    //             : '<li class="nav-item">'
-    //                 . Html::beginForm(['/site/logout'])
-    //                 . Html::submitButton(
-    //                     'Logout (' . Yii::$app->user->identity->username . ')',
-    //                     ['class' => 'nav-link btn btn-link logout']
-    //                 )
-    //                 . Html::endForm()
-    //                 . '</li>'
-    //     ]
-    // ]);
-    // NavBar::end();
-    ?>
+?>
 
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
             <svg class="bi me-2" width="40" height="32">
@@ -104,27 +76,78 @@ NavX::widget([
 
         <ul class="nav nav-pills">
             <li class="nav-item">
-                <?=Html::a('หน้าหลัก',['/vehicle2'],['class'=> 'nav-link active'])?>
+                <?=Html::a('หน้าหลัก', ['/vehicle2'], ['class' => 'nav-link active'])?>
             </li>
             <li class="nav-item">
-                <?=Html::a('<i class="fa-solid fa-book-open-reader"></i> รายการจอง',['/vehicle2/booking'],['class'=> 'nav-link'])?>
+                <?=Html::a('<i class="fa-solid fa-book-open-reader"></i> รายการจอง' . (BookingHelper::MyBooking() > 0 ? ' <span class="badge bg-danger">' . BookingHelper::MyBooking() . '</span>' : null), ['/vehicle2/booking'], ['class' => 'nav-link'])?>
             </li>
-            <li class="nav-item"><a href="#" class="nav-link">Features</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">FAQs</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+
+            <?php if (Yii::$app->user->can('driver')): ?>
+            <li class="nav-item">
+                <?=Html::a('<i class="fa-solid fa-user-tag"></i> ภาระกิจ' . (BookingHelper::Myjob() > 0 ? ' <span class="badge bg-danger">' . BookingHelper::Myjob() . '</span>' : null), ['/vehicle2/booking'], ['class' => 'nav-link'])?>
+            </li>
+            <li class="nav-item">
+                <?=Html::a('<i class="fa-solid fa-list-ul"></i> รายการขอใช้ยานพหนะ', ['/vehicle2/booking'], ['class' => 'nav-link'])?>
+            </li>
+            <?php endif;?>
+
+            <?php if (Yii::$app->user->can('admin')): ?>
+            <li class="nav-item">
+                <?=Html::a('<i class="fa-solid fa-list-ul"></i> รายการขอใช้ยานพหนะ', ['/vehicle2/booking'], ['class' => 'nav-link'])?>
+            </li>
+            <?php endif;?>
+
+            <?php if (Yii::$app->user->isGuest): ?>
+            <li class="nav-item">
+                <?=Html::a('<i class="fa-solid fa-user-lock"></i> เข้าสู่ระบบ', ['/auth/login'],['class' => 'nav-link'])?>
+            </li>
+            <?php else: ?>
+            <li class="nav-item">
+                <?=Html::beginForm(['/auth/logout'])
+// . Html::submitButton(
+//     '<i class="fa-solid fa-power-off"></i> (' . Yii::$app->user->identity->username . ')',
+//     ['class' => 'btn btn-outline-danger logout']
+// )
+// . Html::endForm()
+. Html::submitButton(
+    '<i class="fa-solid fa-power-off"></i> ออกจากระบบ ',
+    ['class' => 'btn btn-danger logout','style' => 'color:#fff']
+)
+. Html::endForm()?>
+            </li>
+
+            <?php endif;?>
+
         </ul>
     </header>
+
+
+            <!-- Loading-box -->
+            <div id="awaitLogin" style="display:none;margin-top:100px">
+                <div class="d-flex justify-content-center">
+                    <div style="position:relative;width:10%;">
+                        <?=Html::img('@web/images/moph_logo.png',['style' => 'position: absolute;width: 100px;top:1px;left:1px;']);?>
+                        <div class="dbl-spinner"></div>
+                        <div class="dbl-spinner"></div>
+                        <h6 style="position: absolute;top:115px;left:8%;">กำลังโหลด...</h6>
+                    </div>
+                </div>
+            </div>
 
     <main id="main" class="flex-shrink-0" role="main">
         <div class="row justify-content-md-center">
             <div class="col-12">
-                <?= $content ?>
+<div id="content-container">
+    <?=$content?>
+</div>
+            
             </div>
         </div>
     </main>
 
-    <?php $this->endBody() ?>
+
+    <?php $this->endBody()?>
 </body>
+
 </html>
-<?php $this->endPage() ?>
+<?php $this->endPage()?>

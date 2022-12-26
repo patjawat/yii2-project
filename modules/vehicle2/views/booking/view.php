@@ -38,6 +38,8 @@ table {
 <div class="container">
 
         
+<div class="row justify-content-md-center">
+    <div class="col-10">
 
     
     <?= DetailView::widget([
@@ -45,7 +47,7 @@ table {
         'attributes' => [
             [
                 'group'=>true,
-                'label'=> '<i class="fa-solid fa-list-check"></i> วัตถุประสงค์การจอง : <code>'.$model->title.'</code>',
+                'label'=> '<i class="fa-solid fa-list-check"></i> แสดงรายการจองรถ : <code>'.$model->title.'</code>',
                 'rowOptions'=>['class'=>'table-info']
             ],
             [
@@ -162,6 +164,8 @@ table {
     ]) ?>
 
 
+</div>
+</div>
 </div>
 
 <div class="row justify-content-md-center mt-5">

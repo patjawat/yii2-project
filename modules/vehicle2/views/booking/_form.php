@@ -295,6 +295,52 @@ $disable = false;
                                 echo Yii::$app->user->can('driver') ? $form->field($model, 'status_id')->inline(true)->radioList($status)->label('สถานะ') : '';
                                 ?>
                         <?php endif;?>
+
+
+                        <?php if (Yii::$app->user->can('driver') && !$model->isNewRecord): ?>
+                <?php
+                        echo $form->field($model, 'driver_id', [
+                            'inputTemplate' => '<div class="input-group">
+                            <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa-regular fa-id-card"></i>&nbsp;</span>
+                            </div>
+                            {input}
+                            </div>',
+                        ])->widget(Select2::classname(), [
+                            'options' => ['placeholder' => 'เลือกพนักงานบับรถ ...'],
+                            'data' => $model->driversMap(),
+                            'disabled' => $disable,
+                            'pluginEvents' => [
+                                "select2:select" => "function() {
+                                    getDriverPhoto($(this).val())
+                                }",
+                            ],
+                        ])->label('พนักงานขับรถ');
+                        ?>
+
+                <?php $mileage_last = $model->mileageLast();?>
+                                        <?=$form->field($model, 'data_json[mileage_start]', [
+
+                                'inputTemplate' => '<div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fa-solid fa-gauge-high"></i>&nbsp;</span>
+                                                            </div>
+                                                            {input}
+                                                            </div>',
+
+                            ])->textInput(['value' => $mileage_last])->label('เลขไมค์ก่อนออกเดินทาง')?>
+
+                <?=$form->field($model, 'data_json[mileage_end]', [
+                        'inputTemplate' => '<div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa-solid fa-gauge-high"></i>&nbsp;</span>
+                                                    </div>
+                                                    {input}
+                                                    </div>',
+
+                    ])->textInput()->label('เลขไมค์หลังเสร็จสินภาระกิจ')?>
+                <?php endif;?>
+
                         <div class="body-footer">
 
                             <div class="form-group">
@@ -392,54 +438,6 @@ $disable = false;
             </div>
         </div>
         <!-- end tabs -->
-        <div class="card border-0" style="width:100%;margin-top: 37px;">
-            <?php // Html::img(['/file', 'id' => $car_id, ['class' => 'card-img-top']])?>
-            <div class="card-body">
-                <?php if (Yii::$app->user->can('driver') && !$model->isNewRecord): ?>
-                <?php
-                        echo $form->field($model, 'driver_id', [
-                            'inputTemplate' => '<div class="input-group">
-                            <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa-regular fa-id-card"></i>&nbsp;</span>
-                            </div>
-                            {input}
-                            </div>',
-                        ])->widget(Select2::classname(), [
-                            'options' => ['placeholder' => 'เลือกพนักงานบับรถ ...'],
-                            'data' => $model->driversMap(),
-                            'disabled' => $disable,
-                            'pluginEvents' => [
-                                "select2:select" => "function() {
-                                    getDriverPhoto($(this).val())
-                                }",
-                            ],
-                        ])->label('พนักงานขับรถ');
-                        ?>
-
-                <?php $mileage_last = $model->mileageLast();?>
-                                        <?=$form->field($model, 'data_json[mileage_start]', [
-
-                                'inputTemplate' => '<div class="input-group">
-                                                            <div class="input-group-prepend">
-                                                            <span class="input-group-text"><i class="fa-solid fa-gauge-high"></i>&nbsp;</span>
-                                                            </div>
-                                                            {input}
-                                                            </div>',
-
-                            ])->textInput(['value' => $mileage_last])->label('เลขไมค์ก่อนออกเดินทาง')?>
-
-                <?=$form->field($model, 'data_json[mileage_end]', [
-                        'inputTemplate' => '<div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fa-solid fa-gauge-high"></i>&nbsp;</span>
-                                                    </div>
-                                                    {input}
-                                                    </div>',
-
-                    ])->textInput()->label('เลขไมค์หลังเสร็จสินภาระกิจ')?>
-                <?php endif;?>
-            </div>
-        </div>
     </div>
 </div>
 <!-- end Row -->

@@ -30,11 +30,11 @@ table {
         </div>
         <div class="ms-auto p-2 bd-highlight">
             <?php if (Yii::$app->user->can('driver')): ?>
-            <?=Html::a('<i class="fa-solid fa-list-ul"></i> ทั้งหมด ' . $status['allBadgeTotal'], ['/vehicle/booking'], ['class' => 'btn btn-info position-relative'])?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <?=Html::a('<i class="fa-solid fa-hourglass-start"></i> ขอใช้รถ' . $status['awaitBadgeTotal'], ['/vehicle/booking', 'status' => 'await'], ['class' => 'btn btn-warning position-relative'])?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <?=Html::a('<i class="fa-solid fa-check"></i> อนุมัติ ' . $status['approveBadgeTotal'], ['/vehicle/booking', 'status' => 'approve'], ['class' => 'btn btn-primary position-relative'])?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <?=Html::a('<i class="fa-solid fa-check"></i> เสร็จสิ้น' . $status['successBadgeTotal'], ['/vehicle/booking', 'status' => 'success'], ['class' => 'btn btn-success position-relative'])?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <?=Html::a('<i class="fa-solid fa-xmark"></i> ยกเลิก ' . $status['cancelBadgeTotal'], ['/vehicle/booking', 'status' => 'cancel'], ['class' => 'btn btn-danger position-relative'])?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <?=Html::a('<i class="fa-solid fa-list-ul"></i> ทั้งหมด ' . $status['allBadgeTotal'], ['/vehicle2/booking'], ['class' => 'btn btn-light position-relative'])?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <?=Html::a('<i class="fa-solid fa-hourglass-start"></i> ขอใช้รถ' . $status['awaitBadgeTotal'], ['/vehicle2/booking', 'status' => 'await'], ['class' => 'btn btn-light position-relative'])?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <?=Html::a('<i class="fa-solid fa-check"></i> อนุมัติ ' . $status['approveBadgeTotal'], ['/vehicle2/booking', 'status' => 'approve'], ['class' => 'btn btn-light position-relative'])?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <?=Html::a('<i class="fa-solid fa-check"></i> เสร็จสิ้น' . $status['successBadgeTotal'], ['/vehicle2/booking', 'status' => 'success'], ['class' => 'btn btn-light position-relative'])?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <?=Html::a('<i class="fa-solid fa-xmark"></i> ยกเลิก ' . $status['cancelBadgeTotal'], ['/vehicle2/booking', 'status' => 'cancel'], ['class' => 'btn btn-light position-relative'])?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <?php endif;?>
         </div>
     </div>
