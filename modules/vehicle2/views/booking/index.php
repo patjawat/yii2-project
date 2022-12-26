@@ -17,121 +17,116 @@ td>img {
     width: 100px;
 }
 
-table {
+/* table {
     background-color: #fff;
+} */
+
+
+table {
+    white-space: nowrap;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+
+}
+
+.table {
+    position: relative;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+
+}
+
+.table td,
+.table th,
+.table tr,
+.table thead,
+.table tbody {
+    border: none;
+    position: relative;
+}
+
+.table thead th {
+    border: none;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+tbody {
+    position: relative;
+
+}
+
+tbody tr {
+    border-radius: 8px;
+    margin-bottom: 200px;
+    position: relative;
+    height: 50px;
+}
+
+tbody tr::after {
+    content: '';
+    width: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    // background-color: #fff;
+    background-color: #dbdfe4;
+    height: 120px;
+    z-index: 0;
+    border-radius: 8px;
+}
+
+tbody td {
+    z-index: 1;
 }
 </style>
-<?php Pjax::begin()?>
+<?php if(Yii::$app->user->can('driver')):?>
+    <div class="row justify-content-md-center">
+    <div class="col-10" style="padding-left: 0px;">
+<div class="d-flex justify-content-start mb-3">
+    <div class="p-2"> <?=Html::a('<i class="fa-solid fa-list-ul"></i> ทั้งหมด '.$status['allBadgeTotal'],['/vehicle2/booking'],['class' => 'btn btn-light position-relative'])?></div>
+    <div class="p-2"><?=Html::a('<i class="fa-solid fa-hourglass-start"></i> ขอใช้รถ'.$status['awaitBadgeTotal'],['/vehicle2/booking','status'=> 'await'],['class' => 'btn btn-light position-relative'])?></div>
+    <div class="p-2"><?=Html::a('<i class="fa-solid fa-check"></i> อนุมัติ '.$status['approveBadgeTotal'],['/vehicle2/booking','status'=> 'approve'],['class' => 'btn btn-light position-relative'])?></div>
+    <div class="p-2"><?=Html::a('<i class="fa-solid fa-check"></i> เสร็จสิ้น' .$status['successBadgeTotal'],['/vehicle2/booking','status'=> 'success'],['class' => 'btn btn-light position-relative'])?></div>
+    <div class="p-2"><?=Html::a('<i class="fa-solid fa-xmark"></i> ยกเลิก '.$status['cancelBadgeTotal'],['/vehicle2/booking','status'=> 'cancel'],['class' => 'btn btn-light position-relative'])?></div>
+
+  </div>
+  </div>
+  </div>
+  <?php endif; ?>   
+
+  
 <div class="row justify-content-md-center">
     <div class="col-10">
 
-    <div class="d-flex bd-highlight">
-        <div class="p-2 bd-highlight">
+        <?php foreach ($dataProvider->getModels() as $model): ?>
+        <div class="row d-flex justify-content-between align-items-center mb-4 p-3 rounded-3 shadow" style="background-color: #fff;margin-buttom:3px;height: 75px;
+">
+            <div class="col-3">
+                <p class="mb-0">เรื่อง : <span class="text-success"><?=$model->title;?></span></p>
+        <p class="mb-0">
+        ผู้ขอใช้ : <span class="text-success"><?=$model->data_json['fullname']?></span>
+        </p>
+            </div>
+            <div class="col-1">
+                <?=$model->car->data_json['car_regis']?>
+            </div>
+            <div class="col-2">
+                <?=isset($model->driver) ? $model->driver->fullname : '-'?>
+            </div>
+            <div class="col-2">
+                <?=$model->start;?>
+            </div>
+            <div class="col-1">
+                <?=$this->render('booking_status',['model' => $model])?>
+            </div>
+            <div class="col-3">
+<?=$this->render('action',['model' => $model])?>
+            </div>
         </div>
-        <div class="ms-auto p-2 bd-highlight">
-            <?php if (Yii::$app->user->can('driver')): ?>
-            <?=Html::a('<i class="fa-solid fa-list-ul"></i> ทั้งหมด ' . $status['allBadgeTotal'], ['/vehicle2/booking'], ['class' => 'btn btn-light position-relative'])?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <?=Html::a('<i class="fa-solid fa-hourglass-start"></i> ขอใช้รถ' . $status['awaitBadgeTotal'], ['/vehicle2/booking', 'status' => 'await'], ['class' => 'btn btn-light position-relative'])?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <?=Html::a('<i class="fa-solid fa-check"></i> อนุมัติ ' . $status['approveBadgeTotal'], ['/vehicle2/booking', 'status' => 'approve'], ['class' => 'btn btn-light position-relative'])?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <?=Html::a('<i class="fa-solid fa-check"></i> เสร็จสิ้น' . $status['successBadgeTotal'], ['/vehicle2/booking', 'status' => 'success'], ['class' => 'btn btn-light position-relative'])?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <?=Html::a('<i class="fa-solid fa-xmark"></i> ยกเลิก ' . $status['cancelBadgeTotal'], ['/vehicle2/booking', 'status' => 'cancel'], ['class' => 'btn btn-light position-relative'])?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <?php endif;?>
-        </div>
+        <?php endforeach;?>
+        
     </div>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-    <?=GridView::widget([
-    'dataProvider' => $dataProvider,
-    // 'filterModel' => $searchModel,
-    'columns' => [
-        [
-            'class' => 'kartik\grid\SerialColumn',
-            'width' => '36px',
-            'pageSummary' => 'Total',
-            'pageSummaryOptions' => ['colspan' => 6],
-            'header' => '#',
-        ],
-        [
-            'header' => 'เรื่อง',
-            'vAlign' => 'middle',
-            'format' => 'raw',
-            'value' => function ($model) {
-                return $model->title;
-            },
-        ],
-
-        [
-            'header' => 'ผู้ขอใช้',
-            'vAlign' => 'middle',
-            'width' => '100px',
-            'format' => 'raw',
-            'value' => function ($model) {
-                return $model->data_json['fullname'];
-            },
-        ],
-        [
-            'header' => 'ยานพาหนะ',
-            'vAlign' => 'middle',
-            'width' => '100px',
-            // 'width' => '40%',
-            'format' => 'raw',
-            'value' => function ($model) {
-                return $model->car->data_json['car_regis'];
-            },
-        ],
-        [
-            'header' => 'ผู้ขับ',
-            'vAlign' => 'middle',
-            // 'width' => '40%',
-            'format' => 'raw',
-            'value' => function ($model) {
-                return isset($model->driver) ? $model->driver->fullname : '-';
-            },
-        ],
-
-        [
-            'header' => 'วันออกเดินทาง',
-            'width' => '150px',
-            'format' => 'raw',
-            'vAlign' => 'middle',
-            'value' => function ($model) {
-                return $model->start;
-            },
-        ],
-
-        [
-            'attribute' => 'status_id',
-            'format' => 'raw',
-            'header' => 'สถานะ',
-            'hAlign' => 'center',
-            'vAlign' => 'middle',
-            'value' => function ($model) {
-                // return isset($model->status) ? $model->status->title : '-';
-                return $this->render('booking_status', ['model' => $model]);
-
-            },
-        ],
-        [
-            'header' => 'ดำเนินการ',
-            'format' => 'raw',
-            'width' => '280px',
-            'hAlign' => 'center',
-            'vAlign' => 'middle',
-            'value' => function ($model) {
-                return $this->render('action', ['model' => $model]);
-            },
-        ],
-        // [
-        //     'class' => ActionColumn::className(),
-        //     'hAlign' => 'center',
-        //     'vAlign' => 'middle',
-        //     'urlCreator' => function ($action, Booking $model, $key, $index, $column) {
-        //         return Url::toRoute([$action, 'id' => $model->id]);
-        //      }
-        // ],
-    ],
-]);?>
-
-</div>
 </div>
 
 <?php
@@ -153,4 +148,3 @@ function CancelWarnings() {
 JS;
 $this->registerJs($js, View::POS_END)
 ?>
-<?php Pjax::end()?>

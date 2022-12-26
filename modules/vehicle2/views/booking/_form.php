@@ -345,7 +345,7 @@ $disable = false;
 
                             <div class="form-group">
                                 <?=Html::submitButton('<i class="fa-solid fa-check"></i> บันทึก', ['class' => 'btn btn-success'])?>
-                                <?=html::a('<i class="fa-solid fa-xmark"></i> ยกเลิกการ', ['/vehicle/booking'], ['class' => 'btn btn-danger']);?>
+                                <?=html::a('<i class="fa-solid fa-xmark"></i> ยกเลิก', ['/vehicle2/booking'], ['class' => 'btn btn-danger']);?>
                             </div>
 
                         </div>
