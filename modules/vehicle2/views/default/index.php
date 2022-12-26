@@ -7,21 +7,18 @@ AppAsset::register($this);
 $AssetBundle = AppAsset::register($this);
 $this->title = 'ระบบจองรถ';
 ?>
-<div class="row justify-content-md-center mt-5">
-<div class="col-8">
-
-<div class="container" style="margin-top:10px;">
-
-        <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+<div class="row justify-content-md-center">
+    <div class="col-8">
+        <div class="container">
+            <?php echo $this->render('_search', ['model' => $searchModel]); ?>
             <?php echo $this->render('car_items', [
             'searchModelCar' => $searchModelCar,
             'dataProviderCar' => $dataProviderCar,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]); ?>
-
-</div>
-</div>
+        </div>
+    </div>
 </div>
 
 
