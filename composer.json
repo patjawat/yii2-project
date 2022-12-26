@@ -59,7 +59,8 @@
         "phpoffice/phpword": "^1.0",
         "yiisoft/yii2-queue": "^2.3",
         "nextvikas/yii2-google-authenticator": "@dev",
-        "ramprasadm1986/yii2-google-authenticator": "^1.0"
+        "ramprasadm1986/yii2-google-authenticator": "^1.0",
+        "kartik-v/yii2-nav-x": "@dev"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

@@ -52,6 +52,7 @@ $modules['gridviewKrajee'] = ['class' => '\kartik\grid\Module']; //system
 $modules['usermanager'] = ['class' => 'app\modules\usermanager\Module']; //จัดการผู้ใช้งานระบบ
 // $modules['usermanager'] = ['class' => 'app\modules\yii2-user-master\Module']; //จัดการผู้ใช้งานระบบ
 $modules['vehicle'] = ['class' => 'app\modules\vehicle\Module']; //system
+$modules['vehicle2'] = ['class' => 'app\modules\vehicle2\Module']; //system
 $modules['meeting'] = ['class' => 'app\modules\meeting\Module']; //system
 $modules['userswicth'] = ['class' => 'sky\userswitch\Module']; //Swicth
 $modules['authenticator'] = [
