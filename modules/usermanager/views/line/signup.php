@@ -9,11 +9,6 @@ $this->title = 'ระบบลงทะเบียน';
 <div class="row justify-content-center mt-3">
 
     <div class="col-10">
-        <?php foreach($dataProvider->getModels() as $items):?>
-            <?=$items->phone;?>
-
-            <?php endforeach; ?>
-
         <?php if(isset($searchModel->phone) && $dataProvider->getTotalCount() == 0): ?>
             <?php $form = ActiveForm::begin([
                 'id' => 'form-usermanager',
