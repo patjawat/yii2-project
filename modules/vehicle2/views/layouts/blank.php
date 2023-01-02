@@ -8,8 +8,14 @@ use app\components\BookingHelper;
 use app\modules\vehicle\AppAsset;
 use kartik\nav\NavX;
 use yii\bootstrap5\Html;
+use app\components\SiteHelper;
 
 AppAsset::register($this);
+$site = SiteHelper::info();
+$urlAction = $this->context->id.'/'.$this->context->action->id;
+$homeActive = $urlAction == 'default/index' ? 'active' : null;
+$bokingActive = $urlAction == 'booking/index' ? 'active' : null;
+// $getUrl = 
 
 $this->registerCsrfMetaTags();
 $this->registerMetaTag(['charset' => Yii::$app->charset], 'charset');
@@ -40,11 +46,50 @@ body {
     font-weight: 100;
     font-family: 'Sarabun', sans-serif;
 }
+
+.nav > li {
+    padding: 5px !important;
+    /* padding:10px; */
+}
 </style>
 
 <body>
     <?php $this->beginBody()?>
-    <header class="container d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+
+    <header class="container d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+      <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+      ระบบบริหารยานพาหนะส่วนกลาง
+      </a>
+
+      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+        <li><?=Html::a('หน้าหลัก', ['/vehicle2'], ['class' => 'nav-link link-dark btn btn-light '.$homeActive])?></li>
+        <li><?=Html::a('<i class="fa-solid fa-book-open-reader"></i> รายการจอง' . (BookingHelper::MyBooking() > 0 ? ' <span class="badge bg-danger">' . BookingHelper::MyBooking() . '</span>' : null), ['/vehicle2/booking'], ['class' => 'nav-link link-dark btn btn-light '.$bokingActive])?></li>
+        <li><?=Html::a('โปรไฟล์', ['/me'], ['class' => 'nav-link link-dark btn btn-light '.$homeActive])?></li>
+       
+        <li><a href="#" class="nav-link link-dark btn btn-light">FAQs</a></li>
+        <li><a href="#" class="nav-link link-dark btn btn-light">About</a></li>
+      </ul>
+
+      <div class="col-md-3 text-end">
+
+<?php if (Yii::$app->user->isGuest): ?>
+                <?=Html::a('<i class="fa-solid fa-user-lock"></i> เข้าสู่ระบบ', ['/auth/login'],['class' => 'btn btn-outline-primary me-2'])?>
+           
+            <?php else: ?>
+                <?=Html::beginForm(['/auth/logout'])
+
+. Html::submitButton(
+    '<i class="fa-solid fa-power-off"></i> ออกจากระบบ ',
+    ['class' => 'btn btn-danger me-2 logout','style' => 'color:#fff']
+)
+. Html::endForm()?>
+
+            <?php endif;?>
+        <!-- <button type="button" class="btn btn-outline-primary me-2">Login</button>
+        <button type="button" class="btn btn-primary">Sign-up</button> -->
+      </div>
+    </header>
+
         <?php
 
 NavX::widget([
@@ -67,59 +112,7 @@ NavX::widget([
 
 ?>
 
-        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-            <svg class="bi me-2" width="40" height="32">
-                <use xlink:href="#bootstrap"></use>
-            </svg>
-            <span class="fs-4 text-white">ระบบขอใช้ยานพาหนะส่วนกลาง</span>
-        </a>
 
-        <ul class="nav nav-pills">
-            <li class="nav-item">
-                <?=Html::a('หน้าหลัก', ['/vehicle2'], ['class' => 'nav-link active'])?>
-            </li>
-            <li class="nav-item">
-                <?=Html::a('<i class="fa-solid fa-book-open-reader"></i> รายการจอง' . (BookingHelper::MyBooking() > 0 ? ' <span class="badge bg-danger">' . BookingHelper::MyBooking() . '</span>' : null), ['/vehicle2/booking'], ['class' => 'nav-link'])?>
-            </li>
-
-            <?php if (Yii::$app->user->can('driver')): ?>
-            <li class="nav-item">
-                <?=Html::a('<i class="fa-solid fa-user-tag"></i> ภาระกิจ' . (BookingHelper::Myjob() > 0 ? ' <span class="badge bg-danger">' . BookingHelper::Myjob() . '</span>' : null), ['/vehicle2/booking'], ['class' => 'nav-link'])?>
-            </li>
-            <li class="nav-item">
-                <?=Html::a('<i class="fa-solid fa-list-ul"></i> รายการขอใช้ยานพหนะ', ['/vehicle2/booking'], ['class' => 'nav-link'])?>
-            </li>
-            <?php endif;?>
-
-            <?php if (Yii::$app->user->can('admin')): ?>
-            <li class="nav-item">
-                <?=Html::a('<i class="fa-solid fa-list-ul"></i> รายการขอใช้ยานพหนะ', ['/vehicle2/booking'], ['class' => 'nav-link'])?>
-            </li>
-            <?php endif;?>
-
-            <?php if (Yii::$app->user->isGuest): ?>
-            <li class="nav-item">
-                <?=Html::a('<i class="fa-solid fa-user-lock"></i> เข้าสู่ระบบ', ['/auth/login'],['class' => 'nav-link'])?>
-            </li>
-            <?php else: ?>
-            <li class="nav-item">
-                <?=Html::beginForm(['/auth/logout'])
-// . Html::submitButton(
-//     '<i class="fa-solid fa-power-off"></i> (' . Yii::$app->user->identity->username . ')',
-//     ['class' => 'btn btn-outline-danger logout']
-// )
-// . Html::endForm()
-. Html::submitButton(
-    '<i class="fa-solid fa-power-off"></i> ออกจากระบบ ',
-    ['class' => 'btn btn-danger logout','style' => 'color:#fff']
-)
-. Html::endForm()?>
-            </li>
-
-            <?php endif;?>
-
-        </ul>
-    </header>
 
 
             <!-- Loading-box -->
@@ -138,6 +131,15 @@ NavX::widget([
         <div class="row justify-content-md-center">
             <div class="col-12">
 <div id="content-container">
+<?php // $this->context->id;?>
+<?php // $this->context->action->id;?>
+<?php
+// echo Yii::$app->request->referrer;
+// echo Yii::$app->controller->id;
+// echo Yii::$app->controller->action->id;
+// echo Yii::$app->controller->module->id;
+echo $urlAction;
+?>
     <?=$content?>
 </div>
             

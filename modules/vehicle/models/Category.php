@@ -96,11 +96,9 @@ class Category extends \yii\db\ActiveRecord
 
     public function CheckCar($start, $end,$car_id) 
     {
-        // $sql = "SELECT count(id) FROM booking WHERE start >= :start or end <= :end AND car_id = :car_id AND status_id in ('cancel','success')";
-        // $sql = "SELECT count(c.id) FROM `category` c LEFT JOIN booking b ON b.car_id = c.id WHERE c.type_name = 'car' AND c.id = :car_id AND b.start <= :end";
-        // $sql = "SELECT count(c.id) FROM `category` c LEFT JOIN booking b ON b.car_id = c.id WHERE c.type_name = 'car' AND c.id = :car_id AND b.end < :start";
         $sql = "SELECT count(c.id) FROM `category` c 
         LEFT JOIN booking b ON b.car_id = c.id WHERE c.type_name = 'car' AND c.id = :car_id
+        AND b.status_id <> 'success'
         AND ( (b.start >= :start AND b.end <= :start) 
         OR (b.start <= :end AND b.end >= :end ) 
         OR (b.start <= :start AND b.end >= :start) 
@@ -110,7 +108,6 @@ class Category extends \yii\db\ActiveRecord
         ->bindValue(':end', $end)
         ->bindValue(':car_id', $car_id)
         ->queryScalar();
-        // ->getRawSql();
         return $query;
     }
 

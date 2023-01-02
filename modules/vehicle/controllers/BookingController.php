@@ -18,6 +18,7 @@ use PhpOffice\PhpWord\Settings;
 use app\components\Processor;
 use app\components\DateTimeHelper;
 use app\components\SystemHelper;
+use app\components\UserHelper;
 
 /**
  * BookingController implements the CRUD actions for Booking model.
@@ -120,6 +121,11 @@ class BookingController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
+                if($model->car->checkCar($model->start,$model->end,$model->car_id) > 0){
+                    return $this->render('_notnull');
+                   
+                }
+
                 $model->status_id = 'await';
                 $model->save();
                 Yii::$app->session->setFlash('position', [
@@ -155,7 +161,18 @@ class BookingController extends Controller
         $sql = "SELECT u.id,u.fullname FROM auth_assignment a INNER JOIN user u ON u.id = a.user_id;";
         $driver = Yii::$app->db->createCommand($sql)->queryAll();
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save(false)) {
+
+        if ($this->request->isPost && $model->load($this->request->post())) {
+
+            $oldModel = $this->findModel($id);
+            // ถ้ามีการเลือกรถคันไหมตรวจสอบว่าว่างหรือไม่
+            if($oldModel->car_id != $model->car_id){
+                if($model->car->checkCar($model->start,$model->end,$model->car_id) > 0){
+                    return $this->render('_notnull');
+                }
+            }
+
+            if($model->save(false)){
             Yii::$app->session->setFlash('position', [
                 'position' => 'center',
                 'icon' => Alert::TYPE_SUCCESS,
@@ -163,7 +180,8 @@ class BookingController extends Controller
                 'showConfirmButton' => false,
                 'timer' => 1500
             ]);
-            return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
 

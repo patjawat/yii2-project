@@ -41,7 +41,9 @@ class AuthController extends \yii\web\Controller
     
     public function actionSignup()
     {
+
         $this->layout = '@app/modules/usermanager/views/layouts/auth';
+        
         $model = new User();
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -51,7 +53,6 @@ class AuthController extends \yii\web\Controller
             if($model->save()){
                 $model->assignment();
             }
-            // return $this->redirect(['success', 'id' => $model->id]);
             return $this->render('@app/modules/usermanager/views/auth/signup_success', [
                 'model' => $this->findModel($model->id),
             ]);

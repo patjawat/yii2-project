@@ -5,12 +5,10 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var app\modules\bookingcar\models\Booking $model */
 
-$this->title = 'เพิ่มการจอง';
+$this->title = 'จองรภ';
 
 ?>
 <div class="booking-create">
-
-    <h3><?= Html::encode($this->title) ?></h3>
 
     <?= $this->render('_form', [
         'model' => $model,

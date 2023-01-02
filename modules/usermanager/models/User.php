@@ -6,11 +6,12 @@ use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
-use yii\web\IdentityInterface;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
+use yii\web\IdentityInterface;
 
-class User extends ActiveRecord implements IdentityInterface {
+class User extends ActiveRecord implements IdentityInterface
+{
 
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
@@ -21,12 +22,13 @@ class User extends ActiveRecord implements IdentityInterface {
     public $q;
     public $old_password;
     public $file;
-
+    public $line_id;
 
     /**
      * @inheritdoc
      */
-    public static function tableName() {
+    public static function tableName()
+    {
         return '{{%user}}';
     }
 
@@ -41,7 +43,7 @@ class User extends ActiveRecord implements IdentityInterface {
                 'class' => 'mdm\upload\UploadBehavior',
                 'attribute' => 'file', // required, use to receive input file
                 'savedAttribute' => 'photo', // optional, use to link model with saved file.
-                'uploadPath' => Yii::getAlias('@webroot').'/uploads/user', // saved directory. default to '@runtime/upload'
+                'uploadPath' => Yii::getAlias('@webroot') . '/uploads/user', // saved directory. default to '@runtime/upload'
                 'autoSave' => true, // when true then uploaded file will be save before ActiveRecord::save()
                 'autoDelete' => true, // when true then uploaded file will deleted before ActiveRecord::delete()
             ],
@@ -49,14 +51,14 @@ class User extends ActiveRecord implements IdentityInterface {
         ];
     }
 
-
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return [
-            
-            [['username'], 'required'],
+
+            [['username', 'phone'], 'required'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
             ['username', 'filter', 'filter' => 'trim'],
@@ -76,19 +78,20 @@ class User extends ActiveRecord implements IdentityInterface {
             ['confirm_password', 'string', 'min' => 6],
             ['confirm_password', 'compare', 'compareAttribute' => 'password'],
             ['phone', 'string', 'min' => 10, 'max' => 10],
-            [['roles', 'doctor_id', 'fullname','fullname_en','license_number','q', 'old_password','phone','photo','data_json'], 'safe'],
-            
+            [['roles', 'doctor_id', 'fullname', 'fullname_en', 'license_number', 'q', 'old_password', 'phone', 'photo', 'data_json', 'line_id'], 'safe'],
+
         ];
     }
 
-
-    public function scenarios() {
+    public function scenarios()
+    {
         $scenarios = parent::scenarios();
         $scenarios['registration'] = ['username', 'email'];
         return $scenarios;
     }
 
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return [
             'doctor_id' => 'รหัสแพทย์',
             'fullname' => 'ชื่อ-สกุล',
@@ -97,16 +100,18 @@ class User extends ActiveRecord implements IdentityInterface {
             'confirm_password' => 'ยืนยันรหัสผ่าน',
             'license_number' => 'เลขใบประกอบฯ',
             'fullname_en' => 'ชื่อ - สกุลแพทย์(อังกฤษ)',
-            'phone' => 'หมายเลขโทรศัพท์'
+            'phone' => 'หมายเลขโทรศัพท์',
         ];
     }
 
-    public function afterFind() {
+    public function afterFind()
+    {
         $this->data_json = Json::decode($this->data_json, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         return parent::afterFind();
     }
 
-    public function beforeSave($insert) {
+    public function beforeSave($insert)
+    {
         if (parent::beforeSave($insert)) {
             $this->data_json = Json::encode($this->data_json, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
             return true;
@@ -118,14 +123,16 @@ class User extends ActiveRecord implements IdentityInterface {
     /**
      * @inheritdoc
      */
-    public static function findIdentity($id) {
+    public static function findIdentity($id)
+    {
         return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
     }
 
     /**
      * @inheritdoc
      */
-    public static function findIdentityByAccessToken($token, $type = null) {
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
         throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
     }
 
@@ -135,7 +142,8 @@ class User extends ActiveRecord implements IdentityInterface {
      * @param string $username
      * @return static|null
      */
-    public static function findByUsername($username) {
+    public static function findByUsername($username)
+    {
         return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
     }
 
@@ -145,14 +153,15 @@ class User extends ActiveRecord implements IdentityInterface {
      * @param string $token password reset token
      * @return static|null
      */
-    public static function findByPasswordResetToken($token) {
+    public static function findByPasswordResetToken($token)
+    {
         if (!static::isPasswordResetTokenValid($token)) {
             return null;
         }
 
         return static::findOne([
-                    'password_reset_token' => $token,
-                    'status' => self::STATUS_ACTIVE,
+            'password_reset_token' => $token,
+            'status' => self::STATUS_ACTIVE,
         ]);
     }
 
@@ -162,7 +171,8 @@ class User extends ActiveRecord implements IdentityInterface {
      * @param string $token password reset token
      * @return boolean
      */
-    public static function isPasswordResetTokenValid($token) {
+    public static function isPasswordResetTokenValid($token)
+    {
         if (empty($token)) {
             return false;
         }
@@ -175,21 +185,24 @@ class User extends ActiveRecord implements IdentityInterface {
     /**
      * @inheritdoc
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->getPrimaryKey();
     }
 
     /**
      * @inheritdoc
      */
-    public function getAuthKey() {
+    public function getAuthKey()
+    {
         return $this->auth_key;
     }
 
     /**
      * @inheritdoc
      */
-    public function validateAuthKey($authKey) {
+    public function validateAuthKey($authKey)
+    {
         return $this->getAuthKey() === $authKey;
     }
 
@@ -199,7 +212,8 @@ class User extends ActiveRecord implements IdentityInterface {
      * @param string $password password to validate
      * @return boolean if password provided is valid for current user
      */
-    public function validatePassword($password) {
+    public function validatePassword($password)
+    {
         return Yii::$app->security->validatePassword($password, $this->password_hash);
     }
 
@@ -208,49 +222,57 @@ class User extends ActiveRecord implements IdentityInterface {
      *
      * @param string $password
      */
-    public function setPassword($password) {
+    public function setPassword($password)
+    {
         $this->password_hash = Yii::$app->security->generatePasswordHash($password);
     }
 
     /**
      * Generates "remember me" authentication key
      */
-    public function generateAuthKey() {
+    public function generateAuthKey()
+    {
         $this->auth_key = Yii::$app->security->generateRandomString();
     }
 
     /**
      * Generates new password reset token
      */
-    public function generatePasswordResetToken() {
+    public function generatePasswordResetToken()
+    {
         $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
     }
 
     /**
      * Removes password reset token
      */
-    public function removePasswordResetToken() {
+    public function removePasswordResetToken()
+    {
         $this->password_reset_token = null;
     }
 
-    public function getItemStatus() {
+    public function getItemStatus()
+    {
         return [
             self::STATUS_ACTIVE => 'Active',
-            self::STATUS_DELETED => 'Deleted'
+            self::STATUS_DELETED => 'Deleted',
         ];
     }
 
-    public function getStatusName() {
+    public function getStatusName()
+    {
         $items = $this->getItemStatus();
         return array_key_exists($this->status, $items) ? $items[$this->status] : '';
     }
 
-    public function getAllRoles() {
+    public function getAllRoles()
+    {
         $auth = $auth = Yii::$app->authManager;
         return ArrayHelper::map($auth->getRoles(), 'name', 'name');
     }
 
-    public function getRoleByUser() {
+    public function getRoleByUser()
+    {
         $auth = Yii::$app->authManager;
         $rolesUser = $auth->getRolesByUser($this->id);
         $roleItems = $this->getAllRoles();
@@ -266,17 +288,29 @@ class User extends ActiveRecord implements IdentityInterface {
         $this->roles = $roleSelect;
     }
 
-    public function assignment() {
+    public function assignment()
+    {
         $auth = Yii::$app->authManager;
         $roleUser = $auth->getRolesByUser($this->id);
         $auth->revokeAll($this->id);
-        if($this->roles){
+        if ($this->roles) {
             foreach ($this->roles as $key => $roleName) {
                 $auth->assign($auth->getRole($roleName), $this->id);
             }
-        }else{
+        } else {
             $auth->assign($auth->getRole('user'), $this->id);
         }
+    }
+
+    public function getLine()
+    {
+        $auth = Auth::findOne(['user_id' => $this->id, 'source' => 'line']);
+        if ($auth) {
+            return $auth;
+        } else {
+            return null;
+        }
+
     }
 
 }

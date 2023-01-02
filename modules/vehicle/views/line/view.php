@@ -20,8 +20,15 @@ ThemeAsset::register($this, ThemeAsset::THEME_MATERIAL_UI);
     position: relative;
     margin-bottom: 20px;
 }
+/* table.detail-view th {
+    width: 80%;
+} */
 table.detail-view th {
-    width: 50%;
+    width: 70%;
+}
+
+table.detail-view td {
+    width: 30%;
 }
 
 .card-driver {
@@ -36,6 +43,7 @@ table.detail-view th {
 </style>
 <div class="row">
     <div class="col-12">
+    
         
 <p>
         <?= Html::a('<i class="fa-regular fa-pen-to-square"></i> แก้ไข', ['update', 'id' => $model->id], ['class' => 'btn btn-sm btn-primary']) ?>
@@ -56,7 +64,7 @@ table.detail-view th {
         'attributes' => [
             [
                 'group'=>true,
-                'label'=> '<i class="fa-solid fa-list-check"></i> วัตถุประสงค์การจอง : <code>'.$model->title.'</code>',
+                'label'=> '<code>'.$model->title.'</code>',
                 'rowOptions'=>['class'=>'table-info']
             ],
             [

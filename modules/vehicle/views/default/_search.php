@@ -23,7 +23,7 @@ use app\modules\vehicle\models\Category;
 ]);?>
 
     <div class="row">
-        <div class="col-3">
+        <div class="col-lg-3 col-md-3 col-sm-12">
             <?=$form->field($model, 'start')->widget(DateTimePicker::classname(), [
                 'options' => ['placeholder' => 'เลือกวันเวลาที่ออกเดินทาง ...'],
                 'language' => 'th',
@@ -34,7 +34,7 @@ use app\modules\vehicle\models\Category;
             ?>
             
         </div>
-        <div class="col-3">
+        <div class="col-lg-3 col-md-3 col-sm-12">
         <?=$form->field($model, 'end')->widget(DateTimePicker::classname(), [
                 'options' => ['placeholder' => 'เลือกวันเวลาที่วันกลับ ...'],
                 'language' => 'th',
@@ -44,7 +44,7 @@ use app\modules\vehicle\models\Category;
             ])->label('วันกลับ');
             ?>
         </div>
-        <div class="col-3">
+        <div class="col-lg-3 col-md-3 col-sm-12">
         <?php
 echo $form->field($model, 'data_json[car_type]', [
     'inputTemplate' => '<div class="input-group">

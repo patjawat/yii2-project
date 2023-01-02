@@ -38,11 +38,10 @@ body{
       <ul class="list-group">
 
       <?php foreach ($dataProviderCar->getModels() as $model):?>
-        <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+        <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center border-0 shadow-md mb-3 bg-body-tertiary rounded">
           <div class="flex-column">
          <?=$model->data_json['car_regis']?>
             <p><small>ยี่ห้อ : <?=$model->data_json['band']?> รุ่น : <?=$model->data_json['model']?></small></p>
-            <!-- <p class="btn btn-primary"><small>by Miguel de Cervantes</small></p> -->
             <?php if($model->checkCar($searchModel->start,$searchModel->end,$model->id) > 0): ?>
                 <button type="button" class="btn btn-warning" disabled><i class="fa-solid fa-minus"></i> ไม่ว่าง</button>
 
@@ -55,8 +54,6 @@ body{
           
           <div class="image-parent box-img">
         <?=Html::img(['/file', 'id' => $model->photo,['class' =>'bd-placeholder-img']])?>
-         
-              <!-- <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/don_quixote.jpg" class="img-fluid" alt="quixote"> -->
           </div>
         </div>
        

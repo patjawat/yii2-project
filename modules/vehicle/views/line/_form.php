@@ -10,7 +10,9 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\View;
 use app\modules\vehicle\AppAsset;
+use app\components\UserHelper;
 $myAssetBundle = AppAsset::register($this);
+$user  = UserHelper::getUser();
 
 
 $car_id = isset($car_id) ? Category::findOne($car_id)->photo : $model->car->photo;
@@ -173,7 +175,7 @@ echo $form->field($model, 'province_id', [
         'autofocus' => 'autofocus',
         'tabindex' => '3',
     ],
-])->textInput(['disabled' =>$disable])->label('เบอร์โทรศัพท์ติดต่อ')?>
+])->textInput(['disabled' =>$disable,'value' => $user->phone])->label('เบอร์โทรศัพท์ติดต่อ')?>
             </div>
         </div>
 

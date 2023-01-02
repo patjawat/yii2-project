@@ -11,8 +11,11 @@ $this->title = 'ลงทะเบียน';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container p-3">
-    <div class="row d-flex justify-content-center">
-        <img id="pictureUrl" class="rounded-circle" width="25%">
+    <!-- <div class="row d-flex justify-content-center"> -->
+    <div class="row">
+        <div class="col-lg-5">
+        <img id="pictureUrl" class="rounded mx-auto d-block" style="width:100px">
+    </div>
     </div>
 
     <div class="row">

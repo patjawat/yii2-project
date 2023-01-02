@@ -30,16 +30,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => '@w
 </head>
 <style>
 
-body {
-    /* background-image: url("<?php // $myAsset->baseUrl.'/images/bg3-1.png'?>"); */
-    /* background-color: #cccccc; */
-    /* background-repeat: no-repeat;
-    background-size: 100%; */
-}
 
-</style>
-<style>
-    /* html, body {
+html, body {
     font-family: 'Prompt', sans-serif;
     font-size: 0.95rem;
     background: #fafafa;
@@ -47,13 +39,12 @@ body {
     overflow-y: auto;
     letter-spacing: 0.05px;
     font-weight: 200;
-    background: linear-gradient( 180deg, rgba(178, 223, 219, 0.6965379901960784) 0%, rgba(224, 242, 241, 0) 100% ), URL("<?php // $myAsset->baseUrl.'/images/bk-background.jpg'?>");
-    /* background-image: url("<?=$myAsset->baseUrl.'/images/bk-background.jpg'?>");
-    background-attachment: fixed;
-    background-size: cover;
-    background-position: center center; */
-    /* font-family: 'THSarabunNew',Tahoma; */
-} */
+    background-color: #29bca5;
+}
+
+</style>
+<style>
+
 #main{
     /* background-image: url("<?=$myAsset->baseUrl.'/images/bk.jpg'?>"); */
     background-repeat: no-repeat;
@@ -73,17 +64,7 @@ body {
 
 }
 
-.bg-right{
-    
-    /* background-image: url("<?=$myAsset->baseUrl.'/images/bg-right.png'?>"); */
-    width: 500px;
-    height: 500px;
-    background-size: cover;
-    position: absolute;
-    /* top: 300px; */
-    right: 300px;
-    /* background-color: antiquewhite; */
-}
+
 </style>
 
 <body class="d-flex flex-column h-100">

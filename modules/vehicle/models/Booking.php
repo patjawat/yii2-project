@@ -142,6 +142,7 @@ class Booking extends \yii\db\ActiveRecord
         return $driver;
     }
 
+    // คำนวนระยะทาง
     public function MileageRang()
     {
         $start = isset($this->data_json['mileage_start']) ? $this->data_json['mileage_start'] : null;
@@ -153,6 +154,7 @@ class Booking extends \yii\db\ActiveRecord
         }
     }
 
+    // เลขไมค์จากครั้งที่แล้ว
     public function MileageLast()
     {
             $model = self::find()->where(['status_id' => 'success','car_id' => $this->car_id])->orderBy(['id' =>SORT_DESC])->one();

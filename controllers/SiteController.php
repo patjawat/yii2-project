@@ -6,10 +6,12 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
+use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\components\AuthHandler;
+use app\models\Site;
 
 
 class SiteController extends Controller
@@ -158,5 +160,42 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+
+    public function actionConfig()
+    {
+            // \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            // Site::findOne(['id' => $id])
+        // $model = Site::findOne(['id' => 'info']);
+        // return $model;
+        $this->layout = '@app/modules/vehicle2/views/layouts/main';
+        // $this->layout = '@app/modules/usermanager/views/layouts/auth';
+        
+        if($this->findModel('info')){
+            $model = $this->findModel('info');
+        }else{
+
+            $model = new Site([
+                'id' => 'info'
+            ]);
+        }
+        if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
+            return $this->redirect(['/site/config']);
+        }else{
+
+            return $this->render('config',[
+                'model' => $model,
+            ]);
+        }
+    }
+
+    protected function findModel($id)
+    {
+        if (($model = Site::findOne(['id' => $id])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

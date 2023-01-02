@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
+$this->title = '';
 ?>
 
 
@@ -67,7 +68,9 @@ use yii\bootstrap4\ActiveForm;
 <div class="row justify-content-md-center">
 
     <div class="col-6">
-<?php $form = ActiveForm::begin([
+        <div data-bs-theme="dark" class="p-3 text-body bg-body shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+        <p>ลงทะเบียน</p>
+            <?php $form = ActiveForm::begin([
     'id' => 'form-usermanager',
     'fieldConfig' => [
         'horizontalCssClasses' => [
@@ -79,27 +82,27 @@ use yii\bootstrap4\ActiveForm;
 ]); ?>
 
 
-    <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'confirm_password')->passwordInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'fullname')->textInput(['maxlength' => true]) ?>
-                    <?php //  $form->field($model, 'fullname_en')->textInput(['maxlength' => true]) ?>
-                    <?php //  $form->field($model, 'doctor_id')->textInput(['maxlength' => true]) ?>
-                    <?php //  $form->field($model, 'license_number')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
-                    <div class="box-img text-center img-thumbnail">
-                        <?= Html::img(['/file','id'=>$model->id]) ?>
-                        <?= $form->field($model,'file')->fileInput(); ?>
-                    </div>
+            <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'confirm_password')->passwordInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'fullname')->textInput(['maxlength' => true]) ?>
+            <?php //  $form->field($model, 'fullname_en')->textInput(['maxlength' => true]) ?>
+            <?php //  $form->field($model, 'doctor_id')->textInput(['maxlength' => true]) ?>
+            <?php //  $form->field($model, 'license_number')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
+            <div class="box-img text-center img-thumbnail">
+                <?= Html::img(['/file','id'=>$model->id]) ?>
+                <?= $form->field($model,'file')->fileInput(); ?>
+            </div>
 
-                    <br>
+            <br>
 
-                    <?= Html::submitButton('<i class="fa-solid fa-check"></i> บันทึก', ['class' => 'btn btn-success']) ?>
+            <?= Html::submitButton('<i class="fa-solid fa-check"></i> บันทึก', ['class' => 'btn btn-success']) ?>
 
-<?= Html::a('<i class="fas fa-redo"></i> ยกเลิก', ['/usermanager/user'], ['class' => 'btn btn-secondary link-loading', 'title' =>  'Reset Grid']) ?>
+            <?= Html::a('<i class="fas fa-redo"></i> ยกเลิก', ['/usermanager/user'], ['class' => 'btn btn-secondary link-loading', 'title' =>  'Reset Grid']) ?>
 
-                <?php ActiveForm::end(); ?>
+            <?php ActiveForm::end(); ?>
+        </div>
     </div>
 </div>
-

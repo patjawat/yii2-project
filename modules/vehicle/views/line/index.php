@@ -1,14 +1,9 @@
 <?php
+use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\View;
 /** @var yii\web\View $this */
 ?>
-<span id="profilex">xx</span>
-<span>
-    <?php
-    
-    ?>
-</span>
 
 <?php
 if(Yii::$app->user->isGuest)
@@ -22,6 +17,7 @@ if(Yii::$app->user->isGuest)
 
 // print_r(Yii::$app->user)
 ?>
+
 <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 <?php echo $this->render('car_items', [
             'searchModelCar' => $searchModelCar,
@@ -30,34 +26,51 @@ if(Yii::$app->user->isGuest)
             'dataProvider' => $dataProvider,
         ]); ?>
 
+
 <?php // if(Yii::$app->user->isGuest):?>
 <?php
-$lineAuth = Url::to(['/usermanager/line/line-auth']);
+// $lineAuth = Url::to(['/usermanager/line/line-auth']);
+$checkMe = Url::to(['/usermanager/line/checkme']);
 $js = <<< JS
 
-    async function main() {
-        await liff.init({ liffId: "1657676585-KD78xz40" })
-        if (liff.isInClient()) {
-            // getUserProfile()
-        } else {
-        if (liff.isLoggedIn()) {
-          const profile = await liff.getProfile();
-        //   await getUser();
-        //   alert(profile)
-          console.log(profile)
-          // getUserProfile()
-          $('#profilex').text(JSON.stringify(profile));
-        //   getUser()
-        } else {
-        console.log('no');
-        logIn()
 
-        }
-      }
+
+function runApp() {
+      liff.getProfile().then(profile => {
+        $.ajax({
+          type: "post",
+          url: "$checkMe",
+          data: {line_id:profile.userId},
+          dataType: "json",
+          success: function (response) {
+            console.log(response);
+            if(response == false){
+              liff.closeWindow();
+            }
+            // window.location.href
+          }
+        });
+
+      }).catch(err => console.error(err));
     }
 
- main()
-   
+    liff.init({ liffId: "1657676585-KD78xz40" }, () => {
+      if (liff.isLoggedIn()) {
+        runApp()
+      } else {
+        liff.login();
+      }
+    }, err => console.error(err.code, error.message));
+
+
+    $('#logout').click(function (e) { 
+      console.log('logged out');
+      liff.logout();
+      liff.closeWindow();
+      // window.location.reload();
+      
+    });
+
 
 
 

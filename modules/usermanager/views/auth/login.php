@@ -18,11 +18,6 @@ $myAsset = $this->assetManager->getBundle('\\app\modules\vehicle\AppAsset');
     #w0 > div{
         margin-bottom:10px;
     }
-    /* h1{
-        background: -webkit-linear-gradient(#b584dc, #163adf);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    } */
 
     .btn-primary{
         background-image: linear-gradient( 135deg, #8ba9f8 10%, #0749f3 100%);
@@ -34,30 +29,17 @@ $myAsset = $this->assetManager->getBundle('\\app\modules\vehicle\AppAsset');
     border: none;
 }
 
-html, body {
-    font-family: 'Prompt', sans-serif;
-    font-size: 0.95rem;
-    background: #fafafa;
-    overflow-x: hidden;
-    overflow-y: auto;
-    letter-spacing: 0.05px;
-    font-weight: 200;
-    /* background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%);
-    background-attachment: fixed;
-    background-size: cover; */
-    background: linear-gradient( 3deg, #e6e9f0 0%, rgba(224, 242, 241, 0) 100% ), URL("<?=$myAssetBundle->baseUrl.'/images/5570863.jpg'?>");
-    background-attachment: fixed;
-    background-size: cover;
-    background-position: center center;
-}
-    
 </style>
-<div class="row justify-content-center align-items-center">
 
-    <div class="col-lg-4 col-md-6 col-sm-12">
-       <div class="text-center">
-           <?=Html::img('@web/images/car_logo.png',['width' =>300]);?>
-        </div>
+
+
+<div class="row justify-content-center align-items-center dark" data-bs-theme="dark">
+
+    
+    
+    <div class="col-lg-4 col-md-6 col-sm-12 mt-5">
+        <h2 class="text-center">ระบบบริหารยานพาหนะ</h2>
+    <div data-bs-theme="dark" class="p-3 text-body bg-body shadow-lg p-3 mb-5 bg-body-tertiary rounded">
         <p>กรุณายืนยันตัวตนเพื่อเข้าสู่ระบบ:</p>
 
         <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
@@ -121,5 +103,7 @@ html, body {
 
     </div>
 
+    </div>
+</div>
 </div>
 <?php // Html::img('@web/images/bk.jpg',['width' => 800])?>

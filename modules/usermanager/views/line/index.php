@@ -4,51 +4,47 @@ use yii\helpers\Url;
 /** @var yii\web\View $this */
 $this->title = "ลงทะเบียน";
 ?>
-<div id="register"></div>
+line
+
+<img id="pictureUrl" width="25%">
+  <p id="userId"></p>
+  <p id="displayName"></p>
+  <p id="statusMessage"></p>
+  <p id="getDecodedIDToken"></p>
+
+  <span id="logout" class="btn btn-danger">Logoutxxx</span>
+
+<div id="register">uu</div>
 <?php
 $urlProfile = Url::to(['/usermanager/line/profile']);
 $js = <<< JS
-
-
-
-function logOut() {
-      liff.logout()
-      window.location.reload()
+function runApp() {
+      liff.getProfile().then(profile => {
+        document.getElementById("pictureUrl").src = profile.pictureUrl;
+        document.getElementById("userId").innerHTML = '<b>UserId:</b> ' + profile.userId;
+        document.getElementById("displayName").innerHTML = '<b>DisplayName:</b> ' + profile.displayName;
+        document.getElementById("statusMessage").innerHTML = '<b>StatusMessage:</b> ' + profile.statusMessage;
+        document.getElementById("getDecodedIDToken").innerHTML = '<b>Email:</b> ' + liff.getDecodedIDToken().email;
+      }).catch(err => console.error(err));
     }
 
-    function logIn() {
-      liff.login({ redirectUri: window.location.href })
-    }
-
-    async function getUserProfile() {
-      const profile = await liff.getProfile()
-        // await getUser();
-      $('#line_id').val(profile.userId)
-
-    }
-    async function main() {
-      await liff.init({ liffId: "1657676585-1qnepdLQ" })
-      if (liff.isInClient()) {
-        getUserProfile()
-        console.log('ss');
+    liff.init({ liffId: "1657676585-KD78xz40" }, () => {
+      if (liff.isLoggedIn()) {
+        runApp()
+        getUser();
       } else {
-        if (liff.isLoggedIn()) {
-          const profile = await liff.getProfile();
-          await getUser();
-          // getUserProfile()
-        //   document.getElementById("btnLogIn").style.display = "none"
-        //   document.getElementById("btnLogOut").style.display = "block"
-        } else {
-        //   document.getElementById("btnLogIn").style.display = "block"
-        //   document.getElementById("btnLogOut").style.display = "none"
-        console.log('no');
-        logIn()
-
-        }
+        liff.login();
       }
-    }
-    main()
+    }, err => console.error(err.code, error.message));
 
+
+    $('#logout').click(function (e) { 
+      console.log('logged out');
+      liff.logout();
+      liff.closeWindow();
+      // window.location.reload();
+      
+    });
 async function getUser() {
     const profile = await liff.getProfile()
 
@@ -65,11 +61,13 @@ async function getUser() {
             $('#awaitLogin').hide();
             $('.content').show();
          console.log(response)   
-         $('#register').html(response)
+         $('#register').text(response)
          
         }
     });
 }
+
+
 JS;
 $this->registerJs($js,View::POS_END)
 ?>

@@ -270,7 +270,13 @@ $disable = false;
                 {input}
                 </div>',
 ])->widget(Select2::classname(), [
-    'options' => ['placeholder' => 'เลือกรถ ...'],
+    'options' => [
+        'placeholder' => 'เลือกรถ ...',
+        // 'options' => [
+        //     8 => ['disabled' => true],
+        //     4 => ['disabled' => true],
+        // ]
+    ],
     'disabled' =>$disable,
     'data' => $model->carsMap(),
 ]);?>
@@ -477,6 +483,7 @@ echo $form->field($model, 'driver_id', [
                                 </div>',
 
 ])->textInput(['value' => $mileage_last])->label('เลขไมค์ก่อนออกเดินทาง')?>
+
 
                 <?php // print_r($car->data_json['car_regis']);?>
 

@@ -5,8 +5,10 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var app\modules\bookingcar\models\Booking $model */
 
+$site = app\components\SiteHelper::Info();
+
 $this->title = 'เพิ่มการจอง';
-$this->params['breadcrumbs'][] = ['label' => 'Bookings', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $site['site_name'], 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="booking-create">

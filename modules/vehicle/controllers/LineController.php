@@ -2,37 +2,34 @@
 
 namespace app\modules\vehicle\controllers;
 
-use Yii;
-use yii\web\Controller;
-use yii\web\Response;
-use \yii\db\Expression;
 use app\models\Amphures;
 use app\modules\vehicle\models\Booking;
 use app\modules\vehicle\models\BookingSearch;
-use app\modules\vehicle\models\Category;
 use app\modules\vehicle\models\CategorySearch;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use yii\helpers\Html;
-use yii\helpers\Url;
 use dominus77\sweetalert2\Alert;
+use Yii;
+use yii\web\NotFoundHttpException;
+use yii\web\Response;
+use \yii\db\Expression;
+use app\components\UserHelper;
 
 class LineController extends \yii\web\Controller
+
 {
     public function actionIndex()
     {
         $this->layout = 'line';
         $searchModel = new BookingSearch([
-            'start' => date("Y-m-d").' 08:00:00',
-            'end' => date("Y-m-d").' 16:30:00',
+            'start' => date("Y-m-d") . ' 08:00:00',
+            'end' => date("Y-m-d") . ' 16:30:00',
         ]);
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         $searchModelCar = new CategorySearch();
         $dataProviderCar = $searchModelCar->search($this->request->queryParams);
         $dataProviderCar->query->where(['type_name' => 'car']);
-        if(isset($searchModel->data_json['car_type'])){
-            $dataProviderCar->query->andFilterWhere(['like', new Expression("JSON_EXTRACT(data_json, '$.car_type')"),$searchModel->data_json['car_type']]);
+        if (isset($searchModel->data_json['car_type'])) {
+            $dataProviderCar->query->andFilterWhere(['like', new Expression("JSON_EXTRACT(data_json, '$.car_type')"), $searchModel->data_json['car_type']]);
         }
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -42,29 +39,61 @@ class LineController extends \yii\web\Controller
         ]);
     }
 
+    public function actionQrcode(){
+        $this->layout = 'line';
+        return $this->render('qrcode');
+    }
+
+
+    public function actionBooking()
+    {
+        $this->layout = 'line';
+        $status = $this->request->get('status');
+        $searchModel = new BookingSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        isset($status) ? $dataProvider->query->where(['status_id' => $status]) : '';
+        // if(!Yii::$app->user->can('driver')){
+        // $dataProvider->query->andWhere(['created_by' => Yii::$app->user->id]);
+        // $dataProvider->query->andWhere(['<>','status_id','cancel']);
+        // $dataProvider->setSort([
+        //     'defaultOrder' => [
+        //         'created_at' => SORT_ASC,
+        //     ]
+        // ]);
+        // }
+
+        return $this->render('booking', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+
+
     public function actionView($id)
     {
         $this->layout = 'line';
         $model = $this->findModel($id);
-    
-            return $this->render('view', [
-                'model' => $this->findModel($id),
-            ]);
 
-       
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+
     }
 
     public function actionCreate()
     {
         $this->layout = 'line';
-       $car_id = $this->request->get('car_id');
-       $start = $this->request->get('start');
-       $end = $this->request->get('end');
+        $user  = UserHelper::getUser();
+        $car_id = $this->request->get('car_id');
+        $start = $this->request->get('start');
+        $end = $this->request->get('end');
+        
         $model = new Booking([
-            'ref' =>  substr(Yii::$app->getSecurity()->generateRandomString(), 10),
+            'ref' => substr(Yii::$app->getSecurity()->generateRandomString(), 10),
             'car_id' => $car_id,
             'start' => $start,
-            'end' => $end
+            'end' => $end,
         ]);
 
         if ($this->request->isPost) {
@@ -76,20 +105,23 @@ class LineController extends \yii\web\Controller
                     'icon' => Alert::TYPE_SUCCESS,
                     'title' => 'บันทึกสำเร็จ!',
                     'showConfirmButton' => false,
-                    'timer' => 1500
+                    'timer' => 1500,
                 ]);
-                return $this->redirect(['view', 'id' => $model->id]);
+                // return $this->redirect(['view', 'id' => $model->id]);
+                return $this->render('view', [
+                    'model' => $this->findModel($model->id),
+                ]);
             }
         } else {
             $model->loadDefaultValues();
         }
 
         return $this->render('create', [
+            
             'model' => $model,
-            'car_id' => $car_id
+            'car_id' => $car_id,
         ]);
     }
-
 
     public function actionUpdate($id)
     {
@@ -105,29 +137,30 @@ class LineController extends \yii\web\Controller
                 'icon' => Alert::TYPE_SUCCESS,
                 'title' => 'บันทึกสำเร็จ!',
                 'showConfirmButton' => false,
-                'timer' => 1500
+                'timer' => 1500,
             ]);
-            return $this->redirect(['view', 'id' => $model->id]);
+            // return $this->redirect(['view', 'id' => $model->id]);
+            return $this->render('view', [
+                'model' => $this->findModel($model->id),
+            ]);
         }
 
-
-        if(Yii::$app->user->can('user') && $model->status_id == 'approve')
-        {
+        if (Yii::$app->user->can('user') && $model->status_id == 'approve') {
             Yii::$app->session->setFlash('position', [
                 'icon' => Alert::TYPE_WARNING,
                 'title' => 'ไม่สามารถแก้ไขได้!',
                 'text' => 'เนื่องจากอนุมัติแล้วกรุณาติดต่อผู้กูแลระบบ!',
                 'showConfirmButton' => false,
-                'timer' => 1500
+                'timer' => 1500,
             ]);
             return $this->render('view', [
                 'model' => $model,
             ]);
-        }else{
+        } else {
 
             return $this->render('update', [
                 'model' => $model,
-                'driver' => $driver
+                'driver' => $driver,
             ]);
         }
     }
@@ -143,13 +176,13 @@ class LineController extends \yii\web\Controller
                 'icon' => Alert::TYPE_SUCCESS,
                 'title' => 'บันทึกสำเร็จ!',
                 'showConfirmButton' => false,
-                'timer' => 1500
+                'timer' => 1500,
             ]);
             return $this->redirect(['index']);
         }
 
         return $this->render('cancel_booking', [
-            'model' => $model
+            'model' => $model,
         ]);
     }
 
@@ -161,7 +194,6 @@ class LineController extends \yii\web\Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-
 
     public function actionDistrictList()
     {
@@ -181,5 +213,10 @@ class LineController extends \yii\web\Controller
         return ['output' => '', 'selected' => ''];
     }
 
+    public function actionMenu(){
+        $this->layout = 'line';
+
+        return $this->render('menu');
+    }
 
 }
