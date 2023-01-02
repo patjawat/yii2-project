@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-    <?php echo   $form->field($model, 'phone')->textInput(['value' => '0909748044']) ?>
+    <?php echo   $form->field($model, 'phone')->textInput() ?>
     <?php // echo   $form->field($model, 'id')->textInput(['value' => '0909748044']) ?>
     <?php // $form->field($model, 'phone')->textInput() ?>
     <?php // $form->field($model, 'line_id')->textInput(['maxlength' => true,'id' => 'line_id'])->label(false); ?>
