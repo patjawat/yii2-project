@@ -11,18 +11,15 @@ use yii\widgets\ActiveForm;
 <div class="booking-search">
 
     <?php $form = ActiveForm::begin([
-        // 'action' => ['index'],
+        'action' => ['signup'],
         'method' => 'get',
         'options' => [
             'data-pjax' => 1
         ],
     ]); ?>
 
-    <?php echo   $form->field($model, 'phone')->textInput() ?>
-    <?php // echo   $form->field($model, 'id')->textInput(['value' => '0909748044']) ?>
-    <?php // $form->field($model, 'phone')->textInput() ?>
-    <?php // $form->field($model, 'line_id')->textInput(['maxlength' => true,'id' => 'line_id'])->label(false); ?>
-
+    <?= $form->field($model, 'phone')->textInput() ?>
+    <?= $form->field($model, 'line_id')->textInput(['id' => 'line_id']) ?>
 
     <div class="d-grid gap-2 col-12 mx-auto">
         <?= Html::submitButton('ตกลง', ['class' => 'btn btn-block btn-primary mt-3']) ?>

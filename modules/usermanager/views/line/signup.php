@@ -6,7 +6,57 @@ use yii\bootstrap4\ActiveForm;
 $this->title = 'ระบบลงทะเบียน';
 ?>
 
-<div class="row justify-content-center mt-3">
+<style>
+
+/* loading animation */
+
+      
+.dbl-spinner {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: transparent;
+    border: 4px solid transparent;
+    border-top: 4px solid #2220;
+    border-left: 4px solid #2220;
+    -webkit-animation: 2s spin linear infinite;
+    animation: 2s spin linear infinite;
+  }
+                                      
+  .dbl-spinner:nth-child(2) {
+    border: 4px solid transparent;
+    border-right: 4px solid #37d8a8;
+    border-bottom: 4px solid #20c997;
+    -webkit-animation: 1s spin linear infinite;
+    animation: 1s spin linear infinite;
+  }
+  
+  @-webkit-keyframes spin {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+  }
+          
+  @keyframes spin {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+  }
+  
+</style>
+
+<div class="row justify-content-center mt-3" id="warp-content">
 
     <div class="col-10">
         <?php if(isset($searchModel->phone) && $dataProvider->getTotalCount() == 0): ?>
@@ -53,6 +103,9 @@ $this->title = 'ระบบลงทะเบียน';
 // $urlProfile = Url::to(['/usermanager/line/checkme']);
 $checkMe = Url::to(['/usermanager/line/checkme']);
 $js = <<< JS
+
+$('#loading').show();
+            $('#warp-content').hide();
 function runApp() {
       liff.getProfile().then(profile => {
         // document.getElementById("pictureUrl").src = profile.pictureUrl;
@@ -63,13 +116,22 @@ function runApp() {
           url: "$checkMe",
           data: {line_id:profile.userId},
           dataType: "json",
+          beforeSend: function(){
+            $('#loading').show();
+            $('#warp-content').hide();
+
+            $('#awaitLogin').show();
+    $('#content-container').hide();
+          },
           success: function (response) {
             console.log(response);
+            $('#loading').hide();
+            $('#warp-content').show();
+            $('#awaitLogin').hide();
+            $('#content-container').show();
             if(response == true){
               liff.closeWindow();
             }
-            // window.location.href
-            
           }
         });
         

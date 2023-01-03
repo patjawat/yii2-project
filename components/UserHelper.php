@@ -66,7 +66,7 @@ class UserHelper extends Component
         if ($model) {
             return [
                 'user' => $model,
-                'line_id' => $line->source_id
+                'line_id' => isset($line) ?  $line->source_id : null,
             ];
         } else {
             return null;

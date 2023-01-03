@@ -21,7 +21,7 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/site.css',
-        // 'fontawesome-free-6.2.0-web/css/all.min.css',
+        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css',
         // 'jquery.steps-1.1.0/jquery.steps.min.js'
     ];
     public $js = [

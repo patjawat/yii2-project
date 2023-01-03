@@ -10,6 +10,7 @@ use app\modules\usermanager\models\User;
 use app\modules\usermanager\models\UserSearch;
 use Yii;
 use yii\web\Response;
+use yii\helpers\Json;
 
 class LineController extends \yii\web\Controller
 
@@ -48,6 +49,12 @@ class LineController extends \yii\web\Controller
         $site = SiteHelper::info();
 
         $auth = Auth::find()->where(['source_id' => $lineId])->one();
+        
+        if ($auth) {
+            Yii::$app->user->login($auth->user);
+            LineHelper::setMainMenu($lineId);
+            return true;
+        }
 
         if (Yii::$app->user->isGuest) {
             if ($auth && Yii::$app->user->login($auth->user)) {
@@ -93,9 +100,35 @@ class LineController extends \yii\web\Controller
         ]);
 
         if (isset($searchModel->phone) && $dataProvider->getTotalCount() == 1) {
+        // Yii::$app->response->format = Response::FORMAT_JSON;
+        $lineId = $searchModel->line_id;
+        $phone = $searchModel->phone;
+
+
+        $user = UserHelper::getUserByPhone($phone);
+
             // return 'Hello'.$dataProvider->getTotalCount();
      
             //  return  $this->checkRegister($searchModel);
+            // return Yii::$app->request->get();
+            $auth =  Auth::findOne(['source_id' => $lineId]);
+            
+            if(!$auth){
+                $newAuth = new Auth();
+                $newAuth->source = 'line';
+                $newAuth->user_id = $user['user']->id;
+                $newAuth->source_id = $lineId;
+                if($newAuth->save(false)){
+                    $newAuth->save(false);
+                    // Yii::$app->user->login($newAuth->user);
+                    LineHelper::setMainMenu($lineId);
+                    return $this->redirect('success');
+                }else{
+                     Yii::$app->user->login($user['user']);
+                     LineHelper::setMainMenu($lineId);
+                    return $this->redirect('success');
+                }
+            }
 
         }
 
