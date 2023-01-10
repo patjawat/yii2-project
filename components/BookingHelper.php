@@ -11,7 +11,8 @@ class BookingHelper extends Component
 
     public static function Myjob()
     {
-        $sql = "SELECT COUNT(id) as total FROM `booking` WHERE driver_id = :id AND status_id IN('approve')";
+        // $sql = "SELECT COUNT(id) as total FROM `booking` WHERE driver_id = :id AND status_id IN('approve')";
+        $sql = "SELECT COUNT(id) as total FROM `booking` WHERE driver_id = :id AND status_id NOT IN('cancel','success')";
         $model = Yii::$app->db->createCommand($sql)
             ->bindValue(':id', Yii::$app->user->id)
             ->queryScalar();
@@ -22,13 +23,13 @@ class BookingHelper extends Component
     public static function MyBooking()
     {
         if(Yii::$app->user->can('user')){
-            $sql = "SELECT COUNT(id) as total FROM `booking` WHERE created_by = :id AND status_id <> 'cancel'";
+            $sql = "SELECT COUNT(id) as total FROM `booking` WHERE created_by = :id AND status_id  NOT IN('cancel','success')";
             $model = Yii::$app->db->createCommand($sql)
                 ->bindValue(':id', Yii::$app->user->id)
                 ->queryScalar();
             
         }else{
-            $sql = "SELECT COUNT(id) as total FROM `booking` WHERE  status_id <> 'cancel'";
+            $sql = "SELECT COUNT(id) as total FROM `booking` WHERE  status_id NOT IN('cancel','success')";
             $model = Yii::$app->db->createCommand($sql)
                 ->queryScalar();
         }

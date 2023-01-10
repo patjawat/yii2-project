@@ -98,6 +98,7 @@ class Booking extends \yii\db\ActiveRecord
 
     public function afterFind() {
         $this->data_json = Json::decode($this->data_json, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
         return parent::afterFind();
     }
 
@@ -158,7 +159,7 @@ class Booking extends \yii\db\ActiveRecord
     public function MileageLast()
     {
             $model = self::find()->where(['status_id' => 'success','car_id' => $this->car_id])->orderBy(['id' =>SORT_DESC])->one();
-            if($model && $this->status_id == 'approve'){
+            if($model){
                 return isset($model->data_json['mileage_end']) ? $model->data_json['mileage_end'] : null;
             }else{
                 return null;

@@ -81,6 +81,7 @@ use yii\bootstrap4\ActiveForm;
                     <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'confirm_password')->passwordInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'fullname')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'data_json[position]')->textInput(['maxlength' => true])->label('ตำแหน่ง') ?>
                     <?php //  $form->field($model, 'fullname_en')->textInput(['maxlength' => true]) ?>
                     <?php //  $form->field($model, 'doctor_id')->textInput(['maxlength' => true]) ?>
                     <?php //  $form->field($model, 'license_number')->textInput(['maxlength' => true]) ?>

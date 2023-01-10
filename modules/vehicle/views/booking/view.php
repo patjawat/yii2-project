@@ -38,14 +38,17 @@ table {
 <div class="row">
     <div class="col-8">
 
-        
+ 
 <p>
+<?php if ( ( $model->status_id == 'await' ) || ( $model->status_id == 'allocate') || ( $model->status_id == 'approve') ):?>
     <?= Html::a('<i class="fa-regular fa-pen-to-square"></i> แก้ไข', ['update', 'id' => $model->id], ['class' => 'btn btn-warning','style' => 'margin-right: 5px;']) ?>
+    <?php endif; ?>
+
 <?= Html::a('<i class="fa-regular fa-pen-to-square"></i> พิมพ์ใบเบิกค่าเดินทาง', ['document', 'id' => $model->id], ['class' => 'btn btn-success',[
     'data' => ['pjax' => false]
     ]]) ?>
        
-        <?php if($model->status_id == 'approve'):?>
+       <?php if($model->status_id == 'success' || $model->status_id == 'cancel'):?>
             <?= Html::a('<i class="fa-solid fa-ban"></i> ยกเลิกการจอง', ['cancel', 'id' => $model->id], [
             'class' => 'btn btn-secondary dis_cancel',
         ]) ?>
@@ -161,7 +164,7 @@ table {
                         'attribute'=>'driver_id', 
                         'label' =>'ภาพพนักงานขับรถ',
                          'format' => ['image',['width'=>'100','height'=>'100']],
-                        'value' => isset($model->driver) ? ['/file?id='.$model->driver->photo] :''
+                        'value' => isset($model->driver->photo) ? ['/file?id='.$model->driver->photo] :['@web/images/driver.png']
                     ],
                 ],
             ],
@@ -199,6 +202,7 @@ table {
 $js = <<< JS
 
 $('.dis_cancel').click(function (e) { 
+
     e.preventDefault();
     console.log('Calcel')
     Swal.fire(

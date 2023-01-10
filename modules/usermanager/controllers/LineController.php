@@ -68,19 +68,6 @@ class LineController extends \yii\web\Controller
         }
     }
 
-    // public function actionLineAuth()
-    // {
-    //     Yii::$app->response->format = Response::FORMAT_JSON;
-    //     $lineId = $this->request->post('line_id');
-    //     $auth = Auth::findOne(['source_id' => $lineId]);
-    //     if ($auth) {
-    //         $user = User::findOne($auth->user_id);
-    //         return Yii::$app->user->login($user);
-    //         // return $this->redirect(['/vehicle/line']);
-    //     } else {
-
-    //     }
-    // }
 
     public function actionSignup()
     {
@@ -106,11 +93,7 @@ class LineController extends \yii\web\Controller
 
 
         $user = UserHelper::getUserByPhone($phone);
-
-            // return 'Hello'.$dataProvider->getTotalCount();
-     
-            //  return  $this->checkRegister($searchModel);
-            // return Yii::$app->request->get();
+        
             $auth =  Auth::findOne(['source_id' => $lineId]);
             
             if(!$auth){

@@ -54,15 +54,16 @@ class BookingController extends Controller
         $searchModel = new BookingSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
         isset($status) ? $dataProvider->query->where(['status_id' => $status]) : '';
-        if(!Yii::$app->user->can('driver')){
+        if(Yii::$app->user->can('user')){
         $dataProvider->query->andWhere(['created_by' => Yii::$app->user->id]);
         $dataProvider->query->andWhere(['<>','status_id','cancel']);
+    }
         $dataProvider->setSort([
             'defaultOrder' => [
                 'created_at' => SORT_ASC,
             ]
         ]);
-        }
+        
 
         return $this->render('index', [
             'searchModel' => $searchModel,

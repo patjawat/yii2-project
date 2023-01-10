@@ -10,7 +10,8 @@ use yii\helpers\Html;
             'class' => 'btn btn-warning',
             'data-pjax' => false
         ]) ?>
-        <?php if($model->status_id == 'approve'):?>
+
+        <?php if($model->status_id == 'success' || $model->status_id == 'cancel'):?>
             <?= Html::a('<i class="fa-solid fa-ban"></i> ยกเลิกการจอง', ['cancel', 'id' => $model->id], [
             'class' => 'btn btn-secondary dis_cancel',
         ]) ?>

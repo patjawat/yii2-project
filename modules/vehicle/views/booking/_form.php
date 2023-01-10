@@ -10,6 +10,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\View;
+use yii\helpers\Json;
 use app\modules\vehicle\AppAsset;
 use kartik\datecontrol\DateControl;
 $myAssetBundle = AppAsset::register($this);
@@ -60,8 +61,12 @@ $disable = false;
 
 
 
-
-<?php $form = ActiveForm::begin();?>
+<?php
+$fullname = Yii::$app->user->identity->fullname;
+$user_json = Json::decode(Yii::$app->user->identity->data_json);
+$position = isset($user_json['position']) ? $user_json['position'] : null;
+?>
+<?php $form = ActiveForm::begin(['id' => 'form-booking']);?>
 <div class="row">
     <div class="col-8">
 
@@ -191,7 +196,7 @@ $disable = false;
         'autofocus' => 'autofocus',
         'tabindex' => '4',
     ],
-])->textInput(['disabled' =>$disable])->label('ชื่อผู้จอง')?>
+])->textInput(['disabled' =>$disable,($model->isNewRecord ? ['value' => $position] : $model->data_json['fullname'])])->label('ชื่อผู้จอง')?>
 
  <?=$form->field($model, 'data_json[position_name]', [
     'inputTemplate' => '<div class="input-group">
@@ -207,7 +212,7 @@ $disable = false;
         'required' => true,
         
     ],
-])->textInput(['disabled' =>$disable])->label('ตำแหน่ง')?>
+])->textInput(['disabled' =>$disable,'value' => $model->isNewRecord ? $position : $model->data_json['position_name']])->label('ตำแหน่ง')?>
 
                             </div>
                             <div class="col-6">
@@ -223,7 +228,7 @@ $disable = false;
         'autofocus' => 'autofocus',
         'tabindex' => 5,
     ],
-])->textInput(['disabled' =>$disable])->label('เบอร์โทรศัพท์ติดต่อ')?>
+])->textInput(['disabled' =>$disable,'value' => $model->isNewRecord ? Yii::$app->user->identity->phone : $model->data_json['phone']])->label('เบอร์โทรศัพท์ติดต่อ')?>
 
 <?=$form->field($model, 'data_json[group_name]', [
     'inputTemplate' => '<div class="input-group">
@@ -336,7 +341,7 @@ echo Yii::$app->user->can('driver') ? $form->field($model, 'status_id')->inline(
 
 <div class="form-group">
                             <?=Html::submitButton('<i class="fa-solid fa-check"></i> บันทึก', ['class' => 'btn btn-success'])?>
-                            <?=html::a('<i class="fa-solid fa-xmark"></i> ยกเลิกการ', ['/vehicle/booking'], ['class' => 'btn btn-danger']);?>
+                            <?=html::a('<i class="fa-solid fa-xmark"></i> ยกเลิก', ['/vehicle/booking'], ['class' => 'btn btn-default']);?>
                         </div>
 
 </div>
@@ -448,7 +453,7 @@ echo Yii::$app->user->can('driver') ? $form->field($model, 'status_id')->inline(
         <div class="card border-0" style="width:100%;margin-top: 37px;">
             <?=Html::img(['/file', 'id' => $car_id, ['class' => 'card-img-top']])?>
             <div class="card-body">
-                <?php  if(Yii::$app->user->can('driver') && !$model->isNewRecord):?>
+                <?php  if(Yii::$app->user->can('driver')):?>
 
                 <?php
 echo $form->field($model, 'driver_id', [

@@ -79,7 +79,7 @@ table {
                 'width' => '100px',
                 'format' => 'raw',
                 'value' => function($model){
-                    return $model->data_json['fullname'];
+                    return isset($model->data_json['fullname']) ? $model->data_json['fullname'] : '-';
                 }
             ],
             [
@@ -89,7 +89,7 @@ table {
                 // 'width' => '40%',
                 'format' => 'raw',
                 'value' => function($model){
-                    return $model->car->data_json['car_regis'];
+                    return isset($model->car->data_json['car_regis']) ? $model->car->data_json['car_regis'] : '-';
                 }
             ],
             [

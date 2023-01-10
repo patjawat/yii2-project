@@ -98,7 +98,7 @@ class Category extends \yii\db\ActiveRecord
     {
         $sql = "SELECT count(c.id) FROM `category` c 
         LEFT JOIN booking b ON b.car_id = c.id WHERE c.type_name = 'car' AND c.id = :car_id
-        AND b.status_id <> 'success'
+        AND b.status_id NOT IN('success','cancel')
         AND ( (b.start >= :start AND b.end <= :start) 
         OR (b.start <= :end AND b.end >= :end ) 
         OR (b.start <= :start AND b.end >= :start) 
