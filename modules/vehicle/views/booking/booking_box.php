@@ -72,7 +72,7 @@ $status = BookingHelper::CountByStatus();
                             <h6 class="mb-0">ทั้งหมด</h6> <span>1 days ago</span>
                         </div>
                     </div>
-                    <div class="badge"> <span>Design</span> </div>
+                    <div class="badge"> <span>คลิกเพื่อดู</span> </div>
                 </div>
                 <div class="mt-3">
                     <!-- <h3 class="heading">Senior Product<br>Designer-Singapore</h3> -->

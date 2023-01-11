@@ -29,9 +29,28 @@ $assetDir = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed2010/admi
         <?= Html::csrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?><?=$this->title ? '' : 'งานเทคโนโลยีความปลอยภัย'?></title>
         <?php $this->head() ?>
+
+  
     </head>
+    
+    <style>
+            html, body {
+    font-family: 'Prompt', sans-serif;
+    font-size: 0.95rem;
+    background: #fafafa;
+    overflow-x: hidden;
+    overflow-y: auto;
+    letter-spacing: 0.05px;
+    font-weight: 200;
+    background-color: #29bca5;
+}
+
+        </style>
+        
     <body class="container" style="min-height: 512.391px;">
         <?php $this->beginBody() ?>
+
+        
         <?php \dominus77\sweetalert2\Alert::widget(['useSessionFlash' => true]); ?>
         <div id="awaitLogin" style="display:none;margin-top:100px">
             <div   class="d-flex justify-content-center">
