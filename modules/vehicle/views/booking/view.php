@@ -163,8 +163,8 @@ table {
                     [
                         'attribute'=>'driver_id', 
                         'label' =>'ภาพพนักงานขับรถ',
-                         'format' => ['image',['width'=>'100','height'=>'100']],
-                        'value' => isset($model->driver->photo) ? ['/file?id='.$model->driver->photo] :['/@web/images/driver.png']
+                        'format' => ['image',['width'=>'100','height'=>'100']],
+                        'value' => isset($model->driver->photo) ? ['/file?id='.$model->driver->photo] :['images/driver.png']
                     ],
                 ],
             ],
