@@ -54,7 +54,7 @@ class LineController extends \yii\web\Controller
         // isset($status) ? $dataProvider->query->where(['status_id' => $status]) : '';
         // if(!Yii::$app->user->can('driver')){
         // $dataProvider->query->andWhere(['created_by' => Yii::$app->user->id]);
-        // $dataProvider->query->andWhere(['<>','status_id','cancel']);
+        $dataProvider->query->andWhere(['in','status_id',['await','approve']]);
         // $dataProvider->setSort([
         //     'defaultOrder' => [
         //         'created_at' => SORT_ASC,
