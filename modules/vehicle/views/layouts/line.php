@@ -35,7 +35,7 @@ $this->registerJSFile('https://static.line-scdn.net/liff/edge/2/sdk.js');
 </head>
 
 
-<body class="d-flex flex-column h-100" style="background-color:#edf2f8;">
+<body class="d-flex flex-column h-100">
     <?php $this->beginBody()?>
 
 
