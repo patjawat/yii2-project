@@ -50,8 +50,8 @@ $disable = false;
 </style>
 
 <?php $form = ActiveForm::begin();?>
-<div class="row">
-    <div class="col-12">
+<div class="row justify-content-center">
+    <div class="col-10">
 
         <?=$form->field($model, 'ref')->hiddenInput(['maxlength' => true])->label(false)?>
         <?=$form->field($model, 'booking_type')->hiddenInput(['value' => 'vehicle'])->label(false)?>
