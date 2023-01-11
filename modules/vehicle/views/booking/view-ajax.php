@@ -138,8 +138,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute'=>'driver_id', 
                         'label' =>'ภาพพนักงานขับรถ',
-                         'format' => ['image',['width'=>'100','height'=>'100']],
-                        'value' => isset($model->driver) ? ['/file?id='.$model->driver->photo] :''
+                        'format' => ['image',['width'=>'100','height'=>'100']],
+                        'value' => isset($model->driver->photo) ? ['/file?id='.$model->driver->photo] :'@web/images/driver.png'
                     ],
                 ],
             ],

@@ -29,7 +29,27 @@ table {
 <div class="booking-index">
 
 <?=$this->render('booking_box',['status' => $status]);?>
+    <div class="d-flex bd-highlight">
+        <div class="p-2 bd-highlight">
+        </div>
+        <div class="ms-auto p-2 bd-highlight">
+<?php if(Yii::$app->user->can('driver')):?>
+    <?=Html::a('<i class="fa-solid fa-list-ul"></i> ทั้งหมด '.$status['allBadgeTotal'],['/vehicle/booking'],['class' => 'btn btn-info position-relative'])?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+            <?=Html::a('<i class="fa-solid fa-hourglass-start"></i> ขอใช้รถ'.$status['awaitBadgeTotal'],['/vehicle/booking','status'=> 'await'],['class' => 'btn btn-warning position-relative'])?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+            <?=Html::a('<i class="fa-solid fa-check"></i> อนุมัติ '.$status['approveBadgeTotal'],['/vehicle/booking','status'=> 'approve'],['class' => 'btn btn-primary position-relative'])?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+            <?=Html::a('<i class="fa-solid fa-check"></i> เสร็จสิ้น' .$status['successBadgeTotal'],['/vehicle/booking','status'=> 'success'],['class' => 'btn btn-success position-relative'])?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
     
+            <?=Html::a('<i class="fa-solid fa-xmark"></i> ยกเลิก '.$status['cancelBadgeTotal'],['/vehicle/booking','status'=> 'cancel'],['class' => 'btn btn-danger position-relative'])?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <?php endif; ?>   
+    </div>
+    </div>
+
+
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
     <div class="text-body bg-body shadow-lg p-3 mb-5 bg-body-tertiary rounded">
     <?= GridView::widget([
@@ -133,16 +153,6 @@ $('.dis_cancel').click(function (e) {
     Swal.fire(
   'ไม่สามารถยกเลิกได้!',
   'เนื่องจากอนุมัติแล้วกรุณาติดต่อผู้กูแลระบบ!',
-  'warning'
-)    
-});
-
-$('.dis_edit').click(function (e) { 
-    e.preventDefault();
-    console.log('Calcel')
-    Swal.fire(
-  'ไม่สามารถแก้ไขได้!',
-  'เนื่องจากไม่ใช่เจ้าของเรื่อง!',
   'warning'
 )    
 });
