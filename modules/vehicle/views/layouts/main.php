@@ -87,7 +87,7 @@ echo Nav::widget([
         ['label' => '<i class="fa-solid fa-book-open-reader"></i> รายการจองรถ'.(BookingHelper::MyBooking() > 0 ? ' <span class="badge bg-danger">'.BookingHelper::MyBooking().'</span>' : null), 'url' => ['/vehicle/booking']],
         Yii::$app->user->can('driver') ? ['label' => '<i class="fa-solid fa-user-tag"></i> ภาระกิจ'.(BookingHelper::Myjob() > 0 ? ' <span class="badge bg-danger">'.BookingHelper::Myjob().'</span>' : null), 'url' => ['/vehicle/myjob']] : '',
         // Yii::$app->user->can('user') ? ['label' => '<i class="fa-solid fa-list-ul"></i> รายการขอใช้ยานพหนะ', 'url' => ['/vehicle/booking']] : '',
-        ['label' => '<i class="fa-solid fa-user-check"></i> โปรไฟล์', 'url' => ['/me']],
+        ['label' => '<i class="fa-solid fa-user-check"></i> โปรไฟล์', 'url' => ['/me/update']],
         Yii::$app->user->can('admin') ? [
             'label' => 'ตั้งค่า', 
             'items' => [

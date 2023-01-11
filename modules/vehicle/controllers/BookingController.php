@@ -6,7 +6,8 @@ use Yii;
 use app\models\Amphures;
 use app\modules\vehicle\models\Booking;
 use app\modules\vehicle\models\BookingSearch;
-use yii\web\Controller;
+// use yii\web\Controller;
+use app\modules\usermanager\components\CheckUpController as Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Html;
@@ -134,7 +135,6 @@ class BookingController extends Controller
             'start' => $start,
             'end' => $end,
             'data_json' =>  ['fullname' => Yii::$app->user->identity->fullname],
-            'driver_id' => Yii::$app->user->can('driver') ? Yii::$app->user->identity->id : ''
            
         ]);
 
@@ -146,6 +146,7 @@ class BookingController extends Controller
                 }
 
                 $model->status_id =  Yii::$app->user->can('driver') ? 'approve' : 'await';
+                $model->driver_id = Yii::$app->user->can('driver') ? Yii::$app->user->identity->id : '';
                 $model->save();
                 Yii::$app->session->setFlash('position', [
                     'position' => 'center',

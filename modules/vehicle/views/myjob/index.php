@@ -32,7 +32,6 @@ td>img {
         <div class="p-2 bd-highlight">
         </div>
         <div class="ms-auto p-2 bd-highlight">
-    <?php // Html::a('<i class="fa-solid fa-list-ul"></i> ทั้งหมด '.$status['allBadgeTotal'],['/vehicle/myjob'],['class' => 'btn btn-info position-relative'])?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
             <?=Html::a('<i class="fa-solid fa-check"></i> อนุมัติ '.$status['approveBadgeTotal'],['/vehicle/myjob','status'=> 'approve'],['class' => 'btn btn-primary position-relative'])?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <?=Html::a('<i class="fa-solid fa-check"></i> เสร็จสิ้น' .$status['successBadgeTotal'],['/vehicle/myjob','status'=> 'success'],['class' => 'btn btn-success position-relative'])?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -61,6 +60,22 @@ td>img {
                 'format' => 'raw',
                 'value' => function($model){
                     return $this->render('../booking/view_car',['model' => $model]);
+                }
+            ],
+            [
+                'header' => 'เลขไมค์เริ่ม',
+                'width' => '50px',
+                'format' => 'raw',
+                'value' => function($model){
+                    return isset($model->data_json['mileage_start']) ? $model->data_json['mileage_start'] :'-';
+                }
+            ],
+            [
+                'header' => 'เลขไมค์สิ้นสุด',
+                'width' => '50px',
+                'format' => 'raw',
+                'value' => function($model){
+                    return isset($model->data_json['mileage_end']) ? $model->data_json['mileage_end'] :'-';
                 }
             ],
             [

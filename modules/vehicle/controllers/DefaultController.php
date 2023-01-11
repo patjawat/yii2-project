@@ -3,9 +3,10 @@
 namespace app\modules\vehicle\controllers;
 
 use Yii;
-use yii\web\Controller;
+// use yii\web\Controller;
 use yii\web\Response;
 use \yii\db\Expression;
+use app\modules\usermanager\components\CheckUpController as Controller;
 use app\modules\vehicle\models\Booking;
 use app\modules\vehicle\models\BookingSearch;
 use app\modules\vehicle\models\Category;

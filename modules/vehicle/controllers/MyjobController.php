@@ -58,6 +58,35 @@ class MyjobController extends \yii\web\Controller
     
     }
 
+
+    public function actionConfirmSuccess($id)
+    {
+        $model = $this->findModel($id);
+
+        $sql = "SELECT u.id,u.fullname FROM auth_assignment a INNER JOIN user u ON u.id = a.user_id;";
+        $driver = Yii::$app->db->createCommand($sql)->queryAll();
+
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $model->status_id = 'success';
+           
+            if($model->save(false)){
+
+                Yii::$app->session->setFlash('position', [
+                    'position' => 'center',
+                    'icon' => Alert::TYPE_SUCCESS,
+                    'title' => 'บันทึกสำเร็จ!',
+                    'showConfirmButton' => false,
+                    'timer' => 1500
+                ]);
+                return $this->redirect(['/vehicle/myjob']);
+            }
+        }
+            return $this->render('_form_confirm', [
+                'model' => $model,
+                'driver' => $driver
+            ]);
+    
+    }
     protected function findModel($id)
     {
         if (($model = Booking::findOne(['id' => $id])) !== null) {

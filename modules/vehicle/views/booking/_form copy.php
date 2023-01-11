@@ -320,7 +320,7 @@ $position = isset($user_json['position_name']) ? $user_json['position_name'] : n
 
                         <?php if($model->isNewRecord):?>
 
-                        <?php // $form->field($model, 'status_id')->hiddenInput()->label(false)?>
+                        <?=$form->field($model, 'status_id')->hiddenInput()->label(false)?>
                         <?php else:?>
                         <?php
 
@@ -331,7 +331,7 @@ $datastatus = ['await','approve','success','cancel'];
                 ->all(), 
                 'code','title');
 
-// echo Yii::$app->user->can('driver') ? $form->field($model, 'status_id')->inline(true)->radioList($status)->label('สถานะ') : '';
+echo Yii::$app->user->can('driver') ? $form->field($model, 'status_id')->inline(true)->radioList($status)->label('สถานะ') : '';
 ?>
                         <?php endif;?>
 
@@ -453,12 +453,77 @@ $datastatus = ['await','approve','success','cancel'];
         <div class="card border-0" style="width:100%;margin-top: 37px;">
             <?=Html::img(['/file', 'id' => $car_id, ['class' => 'card-img-top']])?>
             <div class="card-body">
-                
+                <?php  if(Yii::$app->user->can('driver')):?>
+
+                <?php
+echo $form->field($model, 'driver_id', [
+    'inputTemplate' => '<div class="input-group">
+    <div class="input-group-prepend">
+    <span class="input-group-text"><i class="fa-regular fa-id-card"></i>&nbsp;</span>
+    </div>
+    {input}
+    </div>',
+])->widget(Select2::classname(), [
+    'options' => ['placeholder' => 'เลือกพนักงานบับรถ ...'],
+    'data' => $model->driversMap(),
+    'disabled' =>$disable,
+    'pluginEvents' => [
+        "select2:select" => "function() {
+            getDriverPhoto($(this).val())
+         }",
+    ],
+])->label('พนักงานขับรถ');
+?>
+
                 <?php
            $mileage_last = $model->mileageLast();
          
            ?>
- 
+           <h1>
+            <?php
+             //echo $model->data_json['mileage_start'];
+           ?></h1>
+           <?php if($mileage_last  == ''):?>
+                <?=$form->field($model, 'data_json[mileage_start]', [
+
+    'inputTemplate' => '<div class="input-group">
+                                <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa-solid fa-gauge-high"></i>&nbsp;</span>
+                                </div>
+                                {input}
+                                </div>',
+
+])->textInput(['value' => $mileage_last])->label('เลขไมค์ก่อนออกเดินทาง')?>
+
+<?php else:?>
+    <label class="form-label" for="booking-data_json-mileage_start">เลขไมค์ก่อนออกเดินทาง</label>
+    <div class="alert alert-success" role="alert"><h4><?=$mileage_last?></h4></div>
+    <div class="mb-3 field-booking-data_json-mileage_start">
+<div class="input-group">
+                                
+                                <!-- <input type="text" id="booking-data_json-mileage_start" class="form-control" name="Booking[data_json][mileage_start]" value="120000"> -->
+                                </div>
+
+<div class="invalid-feedback"></div>
+</div>
+<?php endif;?>
+
+                <?php // print_r($car->data_json['car_regis']);?>
+
+
+                <?=$form->field($model, 'data_json[mileage_end]', [
+
+    'inputTemplate' => '<div class="input-group">
+                                <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa-solid fa-gauge-high"></i>&nbsp;</span>
+                                </div>
+                                {input}
+                                </div>',
+
+])->textInput()->label('เลขไมค์หลังเสร็จสินภาระกิจ')?>
+
+
+                <?php endif; ?>
             </div>
         </div>
 

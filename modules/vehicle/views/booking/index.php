@@ -28,6 +28,7 @@ table {
 <?php Pjax::begin()?>
 <div class="booking-index">
 
+<?=$this->render('booking_box');?>
     <div class="d-flex bd-highlight">
         <div class="p-2 bd-highlight">
         </div>

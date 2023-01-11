@@ -64,9 +64,7 @@ use yii\bootstrap4\ActiveForm;
     width: 200px;
 }
 </style>
-<div class="row">
 
-    <div class="col-6">
 <?php $form = ActiveForm::begin([
     'id' => 'form-usermanager',
     'fieldConfig' => [
@@ -77,39 +75,54 @@ use yii\bootstrap4\ActiveForm;
     ],
     'layout' => 'horizontal',
 ]); ?>
-    <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'confirm_password')->passwordInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'fullname')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'data_json[position]')->textInput(['maxlength' => true])->label('ตำแหน่ง') ?>
-                    <?php //  $form->field($model, 'fullname_en')->textInput(['maxlength' => true]) ?>
-                    <?php //  $form->field($model, 'doctor_id')->textInput(['maxlength' => true]) ?>
-                    <?php //  $form->field($model, 'license_number')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'data_json[link]')->textInput(['maxlength' => true,'placeholder' =>'เช่น https://docs.google.com/'])->label('แบบประเมิน Link') ?>
-                    <div class="box-img text-center">
-                    <?= Html::img(['/file','id'=>$model->photo],['class' => 'rounded','style' => 'width:200px']) ?>
-                        <?= $form->field($model,'file')->fileInput()->label('&nbsp'); ?>
-                    </div>
+        <div class="row">
+            <div class="col-6">
+        <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'confirm_password')->passwordInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'fullname')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'data_json[position_name]')->textInput(['maxlength' => true])->label('ตำแหน่ง') ?>
+        <?php //  $form->field($model, 'fullname_en')->textInput(['maxlength' => true]) ?>
+        <?php //  $form->field($model, 'doctor_id')->textInput(['maxlength' => true]) ?>
+        <?php //  $form->field($model, 'license_number')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'data_json[link]')->textInput(['maxlength' => true,'placeholder' =>'เช่น https://docs.google.com/'])->label('แบบประเมิน Link') ?>
+        <div class="box-img text-center">
+            <?= Html::img(['/file','id'=>$model->photo],['class' => 'rounded','style' => 'width:200px']) ?>
+            <?= $form->field($model,'file')->fileInput()->label('&nbsp'); ?>
+        </div>
 
-                    <br>
+        <br>
 
-                    <div class="form-group row field-user-phone">
-<label class="col-lg-4 col-md-4 col-sm-4" for="user-phone">&nbsp;</label>
-<div class="col-lg-8 col-md-8 col-sm-8">
+        <div class="form-group row field-user-phone">
+            <label class="col-lg-4 col-md-4 col-sm-4" for="user-phone">&nbsp;</label>
+            <div class="col-lg-8 col-md-8 col-sm-8">
 
 
-                    <?= Html::submitButton('<i class="fa-solid fa-check"></i> บันทึก', ['class' => 'btn btn-success']) ?>
+                <?= Html::submitButton('<i class="fa-solid fa-check"></i> บันทึก', ['class' => 'btn btn-success']) ?>
 
-<?= Html::a('<i class="fas fa-redo"></i> ยกเลิก', ['/me/index'], ['class' => 'btn btn-secondary link-loading', 'title' =>  'Reset Grid']) ?>
+                <?= Html::a('<i class="fas fa-redo"></i> ยกเลิก', ['/me/index'], ['class' => 'btn btn-secondary link-loading', 'title' =>  'Reset Grid']) ?>
 
-<div class="invalid-feedback "></div>
+                <div class="invalid-feedback "></div>
 
+            </div>
+        </div>
+        </div>
+
+        <div class="col-6">
+
+<?php if($model->phone == '' || (isset($model->data_json['position_name'])  ? $model->data_json['position_name'] : '') == '') :?>
+        <div class="alert alert-success" role="alert">
+  <h4 class="alert-heading"><i class="fa-solid fa-triangle-exclamation"></i> ข้อตกลง!</h4>
+  <p><i class="fa-regular fa-square-check"></i> ตำแหน่ง (<code>ต้องมี</code>)</p>
+  <p><i class="fa-regular fa-square-check"></i> เบอร์โทรศัพท์ (<code>ต้องมี</code>)</p>
+  <hr>
+  <p class="mb-0">กรอกข้อมูล เบอร์โทรศัพท์ และ ตำแหน่งของท่านให้ครบถ้วนก่อนเข้าใช้งานระบบ</p>
 </div>
-</div>
+<?php endif; ?>
 
-                <?php ActiveForm::end(); ?>
+
+        </div>
     </div>
-</div>
-
+    <?php ActiveForm::end(); ?>
