@@ -66,10 +66,10 @@ $this->title = '';
 }
 </style>
 <div class="row justify-content-md-center">
-
+้<h1 class="text-center text-white">ระบบลงทะเบียน</h1>
     <div class="col-6">
         <div data-bs-theme="dark" class="p-3 text-body bg-body shadow-lg p-3 mb-5 bg-body-tertiary rounded">
-        <p>ลงทะเบียน</p>
+        <p>แบบฟอร์มการลงทะเบียน</p>
             <?php $form = ActiveForm::begin([
     'id' => 'form-usermanager',
     'fieldConfig' => [

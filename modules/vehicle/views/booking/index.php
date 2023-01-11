@@ -50,7 +50,7 @@ table {
 
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
+    <div class="text-body bg-body shadow-lg p-3 mb-5 bg-body-tertiary rounded">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         // 'filterModel' => $searchModel,
@@ -136,17 +136,10 @@ table {
                     return $this->render('action',['model' => $model]);
                 }
             ]
-            // [
-            //     'class' => ActionColumn::className(),
-            //     'hAlign' => 'center',
-            //     'vAlign' => 'middle',
-            //     'urlCreator' => function ($action, Booking $model, $key, $index, $column) {
-            //         return Url::toRoute([$action, 'id' => $model->id]);
-            //      }
-            // ],
         ],
     ]); ?>
 
+</div>
 </div>
 
 <?php 
