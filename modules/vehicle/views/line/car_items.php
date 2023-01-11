@@ -12,8 +12,6 @@ use yii\helpers\Json;
 /** @var app\modules\bookingcar\models\CategorySearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'ประเภทรถ';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <style>
