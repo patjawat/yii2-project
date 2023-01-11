@@ -51,7 +51,7 @@ class LineController extends \yii\web\Controller
         $status = $this->request->get('status');
         $searchModel = new BookingSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
-        isset($status) ? $dataProvider->query->where(['status_id' => $status]) : '';
+        // isset($status) ? $dataProvider->query->where(['status_id' => $status]) : '';
         // if(!Yii::$app->user->can('driver')){
         // $dataProvider->query->andWhere(['created_by' => Yii::$app->user->id]);
         // $dataProvider->query->andWhere(['<>','status_id','cancel']);
