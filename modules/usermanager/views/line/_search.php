@@ -7,7 +7,6 @@ use yii\widgets\ActiveForm;
 /** @var app\modules\bookingcar\models\BookingSearch $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
-
 <div class="booking-search">
 
     <?php $form = ActiveForm::begin([

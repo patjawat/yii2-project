@@ -44,6 +44,18 @@ $this->registerJSFile('https://static.line-scdn.net/liff/edge/2/sdk.js');
         font-weight: 100;
         font-family: 'Sarabun', sans-serif;
     }
+ 
+            html, body {
+    font-family: 'Prompt', sans-serif;
+    font-size: 0.95rem;
+    background: #fafafa;
+    overflow-x: hidden;
+    overflow-y: auto;
+    letter-spacing: 0.05px;
+    font-weight: 200;
+    background-color: #29bca5;
+}
+
     </style>
 
     <main id="main" class="flex-shrink-0" role="main">
