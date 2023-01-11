@@ -5,13 +5,15 @@
 <div class="show-user"></div>
 
 <?php
+use yii\helpers\Url;
+$urlUser = Url::to(['/usermanager/user']);
 $js = <<< JS
 loadUser();
 
 function loadUser(){
     $.ajax({
         type: "get",
-        url: "/usermanager/user",
+        url: "$urlUser",
         dataType: "json",
         beforeSend:function(){
             $('.loading-page').show();
