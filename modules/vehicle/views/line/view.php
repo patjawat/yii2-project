@@ -43,16 +43,16 @@ table {
  
 <p>
 <?php if ( ( $model->status_id == 'await' ) || ( $model->status_id == 'allocate') || ( $model->status_id == 'approve') ):?>
-    <?php //if(Yii::$app->user->can('driver')):?>
+    <?php if(Yii::$app->user->can('driver')):?>
     <?= $model->driver_id == '' ? Html::a('<i class="far fa-edit"></i> รับภาระกิจ', ['confirm-job', 'id' => $model->id], ['class' => 'btn btn-info','id' => 'confirm-job']):'' ?>
     <?php if(Yii::$app->user->identity->id == $model->created_by):?>
-    <?php  Html::a('<i class="fa-regular fa-pen-to-square"></i> แก้ไข', ['update', 'id' => $model->id], ['class' => 'btn btn-warning','style' => 'margin-right: 5px;']) ?>
+    <?= Html::a('<i class="fa-regular fa-pen-to-square"></i> แก้ไข', ['update', 'id' => $model->id], ['class' => 'btn btn-warning','style' => 'margin-right: 5px;']) ?>
 
         <?php endif;?>
    <?php else:?>
     <?= Html::a('<i class="fa-regular fa-pen-to-square"></i> แก้ไข', ['update', 'id' => $model->id], ['class' => 'btn btn-warning','style' => 'margin-right: 5px;']) ?>
     <?php endif;?>
-    <?php // endif; ?>
+    <?php endif; ?>
 
 <?= Html::a('<i class="fa-regular fa-pen-to-square"></i> พิมพ์ใบเบิกค่าเดินทาง', ['document', 'id' => $model->id], ['class' => 'btn btn-success',[
     'data' => ['pjax' => false]
