@@ -100,6 +100,15 @@ table {
             [
                 'columns' => [
                     [
+                        'attribute'=>'end', 
+                        'lable' => 'วันเวลากลับ',
+                    ],
+                ],
+            ],
+            
+            [
+                'columns' => [
+                    [
                         'attribute'=>'title',
                         'label' =>'จุดหมายปลายทาง',
                         'format'=>'raw', 

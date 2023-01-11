@@ -5,9 +5,10 @@ use yii\helpers\Url;
 AppAsset::register($this);
 $AssetBundle = AppAsset::register($this);
 $site = app\components\SiteHelper::Info();
-$this->title = $site['site_name'];
+// $this->title = $site['site_name'];
 
 ?>
+
 <div class="container">
     <?php echo $this->render('_search', ['model' => $searchModel]); ?>
     <div class="row">

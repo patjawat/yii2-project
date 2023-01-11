@@ -28,7 +28,7 @@ table {
 <?php Pjax::begin()?>
 <div class="booking-index">
 
-<?=$this->render('booking_box');?>
+<?=$this->render('booking_box',['status' => $status]);?>
     <div class="d-flex bd-highlight">
         <div class="p-2 bd-highlight">
         </div>
@@ -130,7 +130,7 @@ table {
             [
                 'header' => 'ดำเนินการ',
                 'format' =>'raw',
-                 'width' => '280px',
+                 'width' => '400px',
                 'hAlign' => 'center',
                 'vAlign' => 'middle',
                 'value' => function($model){

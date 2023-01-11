@@ -24,6 +24,7 @@ class m221021_071303_create_booking_table extends Migration
             'data_json' => $this->json()->comment('json'),
             'status_id' => $this->string(200)->comment('สถานะ'),
             'driver_id' => $this->string(50)->comment('คนขับ'),
+            'driver_star' => $this->integer()->comment('คะแนนคนขับ'),
             'booking_type' => $this->string(50)->comment('ประเภทการจอง'),
             'updated_at' => $this->timestamp()->defaultValue(null)->append('ON UPDATE CURRENT_TIMESTAMP'),
             'created_at' => $this->timestamp(),   

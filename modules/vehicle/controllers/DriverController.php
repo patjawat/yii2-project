@@ -37,7 +37,7 @@ class DriverController extends \yii\web\Controller
 
 
         $datas = [];
-        foreach ( $dataProvider->getMOdels() as $event)
+        foreach ( $dataProvider->getModels() as $event)
         {
             $datas[] = [
 				'title' => 'เรื่อง #' . $event->title,

@@ -13,7 +13,7 @@ use yii\helpers\Json;
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 
-$this->params['breadcrumbs'][] = $this->title;
+// $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <style>
