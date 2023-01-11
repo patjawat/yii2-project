@@ -74,7 +74,7 @@ class UserController extends Controller
     {
         $model = new User();
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate(false)) {
             $model->setPassword($model->password);
             $model->generateAuthKey();
 
@@ -85,7 +85,7 @@ class UserController extends Controller
             //  // End Upload File
             //  }
              
-            if($model->save()){
+            if($model->save(false)){
               $model->assignment();
             }
             return $this->redirect(['view', 'id' => $model->id]);
