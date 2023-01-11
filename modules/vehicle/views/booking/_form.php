@@ -477,7 +477,13 @@ echo $form->field($model, 'driver_id', [
 
                 <?php
            $mileage_last = $model->mileageLast();
+         
            ?>
+           <h1>
+            <?php
+             //echo $model->data_json['mileage_start'];
+           ?></h1>
+           <?php if($mileage_last  == ''):?>
                 <?=$form->field($model, 'data_json[mileage_start]', [
 
     'inputTemplate' => '<div class="input-group">
@@ -489,6 +495,18 @@ echo $form->field($model, 'driver_id', [
 
 ])->textInput(['value' => $mileage_last])->label('เลขไมค์ก่อนออกเดินทาง')?>
 
+<?php else:?>
+    <label class="form-label" for="booking-data_json-mileage_start">เลขไมค์ก่อนออกเดินทาง</label>
+    <div class="alert alert-success" role="alert"><h4><?=$mileage_last?></h4></div>
+    <div class="mb-3 field-booking-data_json-mileage_start">
+<div class="input-group">
+                                
+                                <!-- <input type="text" id="booking-data_json-mileage_start" class="form-control" name="Booking[data_json][mileage_start]" value="120000"> -->
+                                </div>
+
+<div class="invalid-feedback"></div>
+</div>
+<?php endif;?>
 
                 <?php // print_r($car->data_json['car_regis']);?>
 

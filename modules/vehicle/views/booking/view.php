@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use kartik\detail\DetailView;
 use yii\web\View;
+use yii\helpers\Url;
+use app\components\UserHelper;
 use dominus77\sweetalert2\assets\ThemeAsset;
 ThemeAsset::register($this, ThemeAsset::THEME_MATERIAL_UI);
 
@@ -41,7 +43,15 @@ table {
  
 <p>
 <?php if ( ( $model->status_id == 'await' ) || ( $model->status_id == 'allocate') || ( $model->status_id == 'approve') ):?>
+    <?php if(Yii::$app->user->can('driver')):?>
+    <?= $model->driver_id == '' ? Html::a('<i class="far fa-edit"></i> รับภาระกิจ', ['confirm-job', 'id' => $model->id], ['class' => 'btn btn-info','id' => 'confirm-job']):'' ?>
+    <?php if(Yii::$app->user->identity->id == $model->created_by):?>
     <?= Html::a('<i class="fa-regular fa-pen-to-square"></i> แก้ไข', ['update', 'id' => $model->id], ['class' => 'btn btn-warning','style' => 'margin-right: 5px;']) ?>
+
+        <?php endif;?>
+   <?php else:?>
+    <?= Html::a('<i class="fa-regular fa-pen-to-square"></i> แก้ไข', ['update', 'id' => $model->id], ['class' => 'btn btn-warning','style' => 'margin-right: 5px;']) ?>
+    <?php endif;?>
     <?php endif; ?>
 
 <?= Html::a('<i class="fa-regular fa-pen-to-square"></i> พิมพ์ใบเบิกค่าเดินทาง', ['document', 'id' => $model->id], ['class' => 'btn btn-success',[
@@ -198,8 +208,36 @@ table {
 
 
 <?php 
-
+$ConfirmUrl = Url::to(['/vehicle/booking/confirm-job']);
+$userConfirm = UserHelper::getUser('fullname');
 $js = <<< JS
+$('#confirm-job').click(function (e) { 
+    e.preventDefault();
+     
+Swal.fire({
+  title: 'ยืนยันรับภาระกิจ?',
+  text: "$userConfirm!",
+  icon: 'warning',
+  showCancelButton: true,
+//   confirmButtonColor: '#3085d6',
+//   cancelButtonColor: '#d33',
+  confirmButtonText: 'ใช่,ยืนยัน!',
+  cancelButtonText: 'ยกเลิก'
+}).then((result) => {
+  if (result.isConfirmed) {
+    $.ajax({
+        type: "get",
+        url: "$ConfirmUrl",
+        data:{id:$model->id},
+        dataType: "json",
+        success: function (response) {
+            console.log(response)
+        }
+    });
+  }
+})
+    
+});
 
 $('.dis_cancel').click(function (e) { 
 

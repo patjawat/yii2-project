@@ -11,7 +11,7 @@ use yii\helpers\Html;
             'data-pjax' => false
         ]) ?>
 
-        <?php if($model->status_id == 'success' || $model->status_id == 'cancel'):?>
+        <?php if($model->status_id == 'success' || $model->status_id == 'cancel' || $model->created_by != Yii::$app->user->identity->id):?>
             <?= Html::a('<i class="fa-solid fa-ban"></i> ยกเลิกการจอง', ['cancel', 'id' => $model->id], [
             'class' => 'btn btn-secondary dis_cancel',
         ]) ?>

@@ -71,6 +71,22 @@ class BookingController extends Controller
         ]);
     }
 
+
+    public function actionConfirmJob()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $id = $this->request->get('id');
+        $model = $this->findModel($id);
+        if ($model->driver_id == '') {
+            $model->driver_id = Yii::$app->user->identity->id;
+            $model->status_id = 'approve';
+        }
+        if ($model->save()) {
+            return $this->redirect(['/vehicle/myjob/update', 'id' => $model->id]);
+        }
+
+    }
+
     /**
      * Displays a single Booking model.
      * @param int $id ID
@@ -118,6 +134,8 @@ class BookingController extends Controller
             'start' => $start,
             'end' => $end,
             'data_json' =>  ['fullname' => Yii::$app->user->identity->fullname],
+            'driver_id' => Yii::$app->user->can('driver') ? Yii::$app->user->identity->id : ''
+           
         ]);
 
         if ($this->request->isPost) {
@@ -127,7 +145,7 @@ class BookingController extends Controller
                    
                 }
 
-                $model->status_id = 'await';
+                $model->status_id =  Yii::$app->user->can('driver') ? 'approve' : 'await';
                 $model->save();
                 Yii::$app->session->setFlash('position', [
                     'position' => 'center',

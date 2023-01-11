@@ -37,15 +37,19 @@ class MyjobController extends \yii\web\Controller
         $sql = "SELECT u.id,u.fullname FROM auth_assignment a INNER JOIN user u ON u.id = a.user_id;";
         $driver = Yii::$app->db->createCommand($sql)->queryAll();
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save(false)) {
-            Yii::$app->session->setFlash('position', [
-                'position' => 'center',
-                'icon' => Alert::TYPE_SUCCESS,
-                'title' => 'บันทึกสำเร็จ!',
-                'showConfirmButton' => false,
-                'timer' => 1500
-            ]);
-            return $this->redirect(['index']);
+        if ($this->request->isPost && $model->load($this->request->post())) {
+           
+            if($model->save(false)){
+
+                Yii::$app->session->setFlash('position', [
+                    'position' => 'center',
+                    'icon' => Alert::TYPE_SUCCESS,
+                    'title' => 'บันทึกสำเร็จ!',
+                    'showConfirmButton' => false,
+                    'timer' => 1500
+                ]);
+                return $this->redirect(['index']);
+            }
         }
             return $this->render('../booking/update', [
                 'model' => $model,
