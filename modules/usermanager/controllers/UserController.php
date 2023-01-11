@@ -37,7 +37,7 @@ class UserController extends Controller
     public function beforeAction($action) {
 
         if (Yii::$app->user->isGuest) {
-            return $this->redirect(['/site/index']);
+            return $this->redirect(['/auth/login']);
         }
         return parent::beforeAction($action);
     }
