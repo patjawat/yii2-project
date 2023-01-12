@@ -60,10 +60,8 @@ class LineController extends \yii\web\Controller
         $dataProvider->query->andWhere(['driver_id' => Yii::$app->user->id]);
         $dataProvider->query->andWhere(['NOT',['status_id' => ['cancel','success']]]);
       
-        if (!Yii::$app->user->can('driver')) {
-            return $this->renderContent('<h1 class="text-center">ตำแหน่งของท่านไม่ได้รับอนุญาติ</h1>');
-        }
-        
+
+
         return $this->render('myjob', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -126,10 +124,7 @@ return true;
                 'created_at' => SORT_ASC,
             ]
         ]);
-        
-        if (!Yii::$app->user->can('driver')) {
-            return $this->renderContent('<h1 class="text-center">ตำแหน่งของท่านไม่ได้รับอนุญาติ</h1>');
-        }
+
 
         return $this->render('booking', [
             'searchModel' => $searchModel,
@@ -236,10 +231,7 @@ return true;
 
     public function actionConfirmJob()
     {
-        if (!Yii::$app->user->can('driver')) {
-            return $this->renderContent('<h1 class="text-center">ตำแหน่งของท่านไม่ได้รับอนุญาติ</h1>');
-        }
-
+ 
         Yii::$app->response->format = Response::FORMAT_JSON;
         $id = $this->request->get('id');
         $model = $this->findModel($id);
