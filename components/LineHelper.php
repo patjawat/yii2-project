@@ -100,20 +100,33 @@ class LineHelper extends Component
        curl_close ($ch);
    }
 
+   public static function PushMessageCarBooking($msg){
 
-   public static function PushMessage($model)
+   $sql = "SELECT * FROM auth_assignment
+   INNER JOIN auth ON auth.user_id = auth_assignment.user_id
+   WHERE auth_assignment.item_name = 'driver'
+   AND auth.source = 'line'";
+   
+   $query = Yii::$app->tcds->createCommand($sql)->queryAll();
+   foreach($query as $row){
+    self::PushMessage($row['source_id'],$msg);
+   }
+
+}
+   public static function PushMessage($id,$msg)
    {
        // Yii::$app->response->format = Response::FORMAT_JSON;
 
+   
    $accessToken = self::LineTokens();//copy ข้อความ Channel access token ตอนที่ตั้งค่า
 
    $arrayHeader = [];
    $arrayHeader[] = "Content-Type: application/json";
    $arrayHeader[] = "Authorization: Bearer {$accessToken}";
-   $arrayPostData['to'] = 'U040cdfc8187f3203b93ba5d793830d00';
+   $arrayPostData['to'] = $id;
 
    $arrayPostData['messages'][0]['type'] = "text";
-   $arrayPostData['messages'][0]['text'] = '#จองรถ';
+   $arrayPostData['messages'][0]['text'] = $msg;
    
    $strUrl = "https://api.line.me/v2/bot/message/push";
    $ch = curl_init();

@@ -82,7 +82,7 @@ function logOut() {
 
     }
     async function main() {
-      await liff.init({ liffId: "1657538565-0ll3l5k4" })
+      await liff.init({ liffId: "1657676585-NZL4yEPB" })
       if (liff.isInClient()) {
         getUserProfile()
         console.log('ss');

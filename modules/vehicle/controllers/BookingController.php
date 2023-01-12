@@ -151,8 +151,7 @@ class BookingController extends Controller
                 $model->driver_id = Yii::$app->user->can('driver') ? Yii::$app->user->identity->id : '';
                 if($model->save()){
                     $msg = '#จองรถทะเบียน : '.$model->car->data_json['car_regis']."\n".'#ผู้ขอ : '.$model->createBy->fullname."\n".'#เรื่อง : '.$model->title."\n".'#วันที่ : '.$model->start.' ถึง '.$model->end;
-                    LineHelper::BroadcastMassage($msg);
-                    // LineHelper::BroadcastMassage($model);
+                    LineHelper::PushMessageCarBooking($msg);
                     Yii::$app->session->setFlash('position', [
                         'position' => 'center',
                         'icon' => Alert::TYPE_SUCCESS,

@@ -6,8 +6,17 @@ AppAsset::register($this);
 $AssetBundle = AppAsset::register($this);
 $site = app\components\SiteHelper::Info();
 // $this->title = $site['site_name'];
-
+$sql = "SELECT * FROM auth_assignment
+INNER JOIN auth ON auth.user_id = auth_assignment.user_id
+WHERE auth_assignment.item_name = 'driver'
+AND auth.source = 'line'";
+$query = Yii::$app->db->createCommand($sql)->queryAll();
 ?>
+
+<?php foreach ($query as $row):?>
+    <p><?=$row['source_id']?></p>
+
+<?php endforeach; ?>
 
 <div class="container">
     <?php echo $this->render('_search', ['model' => $searchModel]); ?>
