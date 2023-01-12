@@ -352,7 +352,7 @@ $datastatus = ['await','approve','success','cancel'];
     'pluginOptions' => [
         'autoclose' => true,
     ],
-                                ]);
+                                ])->label('ลงวันที่');
 
                                  ?>
 

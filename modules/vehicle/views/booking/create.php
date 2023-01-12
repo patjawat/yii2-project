@@ -7,13 +7,11 @@ use yii\helpers\Html;
 
 $site = app\components\SiteHelper::Info();
 
-$this->title = 'เพิ่มการจอง';
+$this->title = 'จองรถ';
 $this->params['breadcrumbs'][] = ['label' => $site['site_name'], 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="booking-create">
-
-    <h3><?= Html::encode($this->title) ?></h3>
 
     <?= $this->render('_form', [
         'model' => $model,
