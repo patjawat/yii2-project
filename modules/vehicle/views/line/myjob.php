@@ -16,6 +16,7 @@ $status = BookingHelper::CountByStatus();
 
 $this->title = 'รายการขอใช้ยานพาหนะ';
 ?>
+<h1 id="test">user  = <?=Yii::$app->user->id?></h1>
 <style>
 td>img {
     width: 100px;
@@ -88,6 +89,7 @@ function runApp() {
           data: {line_id:profile.userId},
           dataType: "json",
           success: function (response) {
+            $('#test').text(JSON.stringify(response))
             console.log(response);
             if(response.register == false){
               liff.closeWindow();

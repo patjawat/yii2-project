@@ -149,7 +149,7 @@ class BookingController extends Controller
                 $model->status_id =  Yii::$app->user->can('driver') ? 'approve' : 'await';
                 $model->driver_id = Yii::$app->user->can('driver') ? Yii::$app->user->identity->id : '';
                 if($model->save()){
-                    LineHelper::PushMessage($model);
+                    LineHelper::BroadcastMassage($model);
                     // LineHelper::BroadcastMassage($model);
                     Yii::$app->session->setFlash('position', [
                         'position' => 'center',

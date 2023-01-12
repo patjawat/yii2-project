@@ -46,7 +46,7 @@ class LineController extends \yii\web\Controller
         $searchModel = new BookingSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
         $dataProvider->query->andWhere(['driver_id' => Yii::$app->user->id]);
-        $dataProvider->query->andWhere(['NOT IN','status_id',['cancel','success']]);
+        // $dataProvider->query->andWhere(['NOT',['status_id' => ['cancel']]]);
       
 
         return $this->render('myjob', [

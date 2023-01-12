@@ -52,11 +52,11 @@ class LineController extends \yii\web\Controller
         
         // ถ้่เคยลงทพเบียนแล้ว
         if ($auth) {
-            Yii::$app->user->login($auth->user);
+            return Yii::$app->user->login($auth->user);
             LineHelper::setMainMenu($lineId);
             return [
                 'register' => true,
-                'msg' => 'ลงทะเบียนสำเร็จ'.$lineId
+                'msg' => 'ลงทะเบียนสำเร็จ',
             ];
         }
 
