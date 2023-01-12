@@ -31,7 +31,6 @@ table {
     white-space: nowrap;
 }
 </style>
-
 <?php if($dataProvider->getTotalCount() == 0):?>
 <h1 class="text-center">ไม่มีการจอง</h1>
   <?php else:?>

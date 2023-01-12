@@ -17,6 +17,16 @@ use app\components\LineHelper;
 class LineController extends \yii\web\Controller
 
 {
+
+    public function beforeAction($action) {
+        // $user = UserHelper::getUserById(Yii::$app->user->can('driver'));
+        // $this->layout = 'line';
+        
+        
+
+        return parent::beforeAction($action);
+    }
+
     public function actionIndex()
     {
         $this->layout = 'line';
@@ -32,6 +42,7 @@ class LineController extends \yii\web\Controller
         if (isset($searchModel->data_json['car_type'])) {
             $dataProviderCar->query->andFilterWhere(['like', new Expression("JSON_EXTRACT(data_json, '$.car_type')"), $searchModel->data_json['car_type']]);
         }
+        
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -49,7 +60,10 @@ class LineController extends \yii\web\Controller
         $dataProvider->query->andWhere(['driver_id' => Yii::$app->user->id]);
         $dataProvider->query->andWhere(['NOT',['status_id' => ['cancel','success']]]);
       
-
+        if (!Yii::$app->user->can('driver')) {
+            return $this->renderContent('<h1 class="text-center">ตำแหน่งของท่านไม่ได้รับอนุญาติ</h1>');
+        }
+        
         return $this->render('myjob', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -106,17 +120,16 @@ return true;
         $status = $this->request->get('status');
         $searchModel = new BookingSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
-        // isset($status) ? $dataProvider->query->where(['status_id' => $status]) : '';
-        // if(!Yii::$app->user->can('driver')){
-        // $dataProvider->query->andWhere(['created_by' => Yii::$app->user->id]);
         $dataProvider->query->andWhere(['status_id' => 'await']);
-        // $dataProvider->query->andWhere(['NOT',['status_id' => ['cancel','success']]]);
-        // $dataProvider->setSort([
-        //     'defaultOrder' => [
-        //         'created_at' => SORT_ASC,
-        //     ]
-        // ]);
-        // }
+        $dataProvider->setSort([
+            'defaultOrder' => [
+                'created_at' => SORT_ASC,
+            ]
+        ]);
+        
+        if (!Yii::$app->user->can('driver')) {
+            return $this->renderContent('<h1 class="text-center">ตำแหน่งของท่านไม่ได้รับอนุญาติ</h1>');
+        }
 
         return $this->render('booking', [
             'searchModel' => $searchModel,
@@ -223,12 +236,19 @@ return true;
 
     public function actionConfirmJob()
     {
+        if (!Yii::$app->user->can('driver')) {
+            return $this->renderContent('<h1 class="text-center">ตำแหน่งของท่านไม่ได้รับอนุญาติ</h1>');
+        }
+
         Yii::$app->response->format = Response::FORMAT_JSON;
         $id = $this->request->get('id');
         $model = $this->findModel($id);
         if ($model->driver_id == '') {
             $model->driver_id = Yii::$app->user->identity->id;
             $model->status_id = 'approve';
+        }
+                if (!Yii::$app->user->can('driver')) {
+            return $this->renderContent('<h1 class="text-center">ตำแหน่งของท่านไม่ได้รับอนุญาติ</h1>');
         }
         if ($model->save()) {
             // return $this->redirect(['/vehicle/myjob/update', 'id' => $model->id]);
