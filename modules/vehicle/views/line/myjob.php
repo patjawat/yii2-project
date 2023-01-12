@@ -14,7 +14,7 @@ ThemeAsset::register($this, ThemeAsset::THEME_MATERIAL_UI);
 $status = BookingHelper::CountByStatus();
 
 
-$this->title = 'รายการขอใช้ยานพาหนะ';
+$this->title = 'ภารกิจของฉัน';
 ?>
 <style>
 td>img {
@@ -34,6 +34,9 @@ table {
 }
 </style>
 
+<?php if($dataProvider->getTotalCount() == 0):?>
+<h1 class="text-center">ไม่มีภาระกิจ</h1>
+  <?php else:?>
 <div class="booking-index">
 
 
@@ -65,7 +68,7 @@ table {
 
                         <!-- Flex -->
                         <div class="p-0">
-                            <?=Html::a('<i class="far fa-edit"></i> เสร็จสิ้นภาระกิจ', ['confirm-success', 'id' => $model->id], ['class' => 'btn btn-success confirm-jobcc','title' => $model->title]);?>
+                            <?=Html::a('<i class="far fa-edit"></i> เสร็จสิ้นภาระกิจ', ['confirm-success', 'id' => $model->id], ['class' => 'btn btn-success confirm-job','title' => $model->title]);?>
                             <?php // Html::a('<i class="fa-regular fa-hand-pointer"></i> เพิ่มเติม...',['/vehicle/line/view','id' => $model->id],['class' => 'btn btn-primary']);?>
                         </div>
                         <div class="ms-auto p-2">
@@ -81,10 +84,13 @@ table {
 
         <?php endforeach; ?>
     </div>
-
+<?php endif;?>
     <?php 
 $checkMe = Url::to(['/usermanager/line/checkme']);
 $js = <<< JS
+
+$('#awaitLogin').show();
+$('#content-container').hide();
 
 function runApp() {
       liff.getProfile().then(profile => {
@@ -99,6 +105,9 @@ function runApp() {
             console.log(response);
             if(response.register == false){
               liff.closeWindow();
+            }else{
+              $('#awaitLogin').hide();
+              $('#content-container').show();
             }
             // window.location.href
           }
@@ -118,30 +127,9 @@ function runApp() {
 
 
 $('.confirm-job').click(function (e) { 
-    e.preventDefault();
-     console.log($(this).attr('href'))
-Swal.fire({
-  title: 'ยืนยันรับภาระกิจ?',
-  text: $(this).attr('title'),
-  icon: 'warning',
-  showCancelButton: true,
-//   confirmButtonColor: '#3085d6',
-//   cancelButtonColor: '#d33',
-  confirmButtonText: 'ใช่,ยืนยัน!',
-  cancelButtonText: 'ยกเลิก'
-}).then((result) => {
-  if (result.isConfirmed) {
-    $.ajax({
-        type: "get",
-        url: $(this).attr('href'),
-        dataType: "json",
-        success: function (response) {
-            console.log(response)
-        }
-    });
-  }
-})
-    
+  $('#awaitLogin').show();
+$('#content-container').hide();
+
 });
 
 $('.dis_cancel').click(function (e) { 

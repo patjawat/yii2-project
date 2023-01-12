@@ -76,11 +76,11 @@ class LineHelper extends Component
     }
 
 
-    public static function BroadcastMassage($model){
+    public static function BroadcastMassage($msg){
 
         $site = self::siteConfig();
         $arrayPostData['messages'][0]['type'] = "text";
-        $arrayPostData['messages'][0]['text'] = '#จองรถทะเบียน : '.$model->car->data_json['car_regis']."\n".'#ผู้ขอ : '.$model->createBy->fullname."\n".'#เรื่อง : '.$model->title."\n".'#วันที่ : '.$model->start.' ถึง '.$model->end;
+        $arrayPostData['messages'][0]['text'] = $msg;
    
         $accessToken = $site['line_token'];//copy ข้อความ Channel access token ตอนที่ตั้งค่า
         $arrayHeader = [];

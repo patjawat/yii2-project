@@ -32,7 +32,10 @@ table {
 }
 </style>
 
-<div class="booking-index">
+<?php if($dataProvider->getTotalCount() == 0):?>
+<h1 class="text-center">ไม่มีการจอง</h1>
+  <?php else:?>
+<div class="booking-index" id="warp-content">
 
 
 <div class="row">
@@ -75,11 +78,13 @@ table {
 
   <?php endforeach; ?>
 </div>
-
+<?php endif; ?>
 <?php 
 $checkMe = Url::to(['/usermanager/line/checkme']);
 $js = <<< JS
 
+$('#awaitLogin').show();
+$('#content-container').hide();
 function runApp() {
       liff.getProfile().then(profile => {
         $.ajax({
@@ -91,6 +96,9 @@ function runApp() {
             console.log(response);
             if(response.register == false){
               liff.closeWindow();
+            }else{
+              $('#awaitLogin').hide();
+              $('#content-container').show();
             }
             // window.location.href
           }
@@ -127,8 +135,24 @@ Swal.fire({
         type: "get",
         url: $(this).attr('href'),
         dataType: "json",
+      beforeSend: function(){
+        $('#awaitLogin').show();
+      $('#warp-content').hide();
+      },
         success: function (response) {
+          $('#awaitLogin').hide();
+              $('#warp-content').show();
             console.log(response)
+            if(response == true){
+              Swal.fire(
+                'บันทึกสำเร็จ!',
+                'รับภาระกิจเรียบร้อย!',
+                'success'
+              )
+              setInterval(
+                liff.closeWindow()
+              ,1000)  
+            }
         }
     });
   }

@@ -12,6 +12,7 @@ use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use \yii\db\Expression;
 use app\components\UserHelper;
+use app\components\LineHelper;
 
 class LineController extends \yii\web\Controller
 
@@ -66,18 +67,24 @@ class LineController extends \yii\web\Controller
         $driver = Yii::$app->db->createCommand($sql)->queryAll();
 
         if ($this->request->isPost && $model->load($this->request->post())) {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
             $model->status_id = 'success';
            
             if($model->save(false)){
-
-                Yii::$app->session->setFlash('position', [
-                    'position' => 'center',
-                    'icon' => Alert::TYPE_SUCCESS,
-                    'title' => 'บันทึกสำเร็จ!',
-                    'showConfirmButton' => false,
-                    'timer' => 1500
-                ]);
-                return $this->redirect(['/vehicle/line/myjob']);
+                // return isset(json_decode($model->data_json)->mileage_start) ? json_decode($model->data_json)->mileage_start : '00';
+                 $msgMile = '#เลขไมค์ก่อนออกเดินทาง : '.json_decode($model->data_json)->mileage_start."\n".'#เสร็จสิ้น : '.json_decode($model->data_json)->mileage_end;
+                $msg = '#เสร็จสิ้นภารกิจ : '.$model->car->data_json['car_regis']."\n".$msgMile;
+                LineHelper::BroadcastMassage($msg);
+return true;
+                // Yii::$app->session->setFlash('position', [
+                //     'position' => 'center',
+                //     'icon' => Alert::TYPE_SUCCESS,
+                //     'title' => 'บันทึกสำเร็จ!',
+                //     'showConfirmButton' => false,
+                //     'timer' => 1500
+                // ]);
+                // return $this->redirect(['/vehicle/line/myjob']);
             }
         }
             return $this->render('_form_confirm', [

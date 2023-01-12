@@ -21,6 +21,7 @@ use app\components\DateTimeHelper;
 use app\components\SystemHelper;
 use app\components\UserHelper;
 use app\components\LineHelper;
+use yii\helpers\Json;
 
 /**
  * BookingController implements the CRUD actions for Booking model.
@@ -149,7 +150,8 @@ class BookingController extends Controller
                 $model->status_id =  Yii::$app->user->can('driver') ? 'approve' : 'await';
                 $model->driver_id = Yii::$app->user->can('driver') ? Yii::$app->user->identity->id : '';
                 if($model->save()){
-                    LineHelper::BroadcastMassage($model);
+                    $msg = '#จองรถทะเบียน : '.$model->car->data_json['car_regis']."\n".'#ผู้ขอ : '.$model->createBy->fullname."\n".'#เรื่อง : '.$model->title."\n".'#วันที่ : '.$model->start.' ถึง '.$model->end;
+                    LineHelper::BroadcastMassage($msg);
                     // LineHelper::BroadcastMassage($model);
                     Yii::$app->session->setFlash('position', [
                         'position' => 'center',
@@ -243,6 +245,12 @@ class BookingController extends Controller
                 'showConfirmButton' => false,
                 'timer' => 1500
             ]);
+        // Yii::$app->response->format = Response::FORMAT_JSON;
+
+            // return json_decode($model->data_json)->cancel_note;
+            // return $a->cancel_note;
+            $msg = '#ยกเลิกจอง  : '.$model->car->data_json['car_regis']."\n".'#ผู้ขอ : '.$model->createBy->fullname."\n".'#เหตุผลการยกลิก : '.json_decode($model->data_json)->cancel_note;
+            LineHelper::BroadcastMassage($msg);
             return $this->redirect(['index']);
         }
 

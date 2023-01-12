@@ -1,25 +1,11 @@
 <?php
-use app\models\Provinces;
-use app\modules\vehicle\models\Category;
-use kartik\depdrop\DepDrop;
-use kartik\select2\Select2;
-use kartik\widgets\DatePicker;
-use kartik\widgets\DateTimePicker;
+use dominus77\sweetalert2\assets\ThemeAsset;
 use yii\bootstrap5\ActiveForm;
-use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\web\View;
-use yii\helpers\Json;
-use app\modules\vehicle\AppAsset;
-use kartik\datecontrol\DateControl;
-$myAssetBundle = AppAsset::register($this);
-
-// 'value' => $model->isNewRecord ? Yii::$app->user->identity->username : ''  
-$car_id = isset($car_id) ? Category::findOne($car_id)->photo : $model->car->photo;
-// $car = $model->isNewRecord ? Category::findOne($car_id) : $model->car->photo;
-
-// $disable = $model->isNewRecord ? false : (Yii::$app->user->can('driver') ? true : false); // (Yii::$app->user->can('driver') ? true : false) || ($model->isNewRecord ? false : true);
+ThemeAsset::register($this, ThemeAsset::THEME_MATERIAL_UI);
 $disable = false;
 ?>
 <style>
@@ -59,24 +45,21 @@ $disable = false;
 }
 </style>
 
-
-
 <?php
-$fullname = Yii::$app->user->identity->fullname;
-$user_json = Json::decode(Yii::$app->user->identity->data_json);
-$position = isset($user_json['position']) ? $user_json['position'] : null;
+
+// $user_json = Json::decode(Yii::$app->user->identity->data_json);
+// $position = isset($user_json['position']) ? $user_json['position'] : null;
 ?>
 <?php $form = ActiveForm::begin(['id' => 'form-success']);?>
 
 <div class="card">
     <div class="card-body">
         <h5 class="card-title">บักทึกเสร็จสิ้นพาระกิจ</h5>
-        <?php  if(Yii::$app->user->can('driver')):?>
         <?php
-           $mileage_last = $model->mileageLast();
-         
-           ?>
-        <?php if($mileage_last  == ''):?>
+echo $mileage_last = $model->mileageLast();
+
+?>
+        <?php if ($mileage_last == ''): ?>
         <?=$form->field($model, 'data_json[mileage_start]', [
 
     'inputTemplate' => '<div class="input-group">
@@ -88,7 +71,10 @@ $position = isset($user_json['position']) ? $user_json['position'] : null;
 
 ])->textInput(['value' => $mileage_last])->label('เลขไมค์ก่อนออกเดินทาง')?>
 
-        <?php else:?>
+        <?php else: ?>
+
+        <?=$form->field($model, 'data_json[mileage_start]')->hiddenInput(['value' => $mileage_last])->label('เลขไมค์หลังเสร็จสินภาระกิจ')->label(false)?>
+        <?php endif;?>
         <label class="form-label" for="booking-data_json-mileage_start">เลขไมค์ก่อนออกเดินทาง</label>
         <div class="alert alert-success" role="alert">
             <h4><?=$mileage_last?></h4>
@@ -101,11 +87,10 @@ $position = isset($user_json['position']) ? $user_json['position'] : null;
 
             <div class="invalid-feedback"></div>
         </div>
-        <?php endif;?>
 
         <?=$form->field($model, 'data_json[mileage_end]', [
 
-'inputTemplate' => '<div class="input-group">
+    'inputTemplate' => '<div class="input-group">
                             <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa-solid fa-gauge-high"></i>&nbsp;</span>
                             </div>
@@ -115,11 +100,11 @@ $position = isset($user_json['position']) ? $user_json['position'] : null;
 ])->textInput()->label('เลขไมค์หลังเสร็จสินภาระกิจ')?>
 
 
-            <?php endif; ?>
+       
 
 
 
-            <?=Html::submitButton('<i class="fa-solid fa-check"></i> บันทึก', ['class' => 'btn btn-primary'])?>
+        <?=Html::submitButton('<i class="fa-solid fa-check"></i> บันทึก', ['class' => 'btn btn-primary'])?>
     </div>
 </div>
 
@@ -128,6 +113,31 @@ $position = isset($user_json['position']) ? $user_json['position'] : null;
 $urlDriverPhoto = Url::to('/bookingcar/booking/get-driver-photo');
 $js = <<< JS
 
+
+$("#form-success").submit(function(event) {
+            event.preventDefault(); // stopping submitting
+            var data = $(this).serializeArray();
+            var url = $(this).attr('action');
+            $('#awaitLogin').show();
+            $('#content-container').hide();
+            $.ajax({
+                url: url,
+                type: 'post',
+                dataType: 'json',
+                data: data,
+                success: function (response) {
+                    $('#awaitLogin').hide();
+                        $('#content-container').show();
+                    if (response == true) {
+                       
+                        liff.closeWindow();
+
+                }
+                }
+            });
+
+
+        });
 
 JS;
 
