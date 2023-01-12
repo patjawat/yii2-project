@@ -57,11 +57,12 @@ table {
                         </div>
                     </div>
                     <ul>
-                        <li>เรื่อง : <?=$model->title;?></li>
-                        <li>สถานที่ไป : <?=isset($model->data_json['point']) ? $model->data_json['point'] : '-' ;?></li>
-                        <li>ผู้โดยสาร :
-                            <?=isset($model->data_json['passenger_number']) ? $model->data_json['passenger_number'] : null?>
-                        </li>
+                    <li>เรื่อง : <?=$model->title;?></li>
+                    <li>สถานที่ : <?=$model->data_json['point'];?></li>
+                    <li>ผู้โดยสาร : <?=isset($model->data_json['passenger_number']) ? $model->data_json['passenger_number'] : null?></li>
+                    <li>ออกเดินทาง : <?=$model->start;?></li>
+                    <li>เดินทางกลับ : <?=$model->end;?></li>
+                       
                     </ul>
 
                     <div class="d-flex">
