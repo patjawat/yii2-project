@@ -50,19 +50,29 @@ class LineController extends \yii\web\Controller
 
         $auth = Auth::find()->where(['source_id' => $lineId])->one();
         
+        // ถ้่เคยลงทพเบียนแล้ว
         if ($auth) {
             Yii::$app->user->login($auth->user);
             LineHelper::setMainMenu($lineId);
-            return true;
+            return [
+                'register' => true,
+                'msg' => 'ลงทะเบียนสำเร็จ'.$lineId
+            ];
         }
 
         if (Yii::$app->user->isGuest) {
             if ($auth && Yii::$app->user->login($auth->user)) {
                 LineHelper::setMainMenu($lineId);
-                return true;
+                return [
+                    'register' => true,
+                    'msg' => 'ลงทะเบียนสำเร็จ setmenu'
+                ];
             } else {
                 LineHelper::setRegisterMenu($lineId);
-                return false;
+                return [
+                    'register' => false,
+                    'msg' => 'ยังไม่ลงทะเบียน set Register'
+                ];
 
             }
         }

@@ -35,41 +35,41 @@ $js = <<< JS
 
 
 
-// function runApp() {
-//       liff.getProfile().then(profile => {
-//         $.ajax({
-//           type: "post",
-//           url: "$checkMe",
-//           data: {line_id:profile.userId},
-//           dataType: "json",
-//           success: function (response) {
-//             console.log(response);
-//             if(response == false){
-//               liff.closeWindow();
-//             }
-//             // window.location.href
-//           }
-//         });
+function runApp() {
+      liff.getProfile().then(profile => {
+        $.ajax({
+          type: "post",
+          url: "$checkMe",
+          data: {line_id:profile.userId},
+          dataType: "json",
+          success: function (response) {
+            console.log(response);
+            if(response == false){
+              liff.closeWindow();
+            }
+            // window.location.href
+          }
+        });
 
-//       }).catch(err => console.error(err));
-//     }
+      }).catch(err => console.error(err));
+    }
 
-//     liff.init({ liffId: "1657676585-KD78xz40" }, () => {
-//       if (liff.isLoggedIn()) {
-//         runApp()
-//       } else {
-//         liff.login();
-//       }
-//     }, err => console.error(err.code, error.message));
+    liff.init({ liffId: "1657676585-KD78xz40" }, () => {
+      if (liff.isLoggedIn()) {
+        runApp()
+      } else {
+        liff.login();
+      }
+    }, err => console.error(err.code, error.message));
 
 
-//     $('#logout').click(function (e) { 
-//       console.log('logged out');
-//       liff.logout();
-//       liff.closeWindow();
-//       // window.location.reload();
+    $('#logout').click(function (e) { 
+      console.log('logged out');
+      liff.logout();
+      liff.closeWindow();
+      // window.location.reload();
       
-//     });
+    });
 
 
 

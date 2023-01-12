@@ -28,7 +28,7 @@ function runApp() {
       }).catch(err => console.error(err));
     }
 
-    liff.init({ liffId: "1657676585-KD78xz40" }, () => {
+    liff.init({ liffId: "1657676585-NZL4yEPB" }, () => {
       if (liff.isLoggedIn()) {
         runApp()
         getUser();

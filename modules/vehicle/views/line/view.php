@@ -37,9 +37,26 @@ table {
     
 }
 </style>
-<div class="row">
-    <div class="col-8">
+<div class="container">
 
+    <div class="row justify-content-center">
+        <div class="col-8">
+            
+            <div class="card" style="width: 18rem;">
+                <!-- <img src="..." class="card-img-top" alt="..."> -->
+                <div class="card-body">
+                    <h5 class="card-title">ผู้จอง : <?=$model->createBy->fullname;?></h5>
+                    <p>เรื่อง : <?=$model->title;?></p>
+                    <p>สถานที่ : <?=$model->data_json['point'];?></p>
+                    <p>ผู้โดยสาร : <?=isset($model->data_json['passenger_number']) ? $model->data_json['passenger_number'] : null?></p>
+                    <p>ออกเดินทาง : <?=$model->start;?></p>
+                    <p>เดินทางกลับ : <?=$model->end;?></p>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="btn btn-primary">รับภาระกิจนี้</a>
+                </div>
+            </div>
+        </div>
+            
  
 <p>
 <?php if ( ( $model->status_id == 'await' ) || ( $model->status_id == 'allocate') || ( $model->status_id == 'approve') ):?>

@@ -4,7 +4,6 @@ use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 ?>
 <div class="container p-3">
-
     <?php $form = ActiveForm::begin(['id' => 'registerForm','action' => ['register-user']]); ?>
     <?= $form->field($model, 'line_id')->hiddenInput(['maxlength' => true,'id' =>'line_id'])->label(false); ?>
     <?= $form->field($model, 'phone')->textInput(['maxlength' => true])->label('กรุณากรอกหมายเลขโทรศีพท์'); ?>

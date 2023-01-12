@@ -39,6 +39,54 @@ class LineController extends \yii\web\Controller
         ]);
     }
 
+    public function actionMyjob()
+    {
+        $this->layout = 'line';
+
+        $searchModel = new BookingSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider->query->andWhere(['driver_id' => Yii::$app->user->id]);
+        $dataProvider->query->andWhere(['NOT IN','status_id',['cancel','success']]);
+      
+
+        return $this->render('myjob', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    //เสร็จสิ้นภาระกิจ
+    public function actionConfirmSuccess($id)
+    {
+        $this->layout = 'line';
+
+        $model = $this->findModel($id);
+
+        $sql = "SELECT u.id,u.fullname FROM auth_assignment a INNER JOIN user u ON u.id = a.user_id;";
+        $driver = Yii::$app->db->createCommand($sql)->queryAll();
+
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $model->status_id = 'success';
+           
+            if($model->save(false)){
+
+                Yii::$app->session->setFlash('position', [
+                    'position' => 'center',
+                    'icon' => Alert::TYPE_SUCCESS,
+                    'title' => 'บันทึกสำเร็จ!',
+                    'showConfirmButton' => false,
+                    'timer' => 1500
+                ]);
+                return $this->redirect(['/vehicle/line/myjob']);
+            }
+        }
+            return $this->render('_form_confirm', [
+                'model' => $model,
+                'driver' => $driver
+            ]);
+    
+    }
+
     public function actionQrcode(){
         $this->layout = 'line';
         return $this->render('qrcode');
@@ -54,7 +102,7 @@ class LineController extends \yii\web\Controller
         // isset($status) ? $dataProvider->query->where(['status_id' => $status]) : '';
         // if(!Yii::$app->user->can('driver')){
         // $dataProvider->query->andWhere(['created_by' => Yii::$app->user->id]);
-        $dataProvider->query->andWhere(['in','status_id',['await','approve']]);
+        $dataProvider->query->andWhere(['in','status_id',['await']]);
         // $dataProvider->setSort([
         //     'defaultOrder' => [
         //         'created_at' => SORT_ASC,
@@ -162,6 +210,21 @@ class LineController extends \yii\web\Controller
                 'model' => $model,
                 'driver' => $driver,
             ]);
+        }
+    }
+
+    public function actionConfirmJob()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $id = $this->request->get('id');
+        $model = $this->findModel($id);
+        if ($model->driver_id == '') {
+            $model->driver_id = Yii::$app->user->identity->id;
+            $model->status_id = 'approve';
+        }
+        if ($model->save()) {
+            // return $this->redirect(['/vehicle/myjob/update', 'id' => $model->id]);
+            return true;
         }
     }
 

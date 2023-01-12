@@ -95,18 +95,7 @@ $position = isset($user_json['position_name']) ? $user_json['position_name'] : n
                         <div class="alert alert-primary" role="alert">ข้อมูลการเดินทาง</div>
 
                         <div class="row justify-content-between">
-                            <div class="col-4">
-                                <?=$form->field($model, 'start')->widget(DateTimePicker::classname(), [
-                    'options' => ['placeholder' => 'เลือกวันเวลาที่ออกเดินทาง ...'],
-                    'language' => 'th',
-                    'readonly' => true,
-                    'disabled' =>$disable,
-                    'pluginOptions' => [
-                        'autoclose' => true,
-                    ],
-                ])->label('วันเวลาที่ออกเดินทาง');
-                ?>
-                            </div>
+                            
                             <div class="col-8">
 
                                 <?=$form->field($model, 'title', [
@@ -124,6 +113,18 @@ $position = isset($user_json['position_name']) ? $user_json['position_name'] : n
 
             ])->textInput(['disabled' =>$disable])->label('วัตถุประสงค์การจอง')?>
 
+                            </div>
+                            <div class="col-4">
+                                <?=$form->field($model, 'start')->widget(DateTimePicker::classname(), [
+                    'options' => ['placeholder' => 'เลือกวันเวลาที่ออกเดินทาง ...'],
+                    'language' => 'th',
+                    'readonly' => true,
+                    'disabled' =>$disable,
+                    'pluginOptions' => [
+                        'autoclose' => true,
+                    ],
+                ])->label('วันเวลาที่ออกเดินทาง');
+                ?>
                             </div>
                         </div>
 

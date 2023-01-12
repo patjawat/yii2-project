@@ -11,16 +11,51 @@ use yii\web\View;
     <p id="statusMessage"></p>
     <p id="getDecodedIDToken"></p>
     <div class="d-grid gap-2 col-12 mx-auto">
-        <span id="closeLiff" class="btn btn-success">ตกลง</span>
+        <span id="closeLiff" class="btn btn-success">ตกลงxx</span>
     </div>
 </div>
 
 <?php
+$checkMe = Url::to(['/usermanager/line/checkme']);
 
 $js = <<< JS
+
+
+function runApp() {
+      liff.getProfile().then(profile => {
+        $.ajax({
+          type: "post",
+          url: "$checkMe",
+          data: {line_id:profile.userId},
+          dataType: "json",
+          success: function (response) {
+            // console.log(response.register);
+            if(response.register == true){
+              liff.closeWindow();
+              console.log('register tttt');
+            }
+            // window.location.href
+          }
+        });
+
+      }).catch(err => console.error(err));
+    }
+
+    liff.init({ liffId: "1657676585-eQJA1a3Y" }, () => {
+      if (liff.isLoggedIn()) {
+        runApp()
+      } else {
+        liff.login();
+      }
+    }, err => console.error(err.code, error.message));
+
+
+
+
    $('#closeLiff').click(function (e) { 
 liff.closeWindow();
     });
+
 
 
 JS;

@@ -21,7 +21,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'line_id')->hiddenInput(['id' => 'line_id'])->label(false); ?>
 
     <div class="d-grid gap-2 col-12 mx-auto">
-        <?= Html::submitButton('ตกลง', ['class' => 'btn btn-block btn-primary mt-3']) ?>
+        <?= Html::submitButton('ตกลงxxx', ['class' => 'btn btn-block btn-primary mt-3']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

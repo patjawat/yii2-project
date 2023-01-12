@@ -90,7 +90,11 @@ $this->title = 'ระบบลงทะเบียน';
         </div>
             <?php ActiveForm::end(); ?>
 
+            <?php elseif($dataProvider->getTotalCount() == 1):?>
+
+              <?php echo $this->render('signup_success');?>
             <?php else:?>
+              <?=$dataProvider->getTotalCount();?>
     <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
  <?php endif; ?>
@@ -124,12 +128,11 @@ function runApp() {
     $('#content-container').hide();
           },
           success: function (response) {
-            console.log(response);
             $('#loading').hide();
             $('#warp-content').show();
             $('#awaitLogin').hide();
             $('#content-container').show();
-            if(response == true){
+            if(response.register == true){
               liff.closeWindow();
             }
           }

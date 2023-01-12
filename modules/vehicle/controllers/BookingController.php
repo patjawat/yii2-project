@@ -20,6 +20,7 @@ use app\components\Processor;
 use app\components\DateTimeHelper;
 use app\components\SystemHelper;
 use app\components\UserHelper;
+use app\components\LineHelper;
 
 /**
  * BookingController implements the CRUD actions for Booking model.
@@ -147,15 +148,18 @@ class BookingController extends Controller
 
                 $model->status_id =  Yii::$app->user->can('driver') ? 'approve' : 'await';
                 $model->driver_id = Yii::$app->user->can('driver') ? Yii::$app->user->identity->id : '';
-                $model->save();
-                Yii::$app->session->setFlash('position', [
-                    'position' => 'center',
-                    'icon' => Alert::TYPE_SUCCESS,
-                    'title' => 'บันทึกสำเร็จ!',
-                    'showConfirmButton' => false,
-                    'timer' => 1500
-                ]);
-                return $this->redirect(['view', 'id' => $model->id]);
+                if($model->save()){
+                    LineHelper::PushMessage($model);
+                    // LineHelper::BroadcastMassage($model);
+                    Yii::$app->session->setFlash('position', [
+                        'position' => 'center',
+                        'icon' => Alert::TYPE_SUCCESS,
+                        'title' => 'บันทึกสำเร็จ!',
+                        'showConfirmButton' => false,
+                        'timer' => 1500
+                    ]);
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
             }
         } else {
             $model->loadDefaultValues();
@@ -167,58 +171,6 @@ class BookingController extends Controller
         ]);
     }
 
-    private function BroadcastMassage($model){
-
-
-        $arrayPostData['messages'][0]['type'] = "text";
-        $arrayPostData['messages'][0]['text'] = '#เหตุ : '.$model->eventType->name."\n".'#ผู้เจ้งเหตุ : '.$model->fname.' '.$model->lname ."\n".'เป็น ('.$model->personType->name.')'."\n".'#ข้อมูลเบื้องต้น : '.$model->orther;
-   
-        $accessToken = "YjWJdP9wvDyfuSnOGB3QPcRY9iDZUjkydzBcXwCB4e6JQGP6JRgufrHP/FhSL/3P9YR1ID09ch6HrWfezByh93J7hd+kgenJPlhebLox9dpw6jszm/tdjfsFfyCdnbpHfwJPXEr9hpHXAPVdnLRMGAdB04t89/1O/w1cDnyilFU=";//copy ข้อความ Channel access token ตอนที่ตั้งค่า
-        $arrayHeader = [];
-        $arrayHeader[] = "Content-Type: application/json";
-        $arrayHeader[] = "Authorization: Bearer {$accessToken}";
-
-       $strUrl = "https://api.line.me/v2/bot/message/broadcast";
-       $ch = curl_init();
-       curl_setopt($ch, CURLOPT_URL,$strUrl);
-       curl_setopt($ch, CURLOPT_HEADER, false);
-       curl_setopt($ch, CURLOPT_POST, true);
-       curl_setopt($ch, CURLOPT_HTTPHEADER, $arrayHeader);
-       curl_setopt($ch, CURLOPT_POSTFIELDS, Json::encode($arrayPostData));
-       curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
-       curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-       $result = curl_exec($ch);
-       curl_close ($ch);
-   }
-
-
-   private function PushMessage($model)
-   {
-       // Yii::$app->response->format = Response::FORMAT_JSON;
-
-   $accessToken = "YjWJdP9wvDyfuSnOGB3QPcRY9iDZUjkydzBcXwCB4e6JQGP6JRgufrHP/FhSL/3P9YR1ID09ch6HrWfezByh93J7hd+kgenJPlhebLox9dpw6jszm/tdjfsFfyCdnbpHfwJPXEr9hpHXAPVdnLRMGAdB04t89/1O/w1cDnyilFU=";//copy ข้อความ Channel access token ตอนที่ตั้งค่า
-
-   $arrayHeader = [];
-   $arrayHeader[] = "Content-Type: application/json";
-   $arrayHeader[] = "Authorization: Bearer {$accessToken}";
-   $arrayPostData['to'] = 'Uf1f8aae531d88418c5755f8cc4ba6dd1';
-
-   $arrayPostData['messages'][0]['type'] = "text";
-   $arrayPostData['messages'][0]['text'] = '#เหตุ : '.$model->eventType->name."\n".'#ผู้เจ้งเหตุ : '.$model->fname.' '.$model->lname ."\n".'เป็น ('.$model->personType->name.')'."\n".'#ข้อมูลเบื้องต้น : '.$model->orther;
-   
-   $strUrl = "https://api.line.me/v2/bot/message/push";
-   $ch = curl_init();
-   curl_setopt($ch, CURLOPT_URL,$strUrl);
-   curl_setopt($ch, CURLOPT_HEADER, false);
-   curl_setopt($ch, CURLOPT_POST, true);
-   curl_setopt($ch, CURLOPT_HTTPHEADER, $arrayHeader);
-   curl_setopt($ch, CURLOPT_POSTFIELDS, Json::encode($arrayPostData));
-   curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
-   curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-   $result = curl_exec($ch);
-   curl_close ($ch);
-   }
-   
 
     /**
      * Updates an existing Booking model.

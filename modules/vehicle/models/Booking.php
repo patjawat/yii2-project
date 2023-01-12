@@ -184,5 +184,9 @@ class Booking extends \yii\db\ActiveRecord
         return $this->hasOne(Category::className(), ['code' => 'status_id']);
     }
 
+    public function getCreateBy() {
+        return $this->hasOne(User::className(), ['id' => 'created_by']);
+    }
+
 
 }
