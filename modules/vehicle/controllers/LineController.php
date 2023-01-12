@@ -46,7 +46,7 @@ class LineController extends \yii\web\Controller
         $searchModel = new BookingSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
         $dataProvider->query->andWhere(['driver_id' => Yii::$app->user->id]);
-        // $dataProvider->query->andWhere(['NOT',['status_id' => ['cancel']]]);
+        $dataProvider->query->andWhere(['NOT',['status_id' => ['cancel','success']]]);
       
 
         return $this->render('myjob', [
@@ -102,7 +102,8 @@ class LineController extends \yii\web\Controller
         // isset($status) ? $dataProvider->query->where(['status_id' => $status]) : '';
         // if(!Yii::$app->user->can('driver')){
         // $dataProvider->query->andWhere(['created_by' => Yii::$app->user->id]);
-        $dataProvider->query->andWhere(['in','status_id',['await']]);
+        $dataProvider->query->andWhere(['status_id' => 'await']);
+        // $dataProvider->query->andWhere(['NOT',['status_id' => ['cancel','success']]]);
         // $dataProvider->setSort([
         //     'defaultOrder' => [
         //         'created_at' => SORT_ASC,

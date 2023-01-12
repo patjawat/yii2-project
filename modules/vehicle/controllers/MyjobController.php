@@ -59,6 +59,10 @@ class MyjobController extends \yii\web\Controller
     }
 
 
+    public function actionJobSuccess(){
+        return $this->render('job_success');
+    }
+
     public function actionConfirmSuccess($id)
     {
         $model = $this->findModel($id);
@@ -78,7 +82,7 @@ class MyjobController extends \yii\web\Controller
                     'showConfirmButton' => false,
                     'timer' => 1500
                 ]);
-                return $this->redirect(['/vehicle/myjob']);
+                return $this->redirect(['/vehicle/line/myjob/job-success']);
             }
         }
             return $this->render('_form_confirm', [

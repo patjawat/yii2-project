@@ -128,22 +128,7 @@ $position = isset($user_json['position']) ? $user_json['position'] : null;
 $urlDriverPhoto = Url::to('/bookingcar/booking/get-driver-photo');
 $js = <<< JS
 
-function getDriverPhoto(id) {
-    $('#driver-photo').attr("src", "/file?id="+id).show();
-    // $.ajax({
-    //     type: "get",
-    //     url: "$urlDriverPhoto",
-    //     data:id,
-    //     dataType: "json",
-    //     success: function (response) {
-    //         console.log(response)
-    //         // $('.driver-profile').html(response)
-    //         // $('.card-driver').attr("src", "/file/43");
-    //         $('#driver-photo').attr("src", "/file?id="+id);
-    //         // console.log(a)
-    //     }
-    // });
-}
+
 JS;
 
 $this->registerJs($js, View::POS_END);
