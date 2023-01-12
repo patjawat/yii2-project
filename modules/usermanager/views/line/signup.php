@@ -108,8 +108,8 @@ $this->title = 'ระบบลงทะเบียน';
 $checkMe = Url::to(['/usermanager/line/checkme']);
 $js = <<< JS
 
-$('#loading').show();
-            $('#warp-content').hide();
+$('#awaitLogin').show();
+$('#content-container').hide();
 function runApp() {
       liff.getProfile().then(profile => {
         // document.getElementById("pictureUrl").src = profile.pictureUrl;
@@ -121,15 +121,10 @@ function runApp() {
           data: {line_id:profile.userId},
           dataType: "json",
           beforeSend: function(){
-            $('#loading').show();
-            $('#warp-content').hide();
-
             $('#awaitLogin').show();
-    $('#content-container').hide();
+            $('#content-container').hide();
           },
           success: function (response) {
-            $('#loading').hide();
-            $('#warp-content').show();
             $('#awaitLogin').hide();
             $('#content-container').show();
             if(response.register == true){
