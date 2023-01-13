@@ -50,6 +50,7 @@ class LineController extends \yii\web\Controller
 
         $auth = Auth::find()->where(['source_id' => $lineId])->one();
    
+        return Yii::$app->user->isGuest;
         // ถ้่เคยลงทพเบียนแล้ว
         if (!$auth) {
             LineHelper::setRegisterMenu($lineId);
