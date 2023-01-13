@@ -61,6 +61,8 @@ $this->title = 'ระบบลงทะเบียน';
   <?php
   if(Yii::$app->user->isGuest){
     echo 'No Login';
+  }else{
+    echo 'Login';
   }
   ?>
 <?=$dataProvider->getTotalCount();?></h1>
