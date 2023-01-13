@@ -63,7 +63,7 @@ use yii\web\View;
     <p id="statusMessage"></p>
     <p id="getDecodedIDToken"></p>
     <div class="d-grid gap-2 col-12 mx-auto">
-        <span id="closeLiff" class="btn btn-success">ตกลงxx</span>
+        <span id="closeLiff" class="btn btn-success">ตกลง</span>
     </div>
 </div>
 
