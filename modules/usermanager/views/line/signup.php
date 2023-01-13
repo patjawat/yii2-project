@@ -96,7 +96,7 @@ $this->title = 'ระบบลงทะเบียน';
     </div>
 </div>
 
-<?php elseif($dataProvider->getTotalCount() == 1):?>
+<?php elseif($dataProvider->getTotalCount() == 1 && !Yii::$app->user->isGuest):?>
 
 <?php echo $this->render('signup_success');?>
 <?php else:?>
