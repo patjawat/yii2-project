@@ -47,6 +47,7 @@ class LineController extends \yii\web\Controller
         $lineId = $this->request->post('line_id');
         $userId = Yii::$app->user->id;
         $site = SiteHelper::info();
+        return $lineId;
 
         $auth = Auth::find()->where(['source_id' => $lineId])->one();
         
@@ -67,15 +68,6 @@ class LineController extends \yii\web\Controller
                 'msg' => 'ลงทะเบียนสำเร็จ',
             ];
         }
-
-        // if ($auth) {
-        //     return Yii::$app->user->login($auth->user);
-        //     LineHelper::setMainMenu($lineId);
-        //     return [
-        //         'register' => true,
-        //         'msg' => 'ลงทะเบียนสำเร็จ',
-        //     ];
-        // }
 
         if (Yii::$app->user->isGuest) {
             if ($auth && Yii::$app->user->login($auth->user)) {
