@@ -49,7 +49,7 @@ class LineController extends \yii\web\Controller
         $site = SiteHelper::info();
 
         $auth = Auth::find()->where(['source_id' => $lineId])->one();
-        return $auth;
+   
         // ถ้่เคยลงทพเบียนแล้ว
         if (!$auth) {
             LineHelper::setRegisterMenu($lineId);
