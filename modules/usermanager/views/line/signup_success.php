@@ -53,7 +53,7 @@ use yii\web\View;
   
 </style>
 <div class="row justify-content-md-center mt-5">
-    <h1 class="text-center"><i class="fa-solid fa-user-check"></i> <span class="text-success">ลงทะเบียนสำเร็จ</span>
+    <h1 class="text-center"><i class="fa-solid fa-user-check"></i> <span class="text-success" id="msg">ลงทะเบียนสำเร็จ</span>
     </h1>
     <div class="row d-flex justify-content-center">
     <img id="pictureUrl" class="rounded-circle shadow-lg p-2 bg-white rounded" style="width:30%">
@@ -83,8 +83,10 @@ function runApp() {
           success: function (response) {
             // console.log(response.register);
             if(response.register == true){
+              $('#msg').text(response.msg);
               liff.closeWindow();
-              console.log('register tttt');
+            }else{
+              $('#msg').text(response.msg);
             }
             // window.location.href
           }
