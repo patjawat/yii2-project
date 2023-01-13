@@ -79,7 +79,7 @@ class LineController extends \yii\web\Controller
                 LineHelper::setRegisterMenu($lineId);
                 return [
                     'register' => false,
-                    'msg' => 'ยังไม่ลงทะเบียน set Register'
+                    'msg' => 'ยังไม่ลงทะเบียน set Register'.$auth
                 ];
 
             }
