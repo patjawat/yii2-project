@@ -64,7 +64,7 @@ class LineController extends \yii\web\Controller
             LineHelper::setMainMenu($lineId);
             return [
                 'register' => true,
-                'msg' => 'ลงทะเบียนสำเร็จ',
+                'msg' => 'ลงทะเบียนสำเร็จxx',
             ];
         }
         
