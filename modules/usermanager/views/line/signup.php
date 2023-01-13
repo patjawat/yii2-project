@@ -140,6 +140,7 @@ function runApp() {
             $('#warp-content').show();
             $('#awaitLogin').hide();
             $('#content-container').show();
+            $('#msg').text(response.msg);
             if(response.register == true){
               liff.closeWindow();
             }
