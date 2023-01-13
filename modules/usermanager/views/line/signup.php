@@ -57,7 +57,7 @@ $this->title = 'ระบบลงทะเบียน';
 </style>
 
 <div class="row justify-content-center mt-3" id="warp-content">
-
+<h1><?=$dataProvider->getTotalCount();?></h1>
     <div class="col-10">
         <?php if(isset($searchModel->phone) && $dataProvider->getTotalCount() == 0): ?>
             <?php $form = ActiveForm::begin([
