@@ -81,6 +81,7 @@ function runApp() {
           dataType: "json",
           success: function (response) {
             $('#msg').text(response.msg);
+            console.log(response.msg)
             // console.log(response.register);
             if(response.register == true){
               liff.closeWindow();
