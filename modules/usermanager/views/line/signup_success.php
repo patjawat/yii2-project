@@ -71,7 +71,6 @@ use yii\web\View;
 $checkMe = Url::to(['/usermanager/line/checkme']);
 
 $js = <<< JS
-$('#msg').text('ooooo');
 
 function runApp() {
       liff.getProfile().then(profile => {
