@@ -81,12 +81,10 @@ function runApp() {
           data: {line_id:profile.userId},
           dataType: "json",
           success: function (response) {
+            $('#msg').text(response.msg);
             // console.log(response.register);
             if(response.register == true){
-              $('#msg').text(response.msg);
               liff.closeWindow();
-            }else{
-              $('#msg').text(response.msg);
             }
             // window.location.href
           }
