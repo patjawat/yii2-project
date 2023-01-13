@@ -2,10 +2,62 @@
 use yii\helpers\Url;
 use yii\web\View;
 ?>
+
+<style>
+
+/* loading animation */
+
+      
+.dbl-spinner {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: transparent;
+    border: 4px solid transparent;
+    border-top: 4px solid #2220;
+    border-left: 4px solid #2220;
+    -webkit-animation: 2s spin linear infinite;
+    animation: 2s spin linear infinite;
+  }
+                                      
+  .dbl-spinner:nth-child(2) {
+    border: 4px solid transparent;
+    border-right: 4px solid #37d8a8;
+    border-bottom: 4px solid #20c997;
+    -webkit-animation: 1s spin linear infinite;
+    animation: 1s spin linear infinite;
+  }
+  
+  @-webkit-keyframes spin {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+  }
+          
+  @keyframes spin {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+  }
+  
+</style>
 <div class="row justify-content-md-center mt-5">
     <h1 class="text-center"><i class="fa-solid fa-user-check"></i> <span class="text-success">ลงทะเบียนสำเร็จ</span>
     </h1>
-    <img id="pictureUrl" width="25%">
+    <div class="row d-flex justify-content-center">
+    <img id="pictureUrl" class="rounded-circle shadow-lg p-2 bg-white rounded" style="width:30%">
+</div>
     <p id="userId"></p>
     <p id="displayName"></p>
     <p id="statusMessage"></p>
@@ -41,7 +93,7 @@ function runApp() {
       }).catch(err => console.error(err));
     }
 
-    liff.init({ liffId: "1657676585-eQJA1a3Y" }, () => {
+    liff.init({ liffId: "1657676585-NZL4yEPB" }, () => {
       if (liff.isLoggedIn()) {
         runApp()
       } else {

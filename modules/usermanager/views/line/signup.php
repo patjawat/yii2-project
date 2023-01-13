@@ -72,10 +72,11 @@ $this->title = 'ระบบลงทะเบียน';
             <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
             <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
             <?= $form->field($model, 'confirm_password')->passwordInput(['maxlength' => true]) ?>
-            <?= $form->field($model, 'fullname')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'fullname')->textInput(['maxlength' => true,'id' => 'fullname']) ?>
             <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
             <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
             <?= $form->field($model, 'line_id')->hiddenInput(['maxlength' => true,'id' => 'line_id'])->label(false); ?>
+            <?= $form->field($model, 'picture_url')->hiddenInput(['maxlength' => true,'id' => 'picture_url'])->label(false); ?>
             <div class="box-img text-center img-thumbnail">
                 <?= Html::img(['/file','id'=>$model->id]) ?>
                 <?= $form->field($model,'file')->fileInput(); ?>
@@ -90,17 +91,18 @@ $this->title = 'ระบบลงทะเบียน';
         </div>
             <?php ActiveForm::end(); ?>
 
-            <?php elseif($dataProvider->getTotalCount() == 1):?>
-
-              <?php echo $this->render('signup_success');?>
-            <?php else:?>
-              <?=$dataProvider->getTotalCount();?>
-    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
-
- <?php endif; ?>
+            
 
     </div>
 </div>
+
+<?php elseif($dataProvider->getTotalCount() == 1):?>
+
+<?php echo $this->render('signup_success');?>
+<?php else:?>
+<?php echo $this->render('_search', ['model' => $searchModel]); ?>
+
+<?php endif; ?>
 
 <?php // if($dataProvider->getTotalCount() == 0): ?>
 <?php
@@ -109,12 +111,18 @@ $checkMe = Url::to(['/usermanager/line/checkme']);
 $js = <<< JS
 
 $('#loading').show();
-            $('#warp-content').hide();
+$('#warp-content').hide();
 function runApp() {
       liff.getProfile().then(profile => {
-        // document.getElementById("pictureUrl").src = profile.pictureUrl;
+        console.log(profile);
         $('#line_id').val(profile.userId)
-
+        try {
+        document.getElementById("pictureUrl").src = profile.pictureUrl;
+        $("#picture_url").val(profile.pictureUrl);
+        $("#fullname").val(profile.displayName);
+      } catch (error) {
+        
+      }
         $.ajax({
           type: "post",
           url: "$checkMe",
@@ -163,4 +171,3 @@ function runApp() {
 JS;
 $this->registerJs($js,View::POS_END)
 ?>
-<?php//  endif;?>

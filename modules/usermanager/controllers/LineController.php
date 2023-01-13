@@ -51,14 +51,31 @@ class LineController extends \yii\web\Controller
         $auth = Auth::find()->where(['source_id' => $lineId])->one();
         
         // ถ้่เคยลงทพเบียนแล้ว
-        if ($auth) {
-            return Yii::$app->user->login($auth->user);
+        if (!$auth) {
+            LineHelper::setRegisterMenu($lineId);
+                return [
+                    'register' => false,
+                    'msg' => 'ยังไม่ลงทะเบียน set Register'
+                ];
+
+            
+        }else{
+            Yii::$app->user->login($auth->user);
             LineHelper::setMainMenu($lineId);
             return [
                 'register' => true,
                 'msg' => 'ลงทะเบียนสำเร็จ',
             ];
         }
+
+        // if ($auth) {
+        //     return Yii::$app->user->login($auth->user);
+        //     LineHelper::setMainMenu($lineId);
+        //     return [
+        //         'register' => true,
+        //         'msg' => 'ลงทะเบียนสำเร็จ',
+        //     ];
+        // }
 
         if (Yii::$app->user->isGuest) {
             if ($auth && Yii::$app->user->login($auth->user)) {
@@ -86,13 +103,16 @@ class LineController extends \yii\web\Controller
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $site = SiteHelper::info();
+        $username = isset($searchModel->email) ? explode("@", $searchModel->email)[0] : '';
 
         $model = new User([
             'phone' => $searchModel->phone,
+            'email' => $searchModel->email,
+            'password' => $searchModel->phone,
+            'confirm_password' => $searchModel->phone,
+            'username' => $username,
             // 'username' => 'admin',
             // 'email' => 'admin@local.com',
-            // 'password' => 'admin112233',
-            // 'confirm_password' => 'admin112233',
             // 'fullname' => 'admin',
         ]);
 
@@ -104,7 +124,7 @@ class LineController extends \yii\web\Controller
 
         $user = UserHelper::getUserByPhone($phone);
         
-            $auth =  Auth::findOne(['source_id' => $lineId]);
+        $auth =  Auth::findOne(['source_id' => $lineId]);
             
             if(!$auth){
                 $newAuth = new Auth();
@@ -112,7 +132,6 @@ class LineController extends \yii\web\Controller
                 $newAuth->user_id = $user['user']->id;
                 $newAuth->source_id = $lineId;
                 if($newAuth->save(false)){
-                    $newAuth->save(false);
                     // Yii::$app->user->login($newAuth->user);
                     LineHelper::setMainMenu($lineId);
                     return $this->redirect('success');
@@ -137,6 +156,7 @@ class LineController extends \yii\web\Controller
                     $newAuth->source = 'line';
                     $newAuth->user_id = $model->id;
                     $newAuth->source_id = $model->line_id;
+                    $newAuth->save(false);
                     if ($newAuth->save(false)) {
                         LineHelper::setMainMenu($model->line_id);
 
