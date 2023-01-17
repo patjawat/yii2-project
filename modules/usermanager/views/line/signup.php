@@ -57,15 +57,6 @@ $this->title = 'ระบบลงทะเบียน';
 </style>
 
 <div class="row justify-content-center mt-5" id="warp-content">
-    <h1>
-        <?php
-  // if(Yii::$app->user->isGuest){
-  //   echo 'No Login';
-  // }else{
-  //   echo 'Login';
-  // }
-  ?>
-        <?php // $dataProvider->getTotalCount();?></h1>
     <div class="col-10">
         <?php if(isset($searchModel->phone) && $dataProvider->getTotalCount() == 0): ?>
         <?php $form = ActiveForm::begin([
