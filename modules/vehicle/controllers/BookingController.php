@@ -22,6 +22,7 @@ use app\components\SystemHelper;
 use app\components\UserHelper;
 use app\components\LineHelper;
 use yii\helpers\Json;
+use app\modules\usermanager\models\Auth;
 
 /**
  * BookingController implements the CRUD actions for Booking model.

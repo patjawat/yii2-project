@@ -7,10 +7,9 @@ $this->title = 'ระบบลงทะเบียน';
 ?>
 
 <style>
-
 /* loading animation */
 
-      
+
 .dbl-spinner {
     position: absolute;
     width: 100px;
@@ -22,84 +21,83 @@ $this->title = 'ระบบลงทะเบียน';
     border-left: 4px solid #2220;
     -webkit-animation: 2s spin linear infinite;
     animation: 2s spin linear infinite;
-  }
-                                      
-  .dbl-spinner:nth-child(2) {
+}
+
+.dbl-spinner:nth-child(2) {
     border: 4px solid transparent;
     border-right: 4px solid #37d8a8;
     border-bottom: 4px solid #20c997;
     -webkit-animation: 1s spin linear infinite;
     animation: 1s spin linear infinite;
-  }
-  
-  @-webkit-keyframes spin {
+}
+
+@-webkit-keyframes spin {
     from {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
     }
+
     to {
         -webkit-transform: rotate(360deg);
         transform: rotate(360deg);
     }
-  }
-          
-  @keyframes spin {
+}
+
+@keyframes spin {
     from {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
     }
+
     to {
         -webkit-transform: rotate(360deg);
         transform: rotate(360deg);
     }
-  }
-  
+}
 </style>
 
-<div class="row justify-content-center mt-3" id="warp-content">
-<h1>
-  <?php
-  if(Yii::$app->user->isGuest){
-    echo 'No Login';
-  }else{
-    echo 'Login';
-  }
+<div class="row justify-content-center mt-5" id="warp-content">
+    <h1>
+        <?php
+  // if(Yii::$app->user->isGuest){
+  //   echo 'No Login';
+  // }else{
+  //   echo 'Login';
+  // }
   ?>
-<?=$dataProvider->getTotalCount();?></h1>
+        <?php // $dataProvider->getTotalCount();?></h1>
     <div class="col-10">
         <?php if(isset($searchModel->phone) && $dataProvider->getTotalCount() == 0): ?>
-            <?php $form = ActiveForm::begin([
+        <?php $form = ActiveForm::begin([
                 'id' => 'form-usermanager',
                 
             ]); ?>
 
-<div class="row d-flex justify-content-center">
-    <img id="pictureUrl" class="rounded-circle shadow-lg p-2 bg-white rounded" style="width:30%">
-</div>
-
-            <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
-            <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
-            <?= $form->field($model, 'confirm_password')->passwordInput(['maxlength' => true]) ?>
-            <?= $form->field($model, 'fullname')->textInput(['maxlength' => true,'id' => 'fullname']) ?>
-            <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-            <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
-            <?= $form->field($model, 'line_id')->hiddenInput(['maxlength' => true,'id' => 'line_id'])->label(false); ?>
-            <?= $form->field($model, 'picture_url')->hiddenInput(['maxlength' => true,'id' => 'picture_url'])->label(false); ?>
-            <div class="box-img text-center img-thumbnail">
-                <?= Html::img(['/file','id'=>$model->id]) ?>
-                <?= $form->field($model,'file')->fileInput(); ?>
-            </div>
-
-            <br>
-            <div class="d-grid gap-2 col-12 mx-auto mb-5">
-
-            <?= Html::submitButton('<i class="fa-solid fa-check"></i> บันทึก', ['class' => 'btn btn-success']) ?>
-
-            <?= Html::a('<i class="fas fa-redo"></i> ยกเลิก', ['/usermanager/user'], ['class' => 'btn btn-secondary link-loading', 'title' =>  'Reset Grid']) ?>
+        <div class="row d-flex justify-content-center">
+            <img id="pictureUrl" class="rounded-circle shadow-lg p-2 bg-white rounded" style="width:30%">
+            <h1 class="text-center" id="displayName"></h1>
         </div>
-            <?php ActiveForm::end(); ?>
 
-            
+        <?= $form->field($model, 'username')->hiddenInput(['maxlength' => true])->label(false) ?>
+        <?= $form->field($model, 'password')->hiddenInput(['maxlength' => true])->label(false) ?>
+        <?= $form->field($model, 'confirm_password')->hiddenInput(['maxlength' => true])->label(false) ?>
+        <?= $form->field($model, 'fullname')->hiddenInput(['maxlength' => true,'id' => 'fullname'])->label(false) ?>
+        <?= $form->field($model, 'email')->hiddenInput(['maxlength' => true])->label(false) ?>
+        <?= $form->field($model, 'phone')->hiddenInput(['maxlength' => true])->label(false) ?>
+        <?= $form->field($model, 'line_id')->hiddenInput(['maxlength' => true,'id' => 'line_id'])->label(false); ?>
+        <?= $form->field($model, 'picture_url')->hiddenInput(['maxlength' => true,'id' => 'picture_url'])->label(false); ?>
+        <div class="box-img text-center img-thumbnail">
+            <?php //  Html::img(['/file','id'=>$model->id]) ?>
+            <?php //  $form->field($model,'file')->fileInput(); ?>
+        </div>
+
+        <br>
+        <div class="d-grid gap-2 col-12 mx-auto mb-5">
+            <?= Html::submitButton('<i class="fa-solid fa-check"></i> ยืนยันลงทะเบียน', ['class' => 'btn btn-success']) ?>
+        </div>
+        <?php ActiveForm::end(); ?>
+
+
 
     </div>
 </div>
@@ -126,6 +124,7 @@ function runApp() {
         $('#line_id').val(profile.userId)
         try {
         document.getElementById("pictureUrl").src = profile.pictureUrl;
+        document.getElementById("displayName").innerHTML = profile.displayName;
         $("#picture_url").val(profile.pictureUrl);
         $("#fullname").val(profile.displayName);
       } catch (error) {

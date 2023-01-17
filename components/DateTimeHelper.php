@@ -29,6 +29,7 @@ class DateTimeHelper extends Component
         // return ($wan > 0 ? $wan." วัน " : "").($hour > 0 ? $hour ." ชั่วโมง " : "").($minute > 0 ? $minute ." นาที " : "").$second." วินาที";
         return [
             'full' => ($wan > 0 ? $wan." วัน " : "").($hour > 0 ? $hour ." ชั่วโมง " : "").($minute > 0 ? $minute ." นาที " : ""),
+            'medium' => ($wan > 0 ? $wan." วัน " : "").($hour > 0 ? $hour ." ชั่วโมง " : ""),
             'day' => $wan > 0 ? $wan:null,
             'hour' => $hour > 0 ? $hour:null,
             'minute' => $minute > 0 ? $minute:null,

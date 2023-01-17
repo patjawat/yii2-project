@@ -2,6 +2,7 @@
 
 namespace app\components;
 
+use Yii;
 use yii\base\Component;
 use yii\helpers\Json;
 
@@ -107,7 +108,7 @@ class LineHelper extends Component
    WHERE auth_assignment.item_name = 'driver'
    AND auth.source = 'line'";
    
-   $query = Yii::$app->tcds->createCommand($sql)->queryAll();
+   $query = Yii::$app->db->createCommand($sql)->queryAll();
    foreach($query as $row){
     self::PushMessage($row['source_id'],$msg);
    }
