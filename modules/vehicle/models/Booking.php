@@ -46,7 +46,19 @@ class Booking extends \yii\db\ActiveRecord
             [['created_by', 'updated_by'], 'integer'],
             [['start', 'end', 'province_id', 'district_id'], 'string', 'max' => 255],
             [['data_json','status_id','driver_id','updated_at', 'created_at','booking_type'], 'safe'],
+            ['start','validateDates'],
         ];
+    }
+
+    public function validateDates(){
+        if(strtotime($this->end) <= strtotime($this->start)){
+            $this->addError('start','โปรดระบุวันที่เริ่มต้นและวันที่สิ้นสุดให้ถูกต้อง');
+            $this->addError('end','โปรดระบุวันที่เริ่มต้นและวันที่สิ้นสุดให้ถูกต้อง');
+        }
+
+        if(strtotime($this->start) <= date('Y-m-d H:i:s')){
+            $this->addError('start','โปรดระบุวันที่เริ่มต้นและวันที่สิ้นสุดให้ถูกต้อง');
+        }
     }
 
     /**

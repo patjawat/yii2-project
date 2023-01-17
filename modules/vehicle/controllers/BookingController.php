@@ -68,6 +68,7 @@ class BookingController extends Controller
             ]
         ]);
         
+   
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -142,7 +143,7 @@ class BookingController extends Controller
         ]);
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
+            if ($model->load($this->request->post()) && $model->validate()) {
                 if($model->car->checkCar($model->start,$model->end,$model->car_id) > 0){
                     return $this->render('_notnull');
                    

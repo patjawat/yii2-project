@@ -22,12 +22,16 @@ $query = Yii::$app->db->createCommand($sql)->queryAll();
     <?php echo $this->render('_search', ['model' => $searchModel]); ?>
     <div class="row">
         <div class="col-md-6 col-lg-6 col-sm-12">
+        <?php if($searchModel->start <= date('Y-m-d H:i:s')):?>
+            <h4 class="text-center">โปรดระบุวันที่เริ่มต้นและวันที่สิ้นสุดให้ถูกต้อง</h4>
+            <?php else:?>
             <?php echo $this->render('car_items', [
             'searchModelCar' => $searchModelCar,
             'dataProviderCar' => $dataProviderCar,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]); ?>
+        <?php endif;?>
         </div>
         <div class="col-md-6 col-lg-6 col-sm-12">
             <br>
