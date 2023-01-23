@@ -39,7 +39,7 @@ class BookingHelper extends Component
     public static function CountByStatus()
     {
 
-        $all = Yii::$app->db->createCommand("SELECT COUNT(id) as total FROM booking")->queryScalar();
+        $all = Yii::$app->db->createCommand("SELECT COUNT(id) as total FROM booking WHERE status_id NOT IN('cancel')")->queryScalar();
         $await = Yii::$app->db->createCommand("SELECT COUNT(id) as total FROM booking WHERE status_id = 'await'")->queryScalar();
         $approve = Yii::$app->db->createCommand("SELECT COUNT(id) as total FROM booking WHERE status_id = 'approve'")->queryScalar();
         $success = Yii::$app->db->createCommand("SELECT COUNT(id) as total FROM booking WHERE status_id = 'success'")->queryScalar();
