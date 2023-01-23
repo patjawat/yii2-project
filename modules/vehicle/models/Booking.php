@@ -56,9 +56,9 @@ class Booking extends \yii\db\ActiveRecord
             $this->addError('end','โปรดระบุวันที่เริ่มต้นและวันที่สิ้นสุดให้ถูกต้อง');
         }
 
-        if(strtotime($this->start) <= date('Y-m-d H:i:s')){
-            $this->addError('start','โปรดระบุวันที่เริ่มต้นและวันที่สิ้นสุดให้ถูกต้อง');
-        }
+        // if(strtotime($this->start) <= date('Y-m-d H')){
+        //     $this->addError('start','โปรดระบุวันที่เริ่มต้นและวันที่สิ้นสุดให้ถูกต้อง');
+        // }
     }
 
     /**

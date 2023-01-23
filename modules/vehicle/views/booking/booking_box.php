@@ -1,4 +1,5 @@
 <?php
+use yii\helpers\Html;
 use app\components\BookingHelper;
 use app\components\DateTimeHelper;
 $status = BookingHelper::CountByStatus();
@@ -41,7 +42,7 @@ $dateApproveAgo =  $querysApprove ? DateTimeHelper::Duration($querysApprove['upd
 }
 
 .badge span {
-    background-color: #fffbec;
+    background-color: #efe1ac;
     width: 60px;
     height: 25px;
     padding-bottom: 3px;
@@ -49,7 +50,12 @@ $dateApproveAgo =  $querysApprove ? DateTimeHelper::Duration($querysApprove['upd
     display: flex;
     color: #fed85d;
     justify-content: center;
-    align-items: center
+    align-items: center;
+}
+
+.badge span > a{
+    color: #117073;
+    text-decoration: unset;
 }
 
 .progress {
@@ -86,7 +92,11 @@ $dateApproveAgo =  $querysApprove ? DateTimeHelper::Duration($querysApprove['upd
                             <h6 class="mb-0">ทั้งหมด</h6> ล่าสุด <span><?=$dateTotal;?></span>
                         </div>
                     </div>
-                    <div class="badge"> <span>คลิกเพื่อดู</span> </div>
+                    <div class="badge"> 
+                    <span>
+                            <?=Html::a('เลือก',['/vehicle/booking']);?>
+                        </span>   
+                     </div>
                 </div>
                 <div class="mt-3">
                     <!-- <h3 class="heading">Senior Product<br>Designer-Singapore</h3> -->
@@ -113,7 +123,11 @@ $dateApproveAgo =  $querysApprove ? DateTimeHelper::Duration($querysApprove['upd
                             <h6 class="mb-0">ขอใช้รถ</h6> <span>ล่าสุด <span><?=$dateAwaitAgo?></span>
                         </div>
                     </div>
-                    <div class="badge"> <span>Design</span> </div>
+                    <div class="badge"> 
+                    <span>
+                            <?=Html::a('เลือก',['/vehicle/booking','status'=> 'await']);?>
+                        </span>        
+                </div>
                 </div>
                 <div class="mt-3">
                     <!-- <h3 class="heading">Senior Product<br>Designer-Singapore</h3> -->
@@ -139,7 +153,10 @@ $dateApproveAgo =  $querysApprove ? DateTimeHelper::Duration($querysApprove['upd
                             <h6 class="mb-0">อนุมัติ</h6> <span>ล่าสุด <?=$dateApproveAgo?></span>
                         </div>
                     </div>
-                    <div class="badge"> <span>Design</span> </div>
+                    <div class="badge"> 
+                    <span>
+                            <?=Html::a('เลือก',['/vehicle/booking','status'=> 'approve']);?>
+                        </span>   </div>
                 </div>
                 <div class="mt-3">
                     <!-- <h3 class="heading">Senior Product<br>Designer-Singapore</h3> -->
@@ -166,7 +183,11 @@ $dateApproveAgo =  $querysApprove ? DateTimeHelper::Duration($querysApprove['upd
                             <h6 class="mb-0">เสร็จสิ้น</h6>ล่าสุด <span><?=$dateSuccessAgo?></span>
                         </div>
                     </div>
-                    <div class="badge"> <span>Design</span> </div>
+                    <div class="badge">
+                    <span>
+                            <?=Html::a('เลือก',['/vehicle/booking','status'=> 'success']);?>
+                        </span>        
+                </div>
                 </div>
                 <div class="mt-3">
                     <!-- <h3 class="heading">Senior Product<br>Designer-Singapore</h3> -->
