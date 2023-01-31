@@ -17,7 +17,8 @@ class SiteHelper extends Component
             'site_name' => isset($model->data_json['site_name']) ? $model->data_json['site_name'] : null,
             'line_token' => isset($model->data_json['line_token']) ? $model->data_json['line_token'] : null,
             'richmenu_register' => isset($model->data_json['richmenu_register']) ? $model->data_json['richmenu_register'] : null,
-            'richmenu_mainmenu' => isset($model->data_json['richmenu_mainmenu']) ? $model->data_json['richmenu_mainmenu'] : null,
+            'richmenu_usermenu' => isset($model->data_json['richmenu_usermenu']) ? $model->data_json['richmenu_usermenu'] : null,
+            'richmenu_drivermenu' => isset($model->data_json['richmenu_drivermenu']) ? $model->data_json['richmenu_drivermenu'] : null,
         ];
     }
 

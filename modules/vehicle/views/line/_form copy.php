@@ -90,11 +90,11 @@ $disable = false;
        
         <div class="d-flex justify-content-between">
         <div class="image-parent box-img">
-        <?= Html::img(['/file', 'id' => $model->car->photo,['class' =>'bd-placeholder-img','style' => 'width:1px;']])?>
+        <?php // Html::img(['/file', 'id' => $model->car->photo,['class' =>'bd-placeholder-img','style' => 'width:1px;']])?>
           </div>
           <div>
-          <p><small>ยี่ห้อ : <?= $model->car->data_json['band']?> </p>
-          <p>รุ่น : <?= $model->car->data_json['model']?></small></p>
+          <p><small>ยี่ห้อ : <?php // $model->car->data_json['band']?> </p>
+          <p>รุ่น : <?php // $model->car->data_json['model']?></small></p>
           </div>
         </div>
     </div>
@@ -244,9 +244,12 @@ echo Yii::$app->user->can('driver') ? $form->field($model, 'status_id')->inline(
         <?php endif;?>
 
 
-      
+        <div class="form-group">
+            <?=Html::submitButton('<i class="fa-solid fa-check"></i> บันทึก', ['class' => 'btn btn-success'])?>
+            <?=html::a('<i class="fa-solid fa-xmark"></i> ยกเลิกการ', ['/vehicle/booking'], ['class' => 'btn btn-danger']);?>
+        </div>
 
-      
+        <?php ActiveForm::end();?>
     </div>
     <div class="col-12">
 
@@ -306,23 +309,13 @@ $mileage_last = $model->mileageLast();
                 <?php endif;?>
             </div>
         </div>
+
+
+        <h5 class="card-title">Title</h5>
+        <p class="card-text">Content</p>
     </div>
     <div class="card-footer">
-    <div class="form-group">
-            <?=Html::submitButton('<i class="fa-solid fa-check"></i> บันทึก', ['class' => 'btn btn-success'])?>
-            
-            <?php if(!$model->isNewRecord):?>
-            <?php if($model->status_id == 'success' || $model->status_id == 'cancel'):?>
-            <?= Html::a('<i class="fa-solid fa-ban"></i> ยกเลิกการจอง', ['cancel', 'id' => $model->id], [
-            'class' => 'btn btn-secondary dis_cancel',
-        ]) ?>
-            <?php else :?>
-                <?= Html::a('<i class="fa-solid fa-ban"></i> ยกเลิกการจอง', ['cancel', 'id' => $model->id], [
-                    'class' => 'btn btn-danger',
-                    ]) ?>
-        <?php endif;?>
-        <?php endif?>
-        </div>
+        Footer
     </div>
   </div>
 
@@ -330,19 +323,34 @@ $mileage_last = $model->mileageLast();
 
 </div>
 
-<?php ActiveForm::end();?>
 <?php
 $urlDriverPhoto = Url::to('/bookingcar/booking/get-driver-photo');
 $js = <<< JS
 
+
 $("#form-line").submit(function(event) {
-    $('#loading').show();
-            $('#warp-content').hide();
-            $('#awaitLogin').show();
-    $('#content-container').hide();
-})
-
-
+            event.preventDefault(); // stopping submitting
+            var data = $(this).serializeArray();
+            var url = $(this).attr('action');
+            console.log(data);
+            // return false;
+            $.ajax({
+                url: url,
+                type: 'post',
+                dataType: 'json',
+                data: data
+            })
+            .done(function(response) {
+                // if (response.data.success == true) {
+                //     alert("Wow you commented");
+                // }
+                console.log(response);
+            })
+            .fail(function() {
+                console.log("error");
+            });
+        
+        });
 function getDriverPhoto(id) {
     $('#driver-photo').attr("src", "/file?id="+id).show();
     // $.ajax({

@@ -15,6 +15,7 @@ use app\modules\vehicle\models\Category;
 
     <?php $form = ActiveForm::begin([
     // 'layout' => 'horizontal',
+    'id' => 'form-search',
     'action' => ['index'],
     'method' => 'get',
     'options' => [
@@ -25,7 +26,8 @@ use app\modules\vehicle\models\Category;
     <div class="row">
         <div class="col-12">
             <?=$form->field($model, 'start')->widget(DateTimePicker::classname(), [
-                'options' => ['placeholder' => 'เลือกวันเวลาที่ออกเดินทาง ...'],
+                'options' => ['placeholder' => 'เลือกวัน ...'],
+                // 'type' => DateTimePicker::TYPE_COMPONENT_APPEND,
                 'language' => 'th',
                 'pluginOptions' => [
                     'autoclose' => true,
@@ -36,7 +38,8 @@ use app\modules\vehicle\models\Category;
         </div>
         <div class="col-12">
         <?=$form->field($model, 'end')->widget(DateTimePicker::classname(), [
-                'options' => ['placeholder' => 'เลือกวันเวลาที่วันกลับ ...'],
+                'options' => ['placeholder' => 'เลือกวัน ...'],
+                // 'type' => DateTimePicker::TYPE_COMPONENT_APPEND,
                 'language' => 'th',
                 'pluginOptions' => [
                     'autoclose' => true
@@ -46,17 +49,11 @@ use app\modules\vehicle\models\Category;
         </div>
         <div class="col-12">
         <?php
-echo $form->field($model, 'data_json[car_type]', [
-    'inputTemplate' => '<div class="input-group">
-    <div class="input-group-prepend">
-    <span class="input-group-text"><i class="fa-solid fa-car"></i>&nbsp;</span>
-    </div>
-    {input}
-    </div>',
-])->widget(Select2::classname(), [
+echo $form->field($model, 'data_json[car_type]')->widget(Select2::classname(), [
     'options' => [
         'placeholder' => 'เลือกประเถทรถ ...'
     ],
+    'size' => Select2::LARGE,
     'pluginOptions' => [
         'allowClear' => true
     ],
@@ -66,7 +63,7 @@ echo $form->field($model, 'data_json[car_type]', [
         </div>
         <div class="col-12">
         <div class="d-grid gap-2">
-            <?=Html::submitButton('<i class="fa-solid fa-magnifying-glass"></i> ค้นหา', ['class' => 'btn btn-primary'])?>
+            <?=Html::submitButton('<i class="fa-solid fa-magnifying-glass"></i> ค้นหา', ['class' => 'btn btn-lg btn-primary'])?>
         </div>
         </div>
     </div>

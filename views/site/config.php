@@ -31,7 +31,8 @@ use app\modules\vehicle\models\Category;
     <?= $form->field($model, 'data_json[site_name]')->textInput(['rows' => 6])->label('ชื่อเว็บไซต์') ?>
     <?= $form->field($model, 'data_json[line_token]')->textInput(['rows' => 6])->label('Line_token') ?>
     <?= $form->field($model, 'data_json[richmenu_register]')->textInput(['rows' => 6])->label('Register richmenu ID') ?>
-    <?= $form->field($model, 'data_json[richmenu_mainmenu]')->textInput(['rows' => 6])->label('MainMenu richmenu ID') ?>
+    <?= $form->field($model, 'data_json[richmenu_drivermenu]')->textInput(['rows' => 6])->label('DriverMenu richmenu ID') ?>
+    <?= $form->field($model, 'data_json[richmenu_usermenu]')->textInput(['rows' => 6])->label('UserMenu richmenu ID') ?>
     <div class="box-img" data-aos="fade-left">
             <?= Html::img(['/file','id'=>$model->photo]) ?>
         </div>

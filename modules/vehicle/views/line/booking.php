@@ -54,7 +54,7 @@ table {
 </div>
         <ul>
           <li>เรื่อง : <?=$model->title;?></li>
-          <li>สถานที่ไป : <?=$model->data_json['point'];?></li>
+          <li>สถานที่ไป : <?=isset($model->data_json['point']) ? $model->data_json['point'] : '-';?></li>
           <li>ผู้โดยสาร : <?=isset($model->data_json['passenger_number']) ? $model->data_json['passenger_number'] : null?></li>
         </ul>
        
@@ -62,8 +62,14 @@ table {
 
         <!-- Flex -->
   <div class="p-0">
+    <?php if(Yii::$app->user->can('driver')):?>
     <?=Html::a('<i class="far fa-edit"></i> รับภาระกิจ', ['confirm-job', 'id' => $model->id], ['class' => 'btn btn-primary confirm-job','title' => $model->title]);?>
-      <?php // Html::a('<i class="fa-regular fa-hand-pointer"></i> เพิ่มเติม...',['/vehicle/line/view','id' => $model->id],['class' => 'btn btn-primary']);?>
+     <?php endif;?>
+     <?php if(Yii::$app->user->can('user')):?>
+      <?= Html::a('<i class="fa-regular fa-pen-to-square"></i> แก้ไข', ['update', 'id' => $model->id], ['class' => 'btn btn-warning','style' => 'margin-right: 5px;']) ?>
+      
+      <?php endif;?>
+    <?php // Html::a('<i class="fa-regular fa-hand-pointer"></i> เพิ่มเติม...',['/vehicle/line/view','id' => $model->id],['class' => 'btn btn-primary']);?>
   </div>
   <div class="ms-auto p-2">
     <!-- สถานะ : <?php // $this->render('booking_status',['model'=>$model])?> -->

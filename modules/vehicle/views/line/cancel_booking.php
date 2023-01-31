@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
 </style>
 <div class="row justify-content-md-center mt-5">
 
-    <div class="col-6">
+    <div class="col-12">
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'status_id')->hiddenInput(['value' => 'cancel'])->label(false) ?>

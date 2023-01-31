@@ -7,11 +7,12 @@ use yii\web\View;
 
 <style>
   .form-control {
+    font-family: 'Prompt';
     display: block;
     height: 50px;
     width: 100%;
     padding: 0.375rem 0.75rem;
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 400;
     line-height: 1.5;
     color: #212529;
@@ -25,27 +26,15 @@ use yii\web\View;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 </style>
-<?php
-if(Yii::$app->user->isGuest)
-{
-    echo 'No';
-}else{
-    // echo 'Yes';
-    $user = Yii::$app->user;
-    // print_r($user);
-}
 
-// print_r(Yii::$app->user)
-?>
+<?php echo $searchModel->end == '' ?  $this->render('_search', ['model' => $searchModel]) : ''; ?>
 
-<?php echo $this->render('_search', ['model' => $searchModel]); ?>
-
-<?php echo isset($searchModel->end) ?  $this->render('car_items', [
+<?php echo $searchModel->end  == '' ?  '' : $this->render('car_items', [
             'searchModelCar' => $searchModelCar,
             'dataProviderCar' => $dataProviderCar,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-        ]) : ''; ?>
+        ]); ?>
 
 
 <?php // if(Yii::$app->user->isGuest):?>
@@ -54,7 +43,23 @@ if(Yii::$app->user->isGuest)
 $checkMe = Url::to(['/usermanager/line/checkme']);
 $js = <<< JS
 
+$('#loading').show();
+$('#warp-content').hide();
 
+$("#form-search").submit(function () {
+          $('#loading').show();
+            $('#warp-content').hide();
+            $('#awaitLogin').show();
+    $('#content-container').hide();
+
+            });
+
+$('.select-car').click(function () {
+  $('#loading').show();
+    $('#warp-content').hide();
+    $('#awaitLogin').show();
+$('#content-container').hide();
+})
 
 function runApp() {
       liff.getProfile().then(profile => {

@@ -19,10 +19,12 @@ class User extends ActiveRecord implements IdentityInterface
     public $password;
     public $confirm_password;
     public $roles;
+    public $role;
     public $q;
     public $old_password;
     public $file;
     public $line_id;
+    public $position_name;
 
     /**
      * @inheritdoc
@@ -78,7 +80,7 @@ class User extends ActiveRecord implements IdentityInterface
             ['confirm_password', 'string', 'min' => 6],
             ['confirm_password', 'compare', 'compareAttribute' => 'password'],
             ['phone', 'string', 'min' => 10, 'max' => 10],
-            [['roles', 'doctor_id', 'fullname', 'fullname_en', 'license_number', 'q', 'old_password', 'phone', 'photo', 'data_json', 'line_id','picture_url'], 'safe'],
+            [['roles','role','position_name', 'doctor_id', 'fullname', 'fullname_en', 'license_number', 'q', 'old_password', 'phone', 'photo', 'data_json', 'line_id','picture_url'], 'safe'],
 
         ];
     }
@@ -299,6 +301,20 @@ class User extends ActiveRecord implements IdentityInterface
             }
         } else {
             $auth->assign($auth->getRole('user'), $this->id);
+        }
+    }
+
+    public function assignmentRegis()
+    {
+        $auth = Yii::$app->authManager;
+        $roleUser = $auth->getRolesByUser($this->id);
+        $auth->revokeAll($this->id);
+        if ($this->roles) {
+            foreach ($this->roles as $key => $roleName) {
+                $auth->assign($auth->getRole($roleName), $this->id);
+            }
+        } else {
+            $auth->assign($auth->getRole($this->role), $this->id);
         }
     }
 

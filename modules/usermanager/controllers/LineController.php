@@ -61,7 +61,11 @@ class LineController extends \yii\web\Controller
             
         }else{
             Yii::$app->user->login($auth->user);
-            LineHelper::setMainMenu($lineId);
+            if(Yii::$app->user->can('driver')){
+                LineHelper::setDriverMenu($lineId);
+            }else{
+                LineHelper::setUserMenu($lineId);
+            }
             return [
                 'register' => true,
                 'msg' => 'ลงทะเบียนสำเร็จxx',
@@ -70,7 +74,7 @@ class LineController extends \yii\web\Controller
         
         if (Yii::$app->user->isGuest) {
             if ($auth && Yii::$app->user->login($auth->user)) {
-                LineHelper::setMainMenu($lineId);
+                LineHelper::setDriverMenu($lineId);
                 return [
                     'register' => true,
                     'msg' => 'ลงทะเบียนสำเร็จ setmenu'
@@ -91,7 +95,10 @@ class LineController extends \yii\web\Controller
     {
         $this->layout = 'line';
         // ตรวจสอบการเคยลงทะเบียนจากเยอร์โทรศัพท์
-        $searchModel = new UserSearch();
+        $searchModel = new UserSearch([
+            // 'email' => 'patjawat@gmail.com',
+            // 'phone' => '0909748044',
+        ]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $site = SiteHelper::info();
         $username = isset($searchModel->email) ? explode("@", $searchModel->email)[0] : '';
@@ -102,6 +109,10 @@ class LineController extends \yii\web\Controller
             'password' => $searchModel->phone,
             'confirm_password' => $searchModel->phone,
             'username' => $username,
+            'data_json' => [
+                'position_name' => $searchModel->position_name
+            ]
+
             // 'username' => 'admin',
             // 'email' => 'admin@local.com',
             // 'fullname' => 'admin',
@@ -124,11 +135,11 @@ class LineController extends \yii\web\Controller
                 $newAuth->source_id = $lineId;
                 if($newAuth->save(false)){
                     // Yii::$app->user->login($newAuth->user);
-                    LineHelper::setMainMenu($lineId);
+                    LineHelper::setDriverMenu($lineId);
                     return $this->redirect('success');
                 }else{
                      Yii::$app->user->login($user['user']);
-                     LineHelper::setMainMenu($lineId);
+                     LineHelper::setDriverMenu($lineId);
                     return $this->redirect('success');
                 }
             }
@@ -139,17 +150,24 @@ class LineController extends \yii\web\Controller
             // try {
             $model->setPassword($model->password);
             $model->generateAuthKey();
+        // Yii::$app->response->format = Response::FORMAT_JSON;
+            
+        //     return $model->role;
 
             if ($model->saveUploadedFile() !== false) {
                 if ($model->save()) {
-                    $model->assignment();
+                    $model->assignmentRegis();
                     $newAuth = new Auth();
                     $newAuth->source = 'line';
                     $newAuth->user_id = $model->id;
                     $newAuth->source_id = $model->line_id;
                     $newAuth->save(false);
                     if ($newAuth->save(false)) {
-                        LineHelper::setMainMenu($model->line_id);
+                        if($model->role == "diver"){
+                            LineHelper::setDriverMenu($model->line_id);
+                        }else if($model->role == "user"){
+                            LineHelper::setUserMenu($model->line_id);
+                        }
 
                         if (Yii::$app->user->login($newAuth->user)) {
                             return $this->redirect('success');
@@ -183,7 +201,7 @@ class LineController extends \yii\web\Controller
         // ];
         if ($model && ($data->line_id == $model['line_id'])) {
             // $lineId = $model->auth->line_id;
-            LineHelper::setMainMenu($model['line_id']);
+            LineHelper::setDriverMenu($model['line_id']);
         }
 
     }

@@ -18,6 +18,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin([
         'action' => ['signup'],
+        'id' => 'form-search',
         'method' => 'get',
         'options' => [
             'data-pjax' => 1
@@ -26,6 +27,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'phone')->textInput(['class' => 'form-control-lg','placeholder' => 'ระบุหมายเลขโทรศัพท์'])->label(false) ?>
     <?= $form->field($model, 'email')->textInput(['class' => 'form-control-lg mt-1','placeholder' => 'ระบุบัญชีอีเมล'])->label(false) ?>
+    <?= $form->field($model, 'position_name')->textInput(['class' => 'form-control-lg mt-1','placeholder' => 'ระบุตำแหน่ง'])->label(false) ?>
     <?= $form->field($model, 'line_id')->hiddenInput(['id' => 'line_id'])->label(false); ?>
 
     <div class="d-grid gap-2 col-12 mx-auto">

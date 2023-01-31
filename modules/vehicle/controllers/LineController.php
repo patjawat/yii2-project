@@ -118,7 +118,14 @@ return true;
         $status = $this->request->get('status');
         $searchModel = new BookingSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
-        $dataProvider->query->andWhere(['status_id' => 'await']);
+        if(Yii::$app->user->can('driver')){
+            $dataProvider->query->andWhere(['status_id' => 'await']);
+        }else{
+            $dataProvider->query->andWhere(['created_by' => Yii::$app->user->id]);
+            $dataProvider->query->andWhere(['not in','status_id',['cancel']]);
+            
+        }
+
         $dataProvider->setSort([
             'defaultOrder' => [
                 'created_at' => SORT_ASC,
@@ -131,6 +138,8 @@ return true;
             'dataProvider' => $dataProvider,
         ]);
     }
+
+
 
 
 
@@ -161,20 +170,22 @@ return true;
         ]);
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
+            if ($model->load($this->request->post()) ) {
                 $model->status_id = 'await';
-                $model->save();
-                Yii::$app->session->setFlash('position', [
-                    'position' => 'center',
-                    'icon' => Alert::TYPE_SUCCESS,
-                    'title' => 'บันทึกสำเร็จ!',
-                    'showConfirmButton' => false,
-                    'timer' => 1500,
-                ]);
-                // return $this->redirect(['view', 'id' => $model->id]);
-                return $this->render('view', [
-                    'model' => $this->findModel($model->id),
-                ]);
+                if($model->save(false)){
+
+                    Yii::$app->session->setFlash('position', [
+                        'position' => 'center',
+                        'icon' => Alert::TYPE_SUCCESS,
+                        'title' => 'บันทึกสำเร็จ!',
+                        'showConfirmButton' => false,
+                        'timer' => 1500,
+                    ]);
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+                // return $this->render('view', [
+                //     'model' => $this->findModel($model->id),
+                // ]);
             }
         } else {
             $model->loadDefaultValues();
@@ -261,7 +272,7 @@ return true;
                 'showConfirmButton' => false,
                 'timer' => 1500,
             ]);
-            return $this->redirect(['index']);
+            return $this->render('cancel_booking_success');
         }
 
         return $this->render('cancel_booking', [
