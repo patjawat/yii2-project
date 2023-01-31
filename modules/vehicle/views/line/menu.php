@@ -10,9 +10,9 @@ $this->title = 'เมนูอื่นๆ';
         <div class="card text-center border-0 shadow-md mb-3 bg-body-tertiary rounded">
 
             <div class="card-body">
-                <h5 class="card-title">QR-Code</h5>
+                <h5 class="card-title">จองรถ</h5>
                 <p class="card-text">Line OA </p>
-                <?=Html::a('<i class="fa-regular fa-hand-pointer"></i> เพิ่มเติม...',['/vehicle/line/qrcode'],['class' => 'btn btn-primary']);?>
+                <?=Html::a('<i class="fa-regular fa-hand-pointer"></i> เพิ่มเติม...',['/vehicle/line'],['class' => 'btn btn-primary']);?>
             </div>
         </div>
     </div>
