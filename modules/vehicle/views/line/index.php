@@ -39,12 +39,13 @@ if(Yii::$app->user->isGuest)
 ?>
 
 <?php echo $this->render('_search', ['model' => $searchModel]); ?>
-<?php echo $this->render('car_items', [
+
+<?php echo isset($searchModel->end) ?  $this->render('car_items', [
             'searchModelCar' => $searchModelCar,
             'dataProviderCar' => $dataProviderCar,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-        ]); ?>
+        ]) : ''; ?>
 
 
 <?php // if(Yii::$app->user->isGuest):?>
