@@ -31,8 +31,8 @@ class LineController extends \yii\web\Controller
     {
         $this->layout = 'line';
         $searchModel = new BookingSearch([
-            'start' => date("Y-m-d") . ' 08:00:00',
-            'end' => date("Y-m-d") . ' 16:30:00',
+            // 'start' => date("Y-m-d") . ' 08:00:00',
+            // 'end' => date("Y-m-d") . ' 16:30:00',
         ]);
         $dataProvider = $searchModel->search($this->request->queryParams);
 
