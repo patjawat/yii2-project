@@ -5,7 +5,7 @@ use yii\helpers\Json;
 $this->title = 'พนักงานขับรถ';
 $this->params['breadcrumbs'][] = $this->title;
 $this->registerCss($this->render('style.css'));
-echo count($models);
+
 ?>
 
 
@@ -14,7 +14,6 @@ echo count($models);
         <?php $delay = 2;?>
         <?php foreach ($models as $model):?>
             <?php $delayNumber = $delay++;?>
-            <?=$delayNumber*100?>
         <div class="col-md-3 col-lg-3 pb-3">
             <!-- Copy the content below until next comment -->
             <div class="card card-custom bg-white border-white border-0" data-aos="fade-up" data-aos-delay="<?=$delayNumber*100?>">
