@@ -87,6 +87,7 @@ class BookingController extends Controller
             $model->status_id = 'approve';
         }
         if ($model->save()) {
+            LineHelper::PushMessageOneToOne($id);
             return $this->redirect(['/vehicle/myjob/update', 'id' => $model->id]);
         }
 

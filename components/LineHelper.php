@@ -147,7 +147,7 @@ class LineHelper extends Component
 
 public static function PushMessageOneToOne($id){
 
-try {
+// try {
 
     $model = Booking::findOne(['id' => $id]);
 
@@ -165,9 +165,9 @@ try {
         return false;
     }
         //code...
-} catch (\Throwable $th) {
-    //throw $th;
-}
+// } catch (\Throwable $th) {
+//     //throw $th;
+// }
 
 }
    public static function PushMessage($id,$msg)
