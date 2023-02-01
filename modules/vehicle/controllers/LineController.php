@@ -122,7 +122,7 @@ return true;
             $dataProvider->query->andWhere(['status_id' => 'await']);
         }else{
             $dataProvider->query->andWhere(['created_by' => Yii::$app->user->id]);
-            $dataProvider->query->andWhere(['not in','status_id',['cancel']]);
+            $dataProvider->query->andWhere(['not in','status_id',['cancel','success']]);
             
         }
 
