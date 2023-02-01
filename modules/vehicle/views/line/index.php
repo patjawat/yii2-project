@@ -43,25 +43,11 @@ use yii\web\View;
 $checkMe = Url::to(['/usermanager/line/checkme']);
 $js = <<< JS
 
-// $('#loading').show();
-// $('#warp-content').hide();
+
+
+
 $('#awaitLogin').show();
 $('#content-container').hide();
-$("#form-search").submit(function () {
-          $('#loading').show();
-            $('#warp-content').hide();
-            $('#awaitLogin').show();
-    $('#content-container').hide();
-
-            });
-
-$('.select-car').click(function () {
-  $('#loading').show();
-    $('#warp-content').hide();
-    $('#awaitLogin').show();
-$('#content-container').hide();
-})
-
 function runApp() {
       liff.getProfile().then(profile => {
         $.ajax({
@@ -84,6 +70,7 @@ function runApp() {
       }).catch(err => console.error(err));
     }
 
+
     liff.init({ liffId: "1657676585-KD78xz40" }, () => {
       if (liff.isLoggedIn()) {
         runApp()
@@ -92,6 +79,21 @@ function runApp() {
       }
     }, err => console.error(err.code, error.message));
 
+
+    $("#form-search").submit(function () {
+          $('#loading').show();
+            $('#warp-content').hide();
+            $('#awaitLogin').show();
+    $('#content-container').hide();
+
+            });
+
+$('.select-car').click(function () {
+  $('#loading').show();
+    $('#warp-content').hide();
+    $('#awaitLogin').show();
+$('#content-container').hide();
+})
 
     $('#logout').click(function (e) { 
       console.log('logged out');
