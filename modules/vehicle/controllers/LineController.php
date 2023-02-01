@@ -171,7 +171,7 @@ return true;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) ) {
-                
+
                 $model->status_id =  Yii::$app->user->can('driver') ? 'approve' : 'await';
                 $model->driver_id = Yii::$app->user->can('driver') ? Yii::$app->user->identity->id : '';
 
@@ -258,9 +258,15 @@ return true;
             return $this->renderContent('<h1 class="text-center">ตำแหน่งของท่านไม่ได้รับอนุญาติ</h1>');
         }
         if ($model->save()) {
+            
+            LineHelper::PushMessageOneToOne($id);
             // return $this->redirect(['/vehicle/myjob/update', 'id' => $model->id]);
             return true;
         }
+    }
+
+    private function sendLineOneToOne(){
+      
     }
 
     public function actionCancel($id)

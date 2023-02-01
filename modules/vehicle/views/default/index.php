@@ -4,10 +4,15 @@ use app\modules\vehicle\AppAsset;
 use yii\helpers\Url;
 AppAsset::register($this);
 $AssetBundle = AppAsset::register($this);
+use app\components\LineHelper;
 
 ?>
 
+<?php
 
+$a = LineHelper::PushMessageOneToOne(8);
+print_r($a);
+?>
 <div class="container">
     <?php echo $this->render('_search', ['model' => $searchModel]); ?>
     <div class="row">

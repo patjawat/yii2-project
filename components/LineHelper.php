@@ -5,6 +5,7 @@ namespace app\components;
 use Yii;
 use yii\base\Component;
 use yii\helpers\Json;
+use app\modules\vehicle\models\Booking;
 
 class LineHelper extends Component
 {
@@ -140,6 +141,33 @@ class LineHelper extends Component
    foreach($query as $row){
     self::PushMessage($row['source_id'],$msg);
    }
+
+}
+
+
+public static function PushMessageOneToOne($id){
+
+try {
+
+    $model = Booking::findOne(['id' => $id]);
+
+    $sql = "SELECT a.source_id FROM booking b
+    INNER JOIN auth a ON a.user_id = b.created_by
+    WHERE b.id = :id";
+    $query = Yii::$app->db->createCommand($sql)
+    ->bindValue(':id', $id)
+    ->queryOne();
+    if($query){
+        $msg =  $msg = '#อนุมัติเรื่อง : '.$model->title."\n".'#วันที่ : '.$model->start.' ถึง '.$model->end .' พขร '.$model->driver->fullname;
+        $id = $query['source_id'];
+        PushMessage($id,$msg);
+    }else{
+        return false;
+    }
+        //code...
+} catch (\Throwable $th) {
+    //throw $th;
+}
 
 }
    public static function PushMessage($id,$msg)
