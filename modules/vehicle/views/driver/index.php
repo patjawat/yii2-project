@@ -13,6 +13,7 @@ echo count($models);
     <div class="row pt-5 m-auto">
         <?php $delay = 2;?>
         <?php foreach ($models as $model):?>
+            <?=$delay*10?>
         <div class="col-md-3 col-lg-3 pb-3">
             <!-- Copy the content below until next comment -->
             <div class="card card-custom bg-white border-white border-0" data-aos="fade-up" data-aos-delay="<?=$delay*10?>">
