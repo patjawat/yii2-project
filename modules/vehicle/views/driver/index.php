@@ -14,10 +14,10 @@ echo count($models);
         <?php $delay = 2;?>
         <?php foreach ($models as $model):?>
             <?php $delayNumber = $delay++;?>
-            <?=$delayNumber*10?>
+            <?=$delayNumber*100?>
         <div class="col-md-3 col-lg-3 pb-3">
             <!-- Copy the content below until next comment -->
-            <div class="card card-custom bg-white border-white border-0" data-aos="fade-up" data-aos-delay="<?=$delayNumber*10?>">
+            <div class="card card-custom bg-white border-white border-0" data-aos="fade-up" data-aos-delay="<?=$delayNumber*100?>">
                 <!-- <div class="card-custom-img" style="background-image: url(http://res.cloudinary.com/d3/image/upload/c_scale,q_auto:good,w_1110/trianglify-v1-cs85g_cc5d2i.jpg);"> -->
                 <div class="card-custom-img"
                     style="background-image: url(https://bkpho.moph.go.th/bungkanpho/uploads/media/2018111510192411_SSJBK_2018_2.jpg);filter: brightness(91%);">
