@@ -82,7 +82,7 @@ class MyjobController extends \yii\web\Controller
                     'showConfirmButton' => false,
                     'timer' => 1500
                 ]);
-                return $this->redirect(['/vehicle/line/myjob/job-success']);
+                return $this->redirect(['/vehicle/myjob/job-success']);
             }
         }
             return $this->render('_form_confirm', [
