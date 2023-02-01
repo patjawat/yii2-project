@@ -71,8 +71,11 @@ function runApp() {
           dataType: "json",
           success: function (response) {
             console.log(response);
-            if(response == false){
+            if(response.register == false){
               liff.closeWindow();
+            }else{
+              $('#awaitLogin').hide();
+              $('#content-container').show();
             }
             // window.location.href
           }
