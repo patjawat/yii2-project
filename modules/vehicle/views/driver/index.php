@@ -11,13 +11,12 @@ echo count($models);
 
 <div class="container">
     <div class="row pt-5 m-auto">
+        <?php $delay = 200;?>
         <?php foreach ($models as $model):?>
 
         <div class="col-md-3 col-lg-3 pb-3">
-            <?php for ($x = 200; $x <= count($models); $x++):?>
-                <?=$x?>
             <!-- Copy the content below until next comment -->
-            <div class="card card-custom bg-white border-white border-0" data-aos="fade-up" data-aos-delay="<?=$x?>">
+            <div class="card card-custom bg-white border-white border-0" data-aos="fade-up" data-aos-delay="<?=$delay++?>">
                 <!-- <div class="card-custom-img" style="background-image: url(http://res.cloudinary.com/d3/image/upload/c_scale,q_auto:good,w_1110/trianglify-v1-cs85g_cc5d2i.jpg);"> -->
                 <div class="card-custom-img"
                     style="background-image: url(https://bkpho.moph.go.th/bungkanpho/uploads/media/2018111510192411_SSJBK_2018_2.jpg);filter: brightness(91%);">
@@ -51,7 +50,7 @@ echo count($models);
                 </div>
             </div>
             <!-- Copy until here -->
-            <?php endfor;?>
+           
         </div>
         <?php endforeach; ?>
 
