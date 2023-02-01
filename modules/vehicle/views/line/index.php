@@ -43,9 +43,10 @@ use yii\web\View;
 $checkMe = Url::to(['/usermanager/line/checkme']);
 $js = <<< JS
 
-$('#loading').show();
-$('#warp-content').hide();
-
+// $('#loading').show();
+// $('#warp-content').hide();
+$('#awaitLogin').show();
+$('#content-container').hide();
 $("#form-search").submit(function () {
           $('#loading').show();
             $('#warp-content').hide();
