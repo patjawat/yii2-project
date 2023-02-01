@@ -171,9 +171,13 @@ return true;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) ) {
-                $model->status_id = 'await';
-                if($model->save(false)){
+                
+                $model->status_id =  Yii::$app->user->can('driver') ? 'approve' : 'await';
+                $model->driver_id = Yii::$app->user->can('driver') ? Yii::$app->user->identity->id : '';
 
+                if($model->save(false)){
+                    $msg = '#จองรถทะเบียน : '.$model->car->data_json['car_regis']."\n".'#ผู้ขอ : '.$model->createBy->fullname."\n".'#เรื่อง : '.$model->title."\n".'#วันที่ : '.$model->start.' ถึง '.$model->end;
+                    LineHelper::PushMessageCarBooking($msg);
                     Yii::$app->session->setFlash('position', [
                         'position' => 'center',
                         'icon' => Alert::TYPE_SUCCESS,
