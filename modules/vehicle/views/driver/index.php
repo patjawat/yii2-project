@@ -5,6 +5,7 @@ use yii\helpers\Json;
 $this->title = 'พนักงานขับรถ';
 $this->params['breadcrumbs'][] = $this->title;
 $this->registerCss($this->render('style.css'));
+echo count($models);
 ?>
  
 
