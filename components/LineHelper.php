@@ -160,7 +160,7 @@ public static function PushMessageOneToOne($id){
     if($query){
         $msg =  $msg = '#อนุมัติเรื่อง : '.$model->title."\n".'#วันที่ : '.$model->start.' ถึง '.$model->end .' พขร '.$model->driver->fullname;
         $id = $query['source_id'];
-        PushMessage($id,$msg);
+        self::PushMessage($id,$msg);
     }else{
         return false;
     }
