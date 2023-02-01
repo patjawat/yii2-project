@@ -70,7 +70,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => '@w
     <header id="header">
         <?php
 NavBar::begin([
-    'brandLabel' => Html::img('@web/images/moph_logo.png', ['alt'=>Yii::$app->name]).'<span>ระบบบริหารยานพาหนะ</span>',
+    'brandLabel' => Html::img('@web/images/logo.png', ['alt'=>Yii::$app->name]).'<span>ระบบบริหารยานพาหนะ</span>',
     // 'brandLabel' => 'ระบบบริหารยานพาหนะ',
     'brandUrl' => Yii::$app->homeUrl,
     'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark'],
@@ -156,7 +156,7 @@ NavBar::end();
             <div id="awaitLogin" style="display:none;margin-top:100px">
                 <div class="d-flex justify-content-center">
                     <div style="position:relative;width:10%;">
-                        <?=Html::img('@web/images/moph_logo.png',['style' => 'position: absolute;width: 100px;top:1px;left:1px;']);?>
+                        <?=Html::img('@web/images/logo.png',['style' => 'position: absolute;width: 100px;top:1px;left:1px;']);?>
                         <div class="dbl-spinner"></div>
                         <div class="dbl-spinner"></div>
                         <h6 style="position: absolute;top:115px;left:8%;">กำลังโหลด...</h6>
