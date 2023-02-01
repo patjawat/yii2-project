@@ -86,7 +86,7 @@ $this->registerJSFile('https://static.line-scdn.net/liff/edge/2/sdk.js');
             <div id="awaitLogin" style="display:none;margin-top:100px">
                 <div class="d-flex justify-content-center">
                     <div style="position:relative;width:20%;">
-                        <?=Html::img('@web/images/moph_logo.png',['style' => 'position: absolute;width: 100px;top:1px;left:1px;']);?>
+                        <?=Html::img('@web/images/logo.png',['style' => 'position: absolute;width: 100px;top:1px;left:1px;']);?>
                         <div class="dbl-spinner"></div>
                         <div class="dbl-spinner"></div>
                         <h6 style="position: absolute;top:115px;left:8%;width: 300px;">กำลังโหลด...</h6>
