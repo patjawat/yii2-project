@@ -23,7 +23,8 @@ $this->registerCss($this->render('style.css'));
      <?php if($model['photo']):?>
                         <?=Html::img(['/file', 'id' => $model['photo'],['class' =>'img-fluid']])?>
                         <?php else:?>
-                            <?=Html::img($model['picture_url'],['class' =>'img-fluid']);?>
+                            <?=$model['picture_url'] ? Html::img($model['picture_url'],['class' =>'img-fluid']) : Html::img('@web/images/user1.jpg',['class' =>'img-fluid']);?>
+                         
         <?php endif;?>
                         
                 </div>
