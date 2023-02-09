@@ -54,6 +54,7 @@ $modules['usermanager'] = ['class' => 'app\modules\usermanager\Module']; //à¸ˆà¸
 $modules['vehicle'] = ['class' => 'app\modules\vehicle\Module']; //system
 $modules['vehicle2'] = ['class' => 'app\modules\vehicle2\Module']; //system
 $modules['meeting'] = ['class' => 'app\modules\meeting\Module']; //system
+$modules['bookipd'] = ['class' => 'app\modules\bookipd\Module']; //system
 $modules['userswicth'] = ['class' => 'sky\userswitch\Module']; //Swicth
 $modules['authenticator'] = [
     'class' => 'nextvikas\authenticator\Module',
