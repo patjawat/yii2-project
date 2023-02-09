@@ -66,7 +66,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 </style>
 
-<body id="top" class="d-flex flex-column h-100" style="background-color:#01a9d1;">
+<body id="top" class="d-flex flex-column h-100" style="background-color:#14b2b7;">
     <!-- <body class="d-flex flex-column h-100" style="background-image: url('<?=$myAssetBundle->baseUrl . '/images/bg-image.png'?>'); -->
     <?php $this->beginBody()?>
 
@@ -75,7 +75,8 @@ h1,h2,h3,h4,h5,h6 {
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" id="header-nav" role="navigation">
             <div class="container">
-                <a class="link-dark navbar-brand site-title mb-0" href="#home">ผู้ป่วยใน</a>
+              <?=html::img($myAssetBundle->baseUrl . '/images/logo-ipd.png',['width'=>100])?>
+              <a class="link-dark navbar-brand site-title mb-0" href="#home">ผู้ป่วยใน</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -107,12 +108,12 @@ h1,h2,h3,h4,h5,h6 {
 
 
     <div id="home">
-        <div class="cover bg-light mt-5">
+        <div class="cover bg-light mt-5 pt-5">
             <div class="px-3 container">
                 <div class="row">
                     <div class="col-lg-6 p-2">
-                        <img class="img-fluid vert-move" src="<?=$myAssetBundle->baseUrl . '/images/section-hero.jpg'?>" alt="hello"
-                            style="width:400px;" />
+                        <!-- <img class="img-fluid vert-move" src="<?php // $myAssetBundle->baseUrl . '/images/section-hero.jpg'?>" alt="hello" style="width:400px;" /> -->
+                        <img class="img-fluid vert-move" src="<?=$myAssetBundle->baseUrl . '/images/hero2.png'?>" alt="hello" style="width:650px;" />
                     </div>
                     <div class="col-lg-6">
                         <div class="mt-5">
@@ -125,7 +126,7 @@ h1,h2,h3,h4,h5,h6 {
   </div>
   <div class="flex-grow-1 ms-3">
   <p class="lead fw-normal mt-3" data-aos="fade-up" data-aos-delay="100">
-                                ผู้ป่วยที่มีความประสงค์จะจองห้องพิเศษสามารถจองผ่านระบบ Online หรือติดต่อสอบถาม
+                                ผู้ป่วยที่มีความประสงค์จะจองห้องพิเศษสามารถจองผ่านระบบ Online หรือ ติดต่อสอบถาม
                                 0909748044
                             </p>
                             <div class="mt-3" data-aos="fade-up" data-aos-delay="200">
